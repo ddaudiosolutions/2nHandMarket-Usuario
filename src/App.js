@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Header from "./components/Header";
+import Productos from "./components/Productos";
+import NuevoProducto from "./components/NuevoProducto";
+import EditarProducto from "./components/EditarProducto";
+//import Login from "./components/Login";
+import VerProducto from "./components/VerProducto";
+//Redux
+import { Provider } from "react-redux";
+import store from "./store";
 
 function App() {
+
+  console.log(process.env.REACT_APP_BACKEND_URL)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Provider store={store}>
+        <Header />
+
+        <div className="container">
+          <Switch>
+            <Route exact path="/" component={Productos} />
+            <Route exact path="/productos/nuevo" component={NuevoProducto} />
+            <Route
+              exact
+              path="/productos/editar/:id"
+              component={EditarProducto}
+            />
+            <Route exact path="/productos" component={Productos} />
+            <Route exact path="/productos/:id" component={VerProducto} />
+            {/* <Route exact path="/login" component={Login} /> */}
+          </Switch>
+        </div>
+      </Provider>
+    </Router>
   );
 }
 
