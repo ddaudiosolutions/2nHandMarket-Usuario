@@ -1,27 +1,43 @@
 /* eslint-disable import/no-anonymous-default-export */
-import axios from "axios";
 
-const API_URL = "http://localhost:4000/api/auth"; //nombramos con una variable la dirección de la API que nos lleva al servidor de donde sacar los datos
+//import axios from "axios";
+import clienteAxios from "../config/axios";
+//const API_URL = clienteAxios;
 
-
-//CON UNA FUNCIO ASYNC LLAMAMOS AL SERVIDOR PARA RECUPERAR LOS DATOS PARA HACER EL LOGIN
-const login = async (username, password) => {
-  const response = await axios
-    .post(API_URL, {
-      username,
-      password,
-    });
-  if (response.data) {
-    localStorage.setItem("user", JSON.stringify(response.data));
-  }
-  return response.data;
+//CREAR USUARIO
+const resgistroUsuario = (nombre, email, password) => {
+  return clienteAxios.post('/api/usuarios', {
+    nombre,
+    email,
+    password,
+  });
 };
 
+//ACCESO LOGIN
+const loginUsuario = (email, password) => {
+  return clienteAxios
+    .post('/api/auth', {
+      email,
+      password,
+    })
+    .then((response) => {
+      
+      if (response.data.token) {       
+        localStorage.setItem("user", JSON.stringify(response.data.token));
+       
+      }   
+      console.log(response.data.token)
+      return response.data;
+    });
+};
+
+//BORRAR LOGIN
 const logout = () => {
   localStorage.removeItem("user");
 };
 
 export default {
-  login,
+  resgistroUsuario,
+  loginUsuario,
   logout,
 };

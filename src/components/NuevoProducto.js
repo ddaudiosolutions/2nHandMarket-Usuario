@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { useState } from "react";
 import Select from "react-select";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
+import 'react-toastify/dist/ReactToastify.css';
 //ACTIONS DE REDUX
 import { crearNuevoProductoAction } from "../actions/productoActions";
 
@@ -49,7 +50,7 @@ const accesorios = [
   { value: "aleta", label: "Aleta" },
 ];
 
-const NuevoProducto = () => {
+const NuevoProducto = ({history}) => {
   //MANEJO DE STATES LOCALES
   const [categoria, setCategoria] = useState("");
 
@@ -66,7 +67,10 @@ const NuevoProducto = () => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  //const [images, setImages] = useState({});
+
+  //CONFIGURANDO EL UPLOADIMAGES
+  
+  //const [images, setImages] = useState([]);
   
   // const imageHandler = (e) => {
   //   const file = e.target.files[0]
@@ -75,7 +79,6 @@ const NuevoProducto = () => {
   //   console.log(formData)
   // }
 
- 
   let subopcion;
 
   switch (categoria) {
@@ -115,24 +118,23 @@ const NuevoProducto = () => {
 
   //AL HACER SUBMIT EN EL FORMULARIO
   const submitNuevoProducto = (e) => {
-    e.preventDefault();
-
-    //validar formulario
-    // if(title === '' || price <=0 || description === ''){
-    //   return;
-    // }
-    //si no hay errores
-
+        e.preventDefault();
+    
     //crear el nuevo producto agregando los states locales de cada producto, para enviarlo al action
     agregarProducto({
       categoria,
       subCategoria,
       title,
       price,
-      description
-      
+      description,
+      //images
     });
+
+    history.push('/productos')
   };
+
+    
+
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -200,7 +202,7 @@ const NuevoProducto = () => {
                     onChange={(e) => setPrice(Number(e.target.value))}
                   ></input>
                 </div>
-                
+
                 <div className="mb-3">
                   <Label htmlFor="descripcionProducto" className="form-label">
                     Descripción del Producto
@@ -213,11 +215,13 @@ const NuevoProducto = () => {
                     onChange={(e) => setDescription(e.target.value)}
                   ></TextArea>
                 </div>
+                
                 <div className="mb-3 text-center">
                   <button className="btn btn-success" type="submit">
                     Agregar Producto
                   </button>
                 </div>
+                
               </form>
             </div>
           </div>

@@ -1,7 +1,12 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Select from "react-select";
+import { useDispatch, useSelector } from "react-redux";
 
+import { editarProductoActionUser } from "../actions/productoActions";
+import { useHistory } from "react-router-dom";
+
+//STYLED COMPONENTS
 const Label = styled.label`
   font-family: Anton;
 `;
@@ -10,86 +15,45 @@ const TextArea = styled.textarea`
   font-family: Lato;
 `;
 
-const tablas = [
-  { value: "slalom", label: "Slalom" },
-  { value: "freeride", label: "Free-Ride" },
-  { value: "freerace", label: "Free-Race" },
-  { value: "freestyle", label: "Free-Style" },
-];
-
-const velas = [
-  { value: "slalom", label: "Slalom_V" },
-  { value: "freeride", label: "Free-Ride" },
-  { value: "freerace", label: "Free-Race" },
-  { value: "freestyle", label: "Free-Style" },
-];
-
-const botavaras = [
-  { value: "carbono", label: "Carbono" },
-  { value: "aluminio", label: "Aluminio" },
-  { value: "mixtas", label: "Mixtas" },
-];
-
-const accesorios = [
-  { value: "arnes", label: "Arnes" },
-  { value: "alargador", label: "Alargador" },
-  { value: "aleta", label: "Aleta" },
-];
+//FUNCION PARA EDITAR PRODUCTO
 
 const EditarProducto = () => {
-  const [producto, setProducto] = useState("");
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-  const handleProduct = (e) => {
-    setProducto(e.target.value);
+  //NUEVO STATE PRODUCTO
+  const [producto, setProductoEditado] = useState({
+    categoria: "",
+    subCategoria: "",
+    price: "",
+    title: "",
+    description: "",
+  });
+  const productoEditar = useSelector((state) => state.productos.productoeditar);
+  //console.log(productoEditar);
+  //if(!productoEditar) return null;
+  const { categoria, subCategoria, price, title, description } = producto;
+
+  useEffect(() => {
+    setProductoEditado(productoEditar);
+  }, [productoEditar]);
+
+ 
+
+  //LEER DATOS FORMULARIO
+  const onChangeFormularioEditado = (e) => {
+    setProductoEditado({
+      ...producto,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const [subProducto, setSubProducto] = useState("");
-
-  const handleSubProduct = (e) => {
-    setSubProducto(e.value);
+  const submitEditarProducto = e => {
+    e.preventDefault()
+    dispatch(editarProductoActionUser(producto));
+    console.log(producto)
+    history.push('/productos')
   };
-
-  // const [datos, setDatos] = useState({
-  //   producto: "",
-  //   subProducto: "",
-  //   tituloProducto: "",
-  //   precio: "",
-  // });
-  // const { tituloProducto, precio } = datos;
-
-  let subopcion = tablas;
-  // let [opciones, setOpciones] = useState([])
-
-  switch (producto) {
-    case "tabla":
-      subopcion = tablas;
-      break;
-
-    case "vela":
-      subopcion = velas;
-      break;
-
-    case "botavara":
-      subopcion = botavaras;
-      break;
-
-    case "accesorio":
-      subopcion = accesorios;
-      break;
-
-    default:
-      console.log("ALGO DIFERENTE SE HA SELECCIONADO");
-      break;
-  }
-
-  // const handleDatosForm = (e) => {
-  //   setDatos({
-  //     producto,
-  //     subProducto,
-  //     ...datos,
-  //     [e.target.value]: e.target.value,
-  //   });
-  // };
 
   return (
     <div className="container mt-5">
@@ -98,35 +62,54 @@ const EditarProducto = () => {
           <div className="card">
             <div className="card-body">
               <h2 className="text-center mx-auto font-wight-bold mb-5">
-                Editar Nuevo Producto
+                Agregar Nuevo Producto
               </h2>
-              <form>
+              <form onSubmit={submitEditarProducto}>
                 <div className="mb-3">
                   <Label className="mb-2">Selecciona el tipo de producto</Label>
                   <select
                     className="custom-select form-control"
                     defaultValue=""
-                    name="producto"
-                    value={producto}
-                    onChange={handleProduct}
+                    name="categoria"
+                    value={categoria}
+                    onChange={onChangeFormularioEditado}
+                    // onChange={onChangeFormularioEditado}
                   >
                     <option value="" selected>
-                      Selecciona el tipo de producto
+                      Selecciona la categoria
                     </option>
                     <option value="tabla">Tabla</option>
                     <option value="vela">Vela</option>
                     <option value="botavara">Botavara</option>
+                    <option value="mastil">Mastil</option>
                     <option value="accesorio">Accesorio</option>
                   </select>
                 </div>
                 <div className="mb-3">
-                  <Label className="mb-2">Selecciona el tipo de producto</Label>
-                  <Select
-                    name="subProducto"
-                    value={subProducto.Label}
-                    onChange={handleSubProduct}
-                    options={subopcion}
-                  />
+                  <Label className="mb-2">Selecciona la Categoria</Label>
+                  <select
+                    className="custom-select form-control"
+                    defaultValue=""
+                    name="subCategoria"
+                    value={subCategoria}
+                    onChange={onChangeFormularioEditado}
+                    // onChange={onChangeFormularioEditado}
+                  >
+                    <option value="" selected>
+                      Selecciona la categoria
+                    </option>
+                    <option value="slalom">Slalom</option>
+                    <option value="freeride">Free-Ride</option>
+                    <option value="freerace">Free-Race</option>
+                    <option value="freestyle">Free-Style</option>
+                    <option value="foil">Foil</option>
+                    <option value="waves">Waves</option>
+                    <option value="carbono">Carbono</option>
+                    <option value="aluminio">Aluminio</option>
+                    <option value="mixta">Mixta</option>
+                    <option value="rdm">RDM</option>
+                    <option value="sdm">SDM</option>
+                  </select>
                 </div>
                 <div className="mb-3">
                   <Label htmlFor="tituloProducto" className="form-label">
@@ -135,11 +118,11 @@ const EditarProducto = () => {
                   <input
                     type="text"
                     className="form-control"
-                    name="tituloProducto"
-                    //value={tituloProducto}
-                    id="tituloProducto"
+                    name="title"
+                    value={title}
+                    id="title"
                     placeholder="Tabla Slalom ...."
-                    //onChange={handleDatosForm}
+                    onChange={onChangeFormularioEditado}
                   ></input>
                 </div>
                 <div className="mb-3">
@@ -151,11 +134,12 @@ const EditarProducto = () => {
                     className="form-control"
                     id="precioProducto"
                     placeholder="450"
-                    name="precio"
-                    //value={precio}
-                    //onChange={handleDatosForm}
+                    name="price"
+                    value={price}
+                    onChange={onChangeFormularioEditado}
                   ></input>
                 </div>
+
                 <div className="mb-3">
                   <Label htmlFor="descripcionProducto" className="form-label">
                     Descripción del Producto
@@ -164,11 +148,15 @@ const EditarProducto = () => {
                     className="form-control"
                     id="descripcionProducto"
                     rows="3"
+                    name="description"
+                    value={description}
+                    onChange={onChangeFormularioEditado}
                   ></TextArea>
                 </div>
+
                 <div className="mb-3 text-center">
                   <button className="btn btn-success" type="submit">
-                    Guardar Cambios Producto
+                    Editar Producto
                   </button>
                 </div>
               </form>

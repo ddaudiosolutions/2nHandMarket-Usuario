@@ -1,18 +1,22 @@
 import { Fragment } from "react";
 import imageNull from "../images/logo192.png";
-import { Link, useHistory } from "react-router-dom";
-
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 //REDUX
 import { useDispatch } from "react-redux";
-import { obtenerProductoVisionar } from "../actions/productoActions";
+import { obtenerProductoIdAction } from "../actions/productoActions";
+//import { obtenerProductoVisionar } from "../actions/productoActions";
 
 const Producto = ({ producto }) => {
-  const { title, price, description, id } = producto;
+  const { user: currentUser } = useSelector((state) => state.auth);
+  const { title, price, author, description, categoria, subCategoria } = producto;
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const redireccionarVerProducto = (producto) => {
-    dispatch(obtenerProductoVisionar(producto));
+    console.log(currentUser)
+
+  const verProductoId = (producto) => {
+    dispatch(obtenerProductoIdAction(producto));
     history.push(`/productos/${producto.id}`);
   };
 
@@ -22,18 +26,20 @@ const Producto = ({ producto }) => {
         <div className="card-header text-center">
           <h5>{title}</h5>
         </div>
-        <img className="card-img-top" src={imageNull}></img>
+        
+        <img className="card-img-top" src={imageNull} alt='imagen nula'></img>
         <div className="card-body text-center">
           <p style={{ color: "red" }}>{price}€</p>
         </div>
         <div className="card-body text-center">
           <button
             className="btn btn-primary"
-            onClick={() => redireccionarVerProducto(producto)}
+            onClick={() => verProductoId(producto)}
           >
             Ver Producto
           </button>
         </div>
+        
       </div>
     </Fragment>
   );

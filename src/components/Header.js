@@ -1,5 +1,13 @@
 import { Link } from "react-router-dom";
+//import { logout } from "../actions/loginActions";
+//i//mport { useDispatch, useSelector } from "react-redux";
+//import {history} from './helpers/history'
+
 const Header = () => {
+  //const {user: currentUser} = useSelector((state) => state.registroReducer)
+ // const dispatch = useDispatch()
+  
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -26,7 +34,15 @@ const Header = () => {
               Nuevo-Producto
             </Link>
 
+            <Link to={'/nuevousuario'} className="nav-link active" >
+              Resgistrate
+            </Link>
 
+            {/* <Link to={'/login'} className="nav-link active" >
+              LogIn
+            </Link> */}
+
+            
            
           </div>
         </div>
