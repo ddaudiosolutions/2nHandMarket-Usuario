@@ -5,7 +5,9 @@ import Select from "react-select";
 
 import { useDispatch } from "react-redux";
 
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+
+
 //ACTIONS DE REDUX
 import { crearNuevoProductoAction } from "../actions/productoActions";
 
@@ -50,7 +52,7 @@ const accesorios = [
   { value: "aleta", label: "Aleta" },
 ];
 
-const NuevoProducto = ({history}) => {
+const NuevoProducto = ({ history }) => {
   //MANEJO DE STATES LOCALES
   const [categoria, setCategoria] = useState("");
 
@@ -67,17 +69,9 @@ const NuevoProducto = ({history}) => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-
-  //CONFIGURANDO EL UPLOADIMAGES
+  const [image, setImage] = useState("");
   
-  //const [images, setImages] = useState([]);
   
-  // const imageHandler = (e) => {
-  //   const file = e.target.files[0]
-  //   const formData = new FormData()
-  //   formData.append ('image', file)
-  //   console.log(formData)
-  // }
 
   let subopcion;
 
@@ -117,9 +111,12 @@ const NuevoProducto = ({history}) => {
     dispatch(crearNuevoProductoAction(producto));
 
   //AL HACER SUBMIT EN EL FORMULARIO
+  
+
   const submitNuevoProducto = (e) => {
-        e.preventDefault();
-    
+    e.preventDefault();
+    const imagenData = new FormData()
+    imagenData.append("image", image)
     //crear el nuevo producto agregando los states locales de cada producto, para enviarlo al action
     agregarProducto({
       categoria,
@@ -127,13 +124,12 @@ const NuevoProducto = ({history}) => {
       title,
       price,
       description,
-      //images
+      image,
+      
     });
 
-    history.push('/productos')
+    history.push("/productos");
   };
-
-    
 
   return (
     <div className="container mt-5">
@@ -151,7 +147,6 @@ const NuevoProducto = ({history}) => {
                     className="custom-select form-control"
                     defaultValue=""
                     name="categoria"
-                    //value={categoria}
                     onChange={handleProduct}
                   >
                     <option value="" selected>
@@ -169,7 +164,6 @@ const NuevoProducto = ({history}) => {
                   <Select
                     defaultValue=""
                     name="subCategoria"
-                    //value={subCategoria.Label}
                     onChange={handleSubProduct}
                     options={subopcion}
                   />
@@ -182,7 +176,6 @@ const NuevoProducto = ({history}) => {
                     type="text"
                     className="form-control"
                     name="title"
-                    //value={title}
                     id="title"
                     placeholder="Tabla Slalom ...."
                     onChange={(e) => setTitle(e.target.value)}
@@ -198,9 +191,9 @@ const NuevoProducto = ({history}) => {
                     id="precioProducto"
                     placeholder="450"
                     name="price"
-                    //value={price}
                     onChange={(e) => setPrice(Number(e.target.value))}
                   ></input>
+                 
                 </div>
 
                 <div className="mb-3">
@@ -211,17 +204,25 @@ const NuevoProducto = ({history}) => {
                     className="form-control"
                     id="descripcionProducto"
                     rows="3"
-                    // value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   ></TextArea>
                 </div>
-                
+                <div>
+                  <input
+                    className="form-input"
+                    id="image"
+                    type="file"
+                    name="image"
+                    formEncType='multipart/form-data'
+                    onChange={(e) => setImage(e.target.files[0])}
+                  ></input>
+                   
+                </div>
                 <div className="mb-3 text-center">
                   <button className="btn btn-success" type="submit">
                     Agregar Producto
                   </button>
                 </div>
-                
               </form>
             </div>
           </div>

@@ -24,26 +24,35 @@ import {
 import clienteAxios from "../config/axios";
 
 import Swal from 'sweetalert2';
-
+// const multer = require("multer");
+// const upload = multer({ dest: "uploads/" });
 
 const user = JSON.parse(localStorage.getItem('user'));
 const data = {
   headers: {
     'x-auth-token': user,
-    'content-type': 'application/json'
-  }
+    //'content-type': 'application/json',    
+    //'content-type': 'multipart/form-data'
+  },
+  data: {
+    body: 'imagenData'
+  }  
 }
+
 console.log(user)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //CREAR NUEVOS PRODUCTOS
 export function crearNuevoProductoAction(producto) {
+  
   return async (dispatch) => {
+    //console.log(producto)
     dispatch(agregarProducto());
+   
 
     try {
       //INSERTAR EN LA API
-      await clienteAxios.post("/api/productos", producto, data);
-      //console.log(respuestaPost);
+      const respuestaPost = await clienteAxios.post("/api/productos", producto, data);
+      console.log(respuestaPost.data);
       //SI TODO VA BIEN, SE ACTUALIZA EL STATE
       dispatch(agregarProductoExito(producto));
      

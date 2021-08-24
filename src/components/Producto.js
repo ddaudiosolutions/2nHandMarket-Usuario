@@ -13,7 +13,7 @@ const Producto = ({ producto }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-    console.log(currentUser)
+   // console.log(currentUser)
 
   const verProductoId = (producto) => {
     dispatch(obtenerProductoIdAction(producto));
