@@ -22,46 +22,43 @@ import {
 
 
 import clienteAxios from "../config/axios";
-
 import Swal from 'sweetalert2';
-// const multer = require("multer");
-// const upload = multer({ dest: "uploads/" });
+
+
 
 const user = JSON.parse(localStorage.getItem('user'));
-const data = {
+const data = ({
+  
   headers: {
     'x-auth-token': user,
-    //'content-type': 'application/json',    
-    //'content-type': 'multipart/form-data'
   },
-  data: {
-    body: 'imagenData'
-  }  
-}
+  //body: {imagenData},
+  
+})
 
 console.log(user)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //CREAR NUEVOS PRODUCTOS
 export function crearNuevoProductoAction(producto) {
-  
-  return async (dispatch) => {
-    //console.log(producto)
+  console.log(producto)
+  for(let value of producto){
+    console.log(value)
+  }
+  return async (dispatch) => {   
     dispatch(agregarProducto());
-   
-
     try {
       //INSERTAR EN LA API
-      const respuestaPost = await clienteAxios.post("/api/productos", producto, data);
-      console.log(respuestaPost.data);
+       const respuesta = await clienteAxios.post("/api/productos", producto, data);
+      console.log(respuesta.data);
       //SI TODO VA BIEN, SE ACTUALIZA EL STATE
-      dispatch(agregarProductoExito(producto));
-     
+      dispatch(agregarProductoExito(producto));     
       //PONER AQUÍ LA ALERTA DE QUE SE CREO BIEN EL PRODUCTO
       Swal.fire(
         'Correcto',
         'El Producto se subió Correctamente',
         'success'
-      )
+      ).then(function() {
+        window.location = "/productos"})
       
       console.log(producto)
     } catch (error) {
@@ -145,6 +142,8 @@ const descargarProductosUserExito = (productos) => ({
   payload: productos,
 });
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //VER UN SOLO PRODUCTO
 export function obtenerProductoIdAction(producto) {
   return (dispatch) => {
@@ -155,6 +154,8 @@ const obtenerProductoId = (producto) => ({
   type: VER_PRODUCTO,
   payload: producto,
 });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //SELECCIONAR Y ELIMINAR PRODUCTO
 
@@ -201,25 +202,41 @@ const eliminarProductoError = () => ({
   payload: true
 })
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //COLOCAR PRODUCTO EN EDICIÓN
 export function obtenerProductoEditarActionUser(producto) {
   return async (dispatch) => {
-    dispatch (obtenerProductoEditarUser(producto))
+    dispatch (obtenerProductoEditar(producto))    
+    console.log(producto)
   }
 }
 
-const obtenerProductoEditarUser = producto => ({
+const obtenerProductoEditar = producto => ({
   type: OBTENER_PRODUCTO_EDITAR,
   payload: producto
 })
 
-export function editarProductoActionUser(producto){
+export function editarProductoActionUser(producto){ 
+  console.log(producto)
   return async (dispatch) => {
-    dispatch (editarProductoUser());
-
+    dispatch (editarProductoUser(producto));
+    
+    
     try {
-        await clienteAxios.put(`/api/productos/editar/${producto.id}`, producto, data )       
-       dispatch(editarProductoUserExito(producto))      
+        const editarRespuesta = await clienteAxios.put(`/api/productos/user/editar/${producto._id}` , producto, data )       
+        console.log(editarRespuesta.data)
+       
+        dispatch(editarProductoUserExito(producto))  
+
+       Swal.fire(
+        'Correcto',
+        'El Producto se editó Correctamente',
+        'success'
+      ).then(function() {
+        window.location = "/productos"})
+      
+      console.log(producto)    
     } catch (error) {
       console.log(error)
       dispatch(editarProductoUserError())
@@ -228,8 +245,9 @@ export function editarProductoActionUser(producto){
   }
 }
 
-const editarProductoUser = () => ({
+const editarProductoUser = (producto) => ({
   type: COMENZAR_EDICION_PRODUCTO,
+  payload: producto
 })
 
 const editarProductoUserExito = (producto) => ({
@@ -237,7 +255,7 @@ const editarProductoUserExito = (producto) => ({
   payload: producto
 })
 
-const editarProductoUserError = () => ({
+const editarProductoUserError = (estado) => ({
   type: PRODUCTO_EDITADO_ERROR,
-  payload: true
+  payload: estado
 })

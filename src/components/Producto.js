@@ -9,7 +9,8 @@ import { obtenerProductoIdAction } from "../actions/productoActions";
 
 const Producto = ({ producto }) => {
   const { user: currentUser } = useSelector((state) => state.auth);
-  const { title, price, author, description, categoria, subCategoria } = producto;
+  console.log(producto._id)
+  const { title, price, images } = producto;
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -17,7 +18,7 @@ const Producto = ({ producto }) => {
 
   const verProductoId = (producto) => {
     dispatch(obtenerProductoIdAction(producto));
-    history.push(`/productos/${producto.id}`);
+    history.push(`/productos/${producto._id}`);
   };
 
   return (
@@ -27,7 +28,7 @@ const Producto = ({ producto }) => {
           <h5>{title}</h5>
         </div>
         
-        <img className="card-img-top" src={imageNull} alt='imagen nula'></img>
+        <img className="card-img-top" src={images[0].url} alt='imagen nula'></img>
         <div className="card-body text-center">
           <p style={{ color: "red" }}>{price}€</p>
         </div>

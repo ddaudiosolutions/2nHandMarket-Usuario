@@ -8,7 +8,7 @@ const VerProducto = () => {
   
   const producto = useSelector((state) => state.productos.productovisionar);
 
-  const { title, price, description, author, categoria, subCategoria } = producto;
+  const { title, price, description, images, categoria, subCategoria } = producto;
   console.log(producto) 
 
   return (
@@ -33,7 +33,7 @@ const VerProducto = () => {
           <div className="card-body">
             <img
               className="card-img m-3 rounded"
-              src={imageNull}
+              src={images[0].url}
               alt="fotoNull"
             ></img>
           </div>

@@ -2,14 +2,13 @@
 import styled from "styled-components";
 import { useState } from "react";
 import Select from "react-select";
-
+import FormData from "form-data";
 import { useDispatch } from "react-redux";
-
 import "react-toastify/dist/ReactToastify.css";
-
 
 //ACTIONS DE REDUX
 import { crearNuevoProductoAction } from "../actions/productoActions";
+
 
 const Label = styled.label`
   font-family: Anton;
@@ -52,7 +51,7 @@ const accesorios = [
   { value: "aleta", label: "Aleta" },
 ];
 
-const NuevoProducto = ({ history }) => {
+const NuevoProducto = () => {
   //MANEJO DE STATES LOCALES
   const [categoria, setCategoria] = useState("");
 
@@ -69,9 +68,9 @@ const NuevoProducto = ({ history }) => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
+  const [images, setImage] = useState("");
   
-  
+  console.log(images)
 
   let subopcion;
 
@@ -112,23 +111,20 @@ const NuevoProducto = ({ history }) => {
 
   //AL HACER SUBMIT EN EL FORMULARIO
   
-
+  
   const submitNuevoProducto = (e) => {
     e.preventDefault();
-    const imagenData = new FormData()
-    imagenData.append("image", image)
-    //crear el nuevo producto agregando los states locales de cada producto, para enviarlo al action
-    agregarProducto({
-      categoria,
-      subCategoria,
-      title,
-      price,
-      description,
-      image,
-      
-    });
 
-    history.push("/productos");
+    let formData = new FormData();
+    formData.set('images', images)
+    formData.set('title', title)
+    formData.set('categoria', categoria)
+    formData.set('subCategoria', subCategoria)
+    formData.set('price', price)
+    formData.set('description', description)
+
+     agregarProducto(formData)
+  
   };
 
   return (
@@ -210,10 +206,9 @@ const NuevoProducto = ({ history }) => {
                 <div>
                   <input
                     className="form-input"
-                    id="image"
-                    type="file"
-                    name="image"
-                    formEncType='multipart/form-data'
+                    id="images"
+                    type='file'
+                    name="images"                                      
                     onChange={(e) => setImage(e.target.files[0])}
                   ></input>
                    

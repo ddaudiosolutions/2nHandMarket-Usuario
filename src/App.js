@@ -95,17 +95,15 @@ function App() {
         <Switch>
           <Route exact path="[/]" component={Login} />
           <Route exact path="/productos/nuevo" component={NuevoProducto} />
-
           <Route exact path="/productos" component={Productos} />
           <Route exact path="/productos/user" component={ProductosUser} />
           <Route exact path="/productos/:id" component={VerProducto} />
-          <Route exact path="/productos/user/:id" component={VerProducto} />
           <Route
             exact
-            path="/productos/editar/:id"
+            path="/productos/user/editar/:id"
             component={EditarProducto}
           />
-          {/* <Route exact path="/productos/user/:id" component={EditarProducto} /> */}
+          <Route exact path="/productos/user/:id" component={VerProducto} />   
           <Route exact path="/nuevousuario" component={CrearUsuario} />
           <Route exact path="/login" component={Login} />
         </Switch>

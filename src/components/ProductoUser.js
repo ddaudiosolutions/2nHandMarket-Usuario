@@ -1,24 +1,25 @@
 import { Fragment } from "react";
-import imageNull from "../images/logo192.png";
+//import imageNull from "../images/logo192.png";
 import { useHistory, } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 //REDUX
 import { useDispatch } from "react-redux";
-import { obtenerProductoEditarActionUser } from "../actions/productoActions";
+import { editarProductoActionUser, obtenerProductoEditarActionUser } from "../actions/productoActions";
 import { borrarProductoAction } from "../actions/productoActions";
 
 const ProductoUser = ({ producto }) => {
   const { user: currentUser } = useSelector((state) => state.auth);
-  const { title, price, author, id } = producto;
+  const { title, price, images , _id } = producto;
+  console.log(_id)
   const dispatch = useDispatch();
   const history = useHistory();
  
-  //console.log(currentUser);
+  console.log(currentUser);
 
   
   //Confirmar si desea Eliminar el Producto
-  const confirmarBorrarProducto = (id) => {
+  const confirmarBorrarProducto = (_id) => {
     Swal.fire({
       title: "Seguro quieres eliminar ?",
       text: "Esta acción no se puede revertir!",
@@ -30,7 +31,7 @@ const ProductoUser = ({ producto }) => {
     }).then((result) => {
       if (result.isConfirmed) {        
         //pasalor al Action
-        dispatch(borrarProductoAction(id));
+        dispatch(borrarProductoAction(_id));
         // la confirmación de esto se pasa al productoAction correspondiente
       }
     });
@@ -39,8 +40,9 @@ const ProductoUser = ({ producto }) => {
 
   
   const sendtoEdicion = producto => {
-    dispatch(obtenerProductoEditarActionUser(producto))
-    history.push(`/productos/editar/${producto.id}`)
+    dispatch(obtenerProductoEditarActionUser(producto))   
+    console.log(producto)
+    history.push(`/productos/user/editar/${producto._id}`)
 
   }
   return (
@@ -49,7 +51,7 @@ const ProductoUser = ({ producto }) => {
         <div className="card-header text-center">
           <h5>{title}</h5>
         </div>
-        <img className="card-img-top" src={imageNull} alt="imagen nula"></img>
+        <img className="card-img-top" src={images[0].url} alt="imagen nula"></img>
         <div className="card-body text-center">
           <p style={{ color: "red" }}>{price}€</p>
         </div>
@@ -64,7 +66,7 @@ const ProductoUser = ({ producto }) => {
         <div className="card-body text-center">
           <button
             className="btn btn-danger"
-            onClick={() => confirmarBorrarProducto(id)}
+            onClick={() => confirmarBorrarProducto(_id)}
           >
             Eliminar Producto
           </button>

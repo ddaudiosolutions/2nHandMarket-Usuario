@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
-
-import { editarProductoActionUser } from "../actions/productoActions";
+import FormData from "form-data";
+import { editarProductoActionUser} from "../actions/productoActions";
 import { useHistory } from "react-router-dom";
 
 //STYLED COMPONENTS
@@ -21,40 +21,58 @@ const EditarProducto = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  //NUEVO STATE PRODUCTO
-  const [producto, setProductoEditado] = useState({
-    categoria: "",
-    subCategoria: "",
-    price: "",
-    title: "",
-    description: "",
-  });
+  
+  //OPCIONES DESDE NUEVO PRODUCTO
+  const [categoria, setCategoria] = useState("");
+  const [subCategoria, setSubCategoria] = useState("");
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [images, setImage] = useState("");
+  const [id, setId] = useState('');
+
   const productoEditar = useSelector((state) => state.productos.productoeditar);
-  //console.log(productoEditar);
-  //if(!productoEditar) return null;
-  const { categoria, subCategoria, price, title, description } = producto;
-
+  console.log(productoEditar.images[0].filename)
+ // TOMAMOS DEL STATE DEL PROUDUCTO EL ID PARA PODER PASARLO A LA NUEVA FUNCION DEL DISPATCH Y ASÍ 
+ // PODER PASAR LOS DATOS AL SERVIDOR Y NO TENER EL ERROR 'UNDEFINED'
+  const productoId = productoEditar._id
+  
   useEffect(() => {
-    setProductoEditado(productoEditar);
-  }, [productoEditar]);
+    setId(productoId)
+    setCategoria(productoEditar.categoria)
+    setSubCategoria(productoEditar.subCategoria)
+    setTitle(productoEditar.title)
+    setPrice(productoEditar.price)
+    setDescription(productoEditar.description)
+    setImage(productoEditar.images[0].url)
+    //setProductoEditado(productoEditar);
+  }, [productoEditar, productoId]);
 
- 
+//console.log(productoEditar.categoria)
 
-  //LEER DATOS FORMULARIO
-  const onChangeFormularioEditado = (e) => {
-    setProductoEditado({
-      ...producto,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const submitEditarProducto = e => {
-    e.preventDefault()
+  const editarProductoUser = (producto ) =>
     dispatch(editarProductoActionUser(producto));
-    console.log(producto)
-    history.push('/productos')
+     
+  const submitEditarProducto = (e) => {
+    e.preventDefault();      
+
+    let formData = new FormData();
+    formData.set("images", images);
+    formData.set("title", title);
+    formData.set("categoria", categoria);
+    formData.set("subCategoria", subCategoria);
+    formData.set("price", price);
+    formData.set("description", description);
+    formData.set('id', id) //PASAMOS EL ID COMO UN STATE MÁS CON EL PRODUCTO, PARA SABER QUE PRODUCTO ESTAMOS E
+   setId(productoEditar._id)
+
+    editarProductoUser(formData)
+    
+    //console.log(formData);
+    history.push("/productos");
   };
 
+  
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -62,22 +80,20 @@ const EditarProducto = () => {
           <div className="card">
             <div className="card-body">
               <h2 className="text-center mx-auto font-wight-bold mb-5">
-                Agregar Nuevo Producto
+                EDITAR Producto
               </h2>
               <form onSubmit={submitEditarProducto}>
                 <div className="mb-3">
                   <Label className="mb-2">Selecciona el tipo de producto</Label>
                   <select
                     className="custom-select form-control"
-                    defaultValue=""
+                    defaultValue={categoria}
                     name="categoria"
                     value={categoria}
-                    onChange={onChangeFormularioEditado}
+                    onChange={(e) => setCategoria(e.target.value)}
                     // onChange={onChangeFormularioEditado}
                   >
-                    <option value="" selected>
-                      Selecciona la categoria
-                    </option>
+                    
                     <option value="tabla">Tabla</option>
                     <option value="vela">Vela</option>
                     <option value="botavara">Botavara</option>
@@ -89,15 +105,14 @@ const EditarProducto = () => {
                   <Label className="mb-2">Selecciona la Categoria</Label>
                   <select
                     className="custom-select form-control"
-                    defaultValue=""
+                    defaultValue={subCategoria}
                     name="subCategoria"
-                    value={subCategoria}
-                    onChange={onChangeFormularioEditado}
+                    value={subCategoria} 
+                    onChange={(e) => setSubCategoria(e.target.value)}
                     // onChange={onChangeFormularioEditado}
                   >
-                    <option value="" selected>
-                      Selecciona la categoria
-                    </option>
+                    
+                    
                     <option value="slalom">Slalom</option>
                     <option value="freeride">Free-Ride</option>
                     <option value="freerace">Free-Race</option>
@@ -109,6 +124,9 @@ const EditarProducto = () => {
                     <option value="mixta">Mixta</option>
                     <option value="rdm">RDM</option>
                     <option value="sdm">SDM</option>
+                    <option value="aleta">ALETA</option>
+                    <option value="arnes">ARNES</option>
+                    <option value="alargador">ALARGADOR</option>
                   </select>
                 </div>
                 <div className="mb-3">
@@ -122,7 +140,7 @@ const EditarProducto = () => {
                     value={title}
                     id="title"
                     placeholder="Tabla Slalom ...."
-                    onChange={onChangeFormularioEditado}
+                    onChange={(e) => setTitle(e.target.value)}
                   ></input>
                 </div>
                 <div className="mb-3">
@@ -136,7 +154,7 @@ const EditarProducto = () => {
                     placeholder="450"
                     name="price"
                     value={price}
-                    onChange={onChangeFormularioEditado}
+                    onChange={(e) => setPrice(Number(e.target.value))}
                   ></input>
                 </div>
 
@@ -150,8 +168,23 @@ const EditarProducto = () => {
                     rows="3"
                     name="description"
                     value={description}
-                    onChange={onChangeFormularioEditado}
+                    onChange={(e) => setDescription(e.target.value)}
                   ></TextArea>
+                </div>
+                <img
+                  className="card-img-top"
+                  src={images}
+                  alt="imagen nula"
+                ></img>
+                <div>
+                  <input
+                    className="form-input"
+                    id="images"
+                    type="file"
+                    name="images"
+                    //value={images}
+                    onChange={(e) => setImage(e.target.files[0])}
+                  ></input>
                 </div>
 
                 <div className="mb-3 text-center">

@@ -21,7 +21,7 @@ const Productos = () => {
       {productos === undefined
         ? null
         : productos.map((producto) => (            
-                  <ProductoUser key={producto.id} producto={producto} />                
+                  <ProductoUser key={producto._id} producto={producto} />                
           ))}
           </div>
     </Fragment>

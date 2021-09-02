@@ -12,7 +12,7 @@ const Productos = () => {
   }, [dispatch]);
 
   const productos = useSelector((state) => state.productos.loading.productos);
-  console.log(productos);
+  //console.log(productos);
 
   return (
     <Fragment>
