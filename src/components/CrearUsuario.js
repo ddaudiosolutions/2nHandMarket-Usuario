@@ -95,15 +95,18 @@ const CrearUsuario = () => {
   };
 
   return (
-    <div className="col-md-12">
-      <div className="card card-container">
-        
+    <div className="container-fluid vh-100" style={{ marginTop: "300px" }}>
+      <div className="d-flex justify-content-center">
+        <div className="rounded col-md-4 col-sm-12 shadow-lg p-5 bg-success">
+          <div className="text-center" >
+            <h3 className="" >Registrarse</h3>
+          </div>
 
         <Form onSubmit={handleRegister} ref={form}>
           {!successful && (
             <div>
               <div className="form-group">
-                <label htmlFor="username">nombre</label>
+                <label htmlFor="username" >Nombre</label>
                 <input
                   type="text"
                   className="form-control"
@@ -126,7 +129,7 @@ const CrearUsuario = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="form-group mb-3">
                 <label htmlFor="password">Password</label>
                 <Input
                   type="password"
@@ -138,8 +141,8 @@ const CrearUsuario = () => {
                 />
               </div>
 
-              <div className="form-group">
-                <button className="btn btn-primary btn-block">Sign Up</button>
+              <div className="form-group text-center">
+                <button className="btn btn-primary btn-block ">Registrarse</button>
               </div>
             </div>
           )}
@@ -153,6 +156,7 @@ const CrearUsuario = () => {
           )}
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
         </Form>
+      </div>
       </div>
     </div>
   );

@@ -16,14 +16,19 @@ const Productos = () => {
 
   return (
     <Fragment>
-      <h2 className="text-center">Listado de Productos del Usuario</h2>
-      <div className=" row d-flex justify-content-center row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-3 g-3 mr-5 mx-auto">            
-      {productos === undefined
-        ? null
-        : productos.map((producto) => (            
-                  <ProductoUser key={producto._id} producto={producto} />                
-          ))}
-          </div>
+      {/* <h2 className="text-center">Mis Productos</h2> */}
+      <div
+        className="container-fluid bg-trasparent my-4 p-3"
+        style={{ position: "relative" }}
+      >
+        <div className="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+          {productos === undefined
+            ? null
+            : productos.map((producto) => (
+                <ProductoUser key={producto._id} producto={producto} />
+              ))}
+        </div>
+      </div>
     </Fragment>
   );
 };

@@ -146,8 +146,16 @@ const descargarProductosUserExito = (productos) => ({
 
 //VER UN SOLO PRODUCTO
 export function obtenerProductoIdAction(producto) {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(obtenerProductoId(producto));
+    try {
+      const respuesta = await clienteAxios.get(`/api/productos/${producto._id}`, data);
+      dispatch(descargarProductosExito(respuesta.data));
+      console.log(respuesta)
+    } catch (error) {
+      console.log(error);
+      dispatch(descargarProductosError());
+    }
   };
 }
 const obtenerProductoId = (producto) => ({
@@ -207,26 +215,33 @@ const eliminarProductoError = () => ({
 //COLOCAR PRODUCTO EN EDICIÓN
 export function obtenerProductoEditarActionUser(producto) {
   return async (dispatch) => {
-    dispatch (obtenerProductoEditar(producto))    
+    dispatch (obtenerProductoEditar(producto))
+    try {
+      const respuesta = await clienteAxios.get(`/api/productos/user/editar/${producto._id}`, data);
+      dispatch(descargarProductosExito(respuesta.data));
+      //console.log(respuesta)
+    } catch (error) {
+      console.log(error);
+      dispatch(descargarProductosError());
+    }   
     console.log(producto)
   }
 }
-
 const obtenerProductoEditar = producto => ({
   type: OBTENER_PRODUCTO_EDITAR,
   payload: producto
 })
 
-export function editarProductoActionUser(producto){ 
-  console.log(producto)
+//////////////////////////////////////////////////
+//EDITAR EL PRODUCTO /////
+export function editarProductoAction(producto){   
+  const productoId = producto.getAll('id');
+  console.log(productoId)
   return async (dispatch) => {
-    dispatch (editarProductoUser(producto));
-    
-    
+    dispatch (editarProducto());      
     try {
-        const editarRespuesta = await clienteAxios.put(`/api/productos/user/editar/${producto._id}` , producto, data )       
-        console.log(editarRespuesta.data)
-       
+        const editarRespuesta = await clienteAxios.put(`/api/productos/user/editar/${productoId}` , producto, data )       
+        console.log(editarRespuesta.data)       
         dispatch(editarProductoUserExito(producto))  
 
        Swal.fire(
@@ -234,8 +249,7 @@ export function editarProductoActionUser(producto){
         'El Producto se editó Correctamente',
         'success'
       ).then(function() {
-        window.location = "/productos"})
-      
+        window.location = "/productos"})      
       console.log(producto)    
     } catch (error) {
       console.log(error)
@@ -245,9 +259,9 @@ export function editarProductoActionUser(producto){
   }
 }
 
-const editarProductoUser = (producto) => ({
+const editarProducto = () => ({
   type: COMENZAR_EDICION_PRODUCTO,
-  payload: producto
+  
 })
 
 const editarProductoUserExito = (producto) => ({

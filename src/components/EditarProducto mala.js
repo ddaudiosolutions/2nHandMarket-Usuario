@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import FormData from "form-data";
-import { editarProductoAction} from "../actions/productoActions";
+import {  editarProductoActionUser} from "../actions/productoActions";
 import { useHistory } from "react-router-dom";
 
 //STYLED COMPONENTS
@@ -29,53 +29,49 @@ const EditarProducto = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImage] = useState("");
-  const [imagesfilename, setImagesfilenamel] = useState('')
   const [contacto, setContacto] = useState('');
-  const [id, setId] = useState('');
-
+  //const [id, setId] = useState('');
 
   const productoEditar = useSelector((state) => state.productos.productoeditar);
- // console.log(productoEditar.contacto)
-
- 
+  //const productos = useSelector((state) => state.productos.loading.productos);
+  console.log(productoEditar)
  // TOMAMOS DEL STATE DEL PROUDUCTO EL ID PARA PODER PASARLO A LA NUEVA FUNCION DEL DISPATCH Y ASÍ 
  // PODER PASAR LOS DATOS AL SERVIDOR Y NO TENER EL ERROR 'UNDEFINED'
-  let productoId = productoEditar._id
-  console.log(productoId)
+  //let productoId = productoEditar._id
+  //console.log(productoId)
   
   useEffect(() => {
-    setId(productoId)
+    //setId(productoId)
     setCategoria(productoEditar.categoria)
     setSubCategoria(productoEditar.subCategoria)
     setTitle(productoEditar.title)
     setPrice(productoEditar.price)
     setDescription(productoEditar.description)
     setImage(productoEditar.images[0].url)
-    setImagesfilenamel(productoEditar.images[0].filename)
     setContacto(productoEditar.contacto)
     //setProductoEditado(productoEditar);
   }, [productoEditar]);
-  
-  console.log(setImage)
 
-  
+//console.log(productoEditar.categoria)
+
+  const editarProductoUser = (producto) =>
+    dispatch(editarProductoActionUser(producto));
+     
   const submitEditarProducto = (e) => {
     e.preventDefault();      
 
     let formData = new FormData();
     formData.set("images", images);
-    formData.set('imagesfilename', imagesfilename);
     formData.set("title", title);
     formData.set("categoria", categoria);
     formData.set("subCategoria", subCategoria);
     formData.set("price", price);
     formData.set("description", description);
-    formData.set('id', id) //PASAMOS EL ID COMO UN STATE MÁS CON EL PRODUCTO, PARA SABER QUE PRODUCTO ESTAMOS E
-    setId(productoId)
-    console.log(formData.getAll('images'))
-    console.log(formData.getAll('imagesUrl'))
-    dispatch(editarProductoAction(formData))
-    console.log(images.length)
+    //formData.set('id', id) //PASAMOS EL ID COMO UN STATE MÁS CON EL PRODUCTO, PARA SABER QUE PRODUCTO ESTAMOS E
+   //setId(productoEditar._id)
+
+    editarProductoUser(formData)
+    
     //console.log(formData);
     history.push("/productos");
   };
@@ -207,7 +203,6 @@ const EditarProducto = () => {
                     name="images"
                     //value={images}
                     onChange={(e) => setImage(e.target.files[0])}
-                    //onChange ={imageHandle}
                   ></input>
                 </div>
 

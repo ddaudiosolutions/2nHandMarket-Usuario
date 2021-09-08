@@ -69,6 +69,7 @@ const NuevoProducto = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImage] = useState("");
+  const [contacto, setContacto] = useState('');
   
   console.log(images)
 
@@ -122,16 +123,16 @@ const NuevoProducto = () => {
     formData.set('subCategoria', subCategoria)
     formData.set('price', price)
     formData.set('description', description)
-
+    formData.set('contacto', contacto)
      agregarProducto(formData)
   
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container-fluid bg-transparent rounded my-4 p-3">
       <div className="row justify-content-center">
         <div className="col-md-8">
-          <div className="card">
+          <div className="card1">
             <div className="card-body">
               <h2 className="text-center mx-auto font-wight-bold mb-5">
                 Agregar Nuevo Producto
@@ -203,6 +204,17 @@ const NuevoProducto = () => {
                     onChange={(e) => setDescription(e.target.value)}
                   ></TextArea>
                 </div>
+                <div className="mb-3">
+                  <Label htmlFor="contacto" className="form-label">
+                    Contacto
+                  </Label>
+                  <TextArea
+                    className="form-control"
+                    id="contacto"
+                    rows="3"
+                    onChange={(e) => setContacto(e.target.value)}
+                  ></TextArea>
+                </div>
                 <div>
                   <input
                     className="form-input"
@@ -213,7 +225,7 @@ const NuevoProducto = () => {
                   ></input>
                    
                 </div>
-                <div className="mb-3 text-center">
+                <div className="mb-3 mt-3 text-center">
                   <button className="btn btn-success" type="submit">
                     Agregar Producto
                   </button>

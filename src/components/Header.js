@@ -22,7 +22,7 @@ const Header = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <Link to={'/'} className="nav-link active">
+            <Link to={'/home'} className="nav-link active">
               Home
             </Link>
 

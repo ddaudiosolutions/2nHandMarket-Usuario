@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import imageNull from "../images/logo192.png";
+import './Producto.css'
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 //REDUX
@@ -9,12 +9,12 @@ import { obtenerProductoIdAction } from "../actions/productoActions";
 
 const Producto = ({ producto }) => {
   const { user: currentUser } = useSelector((state) => state.auth);
-  console.log(producto._id)
+  //console.log(producto._id)
   const { title, price, images } = producto;
   const dispatch = useDispatch();
   const history = useHistory();
 
-   // console.log(currentUser)
+  // console.log(currentUser)
 
   const verProductoId = (producto) => {
     dispatch(obtenerProductoIdAction(producto));
@@ -23,16 +23,42 @@ const Producto = ({ producto }) => {
 
   return (
     <Fragment>
+      <div className="col">
+        <div className="card shadow-sm">
+          <img
+            src={images[0].url}
+            className="card-img-top mt-3"
+            alt={images[0].filename}
+          ></img>
+          <div className="card-body">
+            <div className="clearfix mb-3">
+              <span className="float-end price-hp">Precio: {price} €</span>
+            </div>
+            <h5 className="card-title text-center">{title}</h5>
+            <div className="text-center ">             
+              <button
+                className="btn btn-primary "
+                onClick={() => verProductoId(producto)}
+              >
+                Ver Producto
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2">
       <div className="card mb-2 ">
         <div className="card-header text-center">
-          <h5>{title}</h5>
-        </div>
-        
-        <img className="card-img-top" src={images[0].url} alt='imagen nula'></img>
-        <div className="card-body text-center">
-          <p style={{ color: "red" }}>{price}€</p>
-        </div>
-        <div className="card-body text-center">
+          <h5 className='display-7'>{title}</h5>
+        </div>        
+        <img
+            className="image-fluid m-3"
+            style={{ height: '100px', objectFit: 'cover'}}
+            src={images[0].url}
+            alt="imagen nula"
+          ></img>
+        <div className="card-body text-center bg-light">
+          <p style={{ color: "red" }}>Precio: {price}€</p>
           <button
             className="btn btn-primary"
             onClick={() => verProductoId(producto)}
@@ -40,8 +66,8 @@ const Producto = ({ producto }) => {
             Ver Producto
           </button>
         </div>
-        
-      </div>
+        </div>
+      </div> */}
     </Fragment>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
@@ -26,8 +26,8 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { isLoggedIn } = useSelector(state => state.auth);
-  const { message } = useSelector(state => state.message);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { message } = useSelector((state) => state.message);
 
   const dispatch = useDispatch();
 
@@ -67,59 +67,57 @@ const Login = (props) => {
   }
 
   return (
-    <div className="col-md-12">
-      <div className="card card-container">
-        <div className='car-img-top'>
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
-        </div>
-
-        <Form onSubmit={handleLogin} ref={form}>
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <Input
-              type="text"
-              className="form-control"
-              name="email"
-              value={email}
-              onChange={onChangeUsername}
-              validations={[required]}
-            />
+    <div className="container-fluid vh-100" style={{ marginTop: "300px" }}>
+      <div className="d-flex justify-content-center">
+        <div className="rounded col-md-4 col-sm-12 shadow-lg p-5 bg-warning">
+          <div className="text-center">
+            <h3 className="text-primary">Acceso Usuarios</h3>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <Input
-              type="password"
-              className="form-control"
-              name="password"
-              value={password}
-              onChange={onChangePassword}
-              validations={[required]}
-            />
-          </div>
-
-          <div className="form-group">
-            <button className="btn btn-primary btn-block" disabled={loading}>
-              {loading && (
-                <span className="spinner-border spinner-border-sm"></span>
-              )}
-              <span>Login</span>
-            </button>
-          </div>
-
-          {message && (
+          <Form onSubmit={handleLogin} ref={form}>
             <div className="form-group">
-              <div className="alert alert-danger" role="alert">
-                {message}
-              </div>
+              <label htmlFor="username">Username</label>
+              <Input
+                type="text"
+                className="form-control"
+                name="email"
+                value={email}
+                onChange={onChangeUsername}
+                validations={[required]}
+              />
             </div>
-          )}
-          <CheckButton style={{ display: "none" }} ref={checkBtn} />
-        </Form>
+
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <Input
+                type="password"
+                className="form-control"
+                name="password"
+                value={password}
+                onChange={onChangePassword}
+                validations={[required]}
+              />
+            </div>
+
+            <div className="form-group text-center">
+              <button className="btn btn-primary btn-block mt-3" disabled={loading}>
+                {loading && (
+                  <span className="spinner-border spinner-border-sm"></span>
+                )}
+                <span>Login</span>
+              </button>
+            </div>
+
+            {message && (
+              <div className="form-group">
+                <div className="alert alert-danger" role="alert">
+                  {message}
+                </div>
+              </div>
+            )}
+            <CheckButton style={{ display: "none" }} ref={checkBtn} />
+          </Form>
+        </div>
       </div>
     </div>
   );
