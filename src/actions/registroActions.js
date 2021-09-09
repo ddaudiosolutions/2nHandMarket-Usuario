@@ -1,4 +1,4 @@
-
+import Swal from 'sweetalert2';
 
 import {
     REGISTER_SUCCESS,
@@ -19,10 +19,16 @@ export const registroActions = (nombre, email, password) => (dispatch) =>{
               payload: response.data
             });
 
-        dispatch({
-            type: SET_MESSAGE,
-            payload: response.data.message,
-        });
+            Swal.fire(
+              'Correcto',
+              'El Usuario se ha creado Correctamente',
+              'success'
+            ).then(function() {
+              window.location = "/login"})
+        // dispatch({
+        //     type: SET_MESSAGE,
+        //     payload: response.data.message,
+        // });
 
         return Promise.resolve();
     },

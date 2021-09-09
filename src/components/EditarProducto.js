@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import Select from "react-select";
+//import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import FormData from "form-data";
 import { editarProductoAction} from "../actions/productoActions";
@@ -54,9 +54,11 @@ const EditarProducto = () => {
     setImagesfilenamel(productoEditar.images[0].filename)
     setContacto(productoEditar.contacto)
     //setProductoEditado(productoEditar);
-  }, [productoEditar]);
+    
+    
+  }, (productoEditar)); //eslint-disable-line react-hooks/exhaustive-deps
   
-  console.log(setImage)
+  //console.log(setImage)
 
   
   const submitEditarProducto = (e) => {
@@ -191,7 +193,7 @@ const EditarProducto = () => {
                     onChange={(e) => setContacto(e.target.value)}
                   ></TextArea>
                 </div>
-                <a href={images} target='_blank'>
+                <a href={images} target='_blank' rel='noreferrer'>
                 <img
                   className="card-img-top "
                   src={images}

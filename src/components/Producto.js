@@ -1,14 +1,14 @@
 import { Fragment } from "react";
 import './Producto.css'
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 //REDUX
 import { useDispatch } from "react-redux";
 import { obtenerProductoIdAction } from "../actions/productoActions";
 //import { obtenerProductoVisionar } from "../actions/productoActions";
 
 const Producto = ({ producto }) => {
-  const { user: currentUser } = useSelector((state) => state.auth);
+  //const { user: currentUser } = useSelector((state) => state.auth);
   //console.log(producto._id)
   const { title, price, images } = producto;
   const dispatch = useDispatch();

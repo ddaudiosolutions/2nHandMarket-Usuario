@@ -1,5 +1,5 @@
-import { Fragment, useEffect } from "react";
-import imageNull from "../images/logo192.png";
+import { Fragment,  } from "react";
+
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import './VerProducto.css'
@@ -8,14 +8,14 @@ const VerProducto = () => {
   
   const producto = useSelector((state) => state.productos.productovisionar);
 
-  const { title, price, description, images, categoria, subCategoria, contacto } = producto;
+  const { title, price, description, images, contacto } = producto;
   //console.log(producto) 
 
   return (
     <Fragment>
       <div className="col">
         <div className="card1 h-100 shadow-sm mt-5">
-          <a href={images[0].url} target='_blank'>
+          <a href={images[0].url} target='_blank' rel="noreferrer">
           <img
             src={images[0].url}
             className="card-img-top1 mt-3"

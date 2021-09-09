@@ -78,9 +78,7 @@ const CrearUsuario = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-
     setSuccessful(false);
-
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {

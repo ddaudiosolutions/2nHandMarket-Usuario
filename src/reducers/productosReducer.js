@@ -32,7 +32,7 @@ const initialState = {
   productoeditar: null,
 };
 
-export default function (state = initialState, action) {
+export default function productosReducer (state = initialState, action) {
   switch (action.type) {
     case AGREGAR_PRODUCTO:
       return {

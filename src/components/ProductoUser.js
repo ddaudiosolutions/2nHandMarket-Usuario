@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 //REDUX
 import { useDispatch } from "react-redux";
-import { editarProductoActionUser, obtenerProductoEditarActionUser } from "../actions/productoActions";
+import { obtenerProductoEditarActionUser } from "../actions/productoActions";
 import { borrarProductoAction } from "../actions/productoActions";
 
 const ProductoUser = ({ producto }) => {

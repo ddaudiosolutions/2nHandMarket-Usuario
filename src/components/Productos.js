@@ -16,8 +16,7 @@ const Productos = () => {
 
   return (
     <Fragment>
-      {/* <h2 className="text-center">Listado de Productos</h2> */}
-      {/* <div className=" row mt-5">             */}
+     
       <div
         className="container-fluid rounded my-5 p-3"
         style={{position: 'relative'}}
