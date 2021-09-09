@@ -111,7 +111,7 @@ function App() {
         </nav>
         <div className="container">
           <Switch>
-            <Route exact path="/" component={currentUser ? Productos : Bienvenida} />
+            <Route exact path="/" component={Bienvenida} />
             <Route exact path="/home" component={currentUser ? Productos : Bienvenida} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/productos/nuevo" component={NuevoProducto} />
