@@ -38,9 +38,9 @@ function App() {
   return (
     <Fragment>
       <Router history={history}>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar  navbar-light bg-light">
           <div className="container-fluid">
-            <button
+            {/* <button
               className="navbar-toggler "
               type="button"
               data-bs-toggle="collapse"
@@ -51,7 +51,7 @@ function App() {
             >
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse" id="menu1">
+            <div className="collapse navbar-collapse" id="menu1"> */}
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 {/* <li className="nav-item">
                   <Link to={"/home"} className="nav-link active">
@@ -107,8 +107,8 @@ function App() {
                 </li>
               </ul>
             </div>
-          </div>
-        </nav>
+          {/* </div>*/}
+        </nav> 
         <div className="container">
           <Switch>
             <Route exact path="/" component={Bienvenida} />

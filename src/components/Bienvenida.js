@@ -1,5 +1,9 @@
 import { Fragment } from "react";
+import {  Link } from "react-router-dom";
+
 import "./Bienvenida.css";
+
+
 const Bienvenida = () => {
   return (
     <Fragment>
@@ -11,23 +15,23 @@ const Bienvenida = () => {
             </h2>
           </div>
           <div className="row">
-            <div className="col-sm-12 text-center g-5">
-              <a href="/nuevousuario">
+            <div className="col-sm-12 text-center g-5">              
+              <Link to='/nuevousuario'  >
                 <button
                   className="btn btn-success btn-md"
-                  style={{ color: "black" }}
-                >
+                  style={{ color: "black" }}>
                   REGISTRATE
                 </button>
-              </a>
-              <a href="/login">
+                </Link>
+              
+              <Link to="/login">
                 <button
                   className="btn btn-warning btn-md"
                   style={{ color: "black" }}
                 >
                   Iniciar Sesion
                 </button>
-              </a>
+              </Link>
             </div>
           </div>
         

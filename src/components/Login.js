@@ -18,7 +18,7 @@ const required = (value) => {
   }
 };
 
-const Login = (props) => {
+const Login = (pros) => {
   const form = useRef();
   const checkBtn = useRef();
 
@@ -51,8 +51,8 @@ const Login = (props) => {
     if (checkBtn.current.context._errors.length === 0) {
       dispatch(loginUsuario(email, password))
         .then(() => {
-          props.history.push("/productos");
-          window.location.reload();
+          // props.history.push("/productos");
+          // window.location.reload();
         })
         .catch(() => {
           setLoading(true);
