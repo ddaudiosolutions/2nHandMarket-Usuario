@@ -12,7 +12,7 @@ const required = (value) => {
   if (!value) {
     return (
       <div className="alert alert-danger" role="alert">
-        This field is required!
+        Este campo es obligatorio!!
       </div>
     );
   }
@@ -43,7 +43,6 @@ const Login = (pros) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-
     setLoading(true);
 
     form.current.validateAll();
@@ -52,7 +51,7 @@ const Login = (pros) => {
       dispatch(loginUsuario(email, password))
         .then(() => {
           // props.history.push("/productos");
-          // window.location.reload();
+          window.location.reload();
         })
         .catch(() => {
           setLoading(true);
@@ -74,10 +73,11 @@ const Login = (pros) => {
             <h3 className="text-primary">Acceso Usuarios</h3>
           </div>
 
-          <Form onSubmit={handleLogin} ref={form}>
+          <Form data-cy='formulario' onSubmit={handleLogin} ref={form}>
             <div className="form-group">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="username">E-mail</label>
               <Input
+              data-cy='email'
                 type="text"
                 className="form-control"
                 name="email"
@@ -90,6 +90,7 @@ const Login = (pros) => {
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <Input
+              data-cy='password'
                 type="password"
                 className="form-control"
                 name="password"
@@ -100,7 +101,11 @@ const Login = (pros) => {
             </div>
 
             <div className="form-group text-center">
-              <button className="btn btn-primary btn-block mt-3" disabled={loading}>
+              <button
+              data-cy='btn-login'
+                className="btn btn-primary btn-block mt-3"
+                disabled={loading}
+              >
                 {loading && (
                   <span className="spinner-border spinner-border-sm"></span>
                 )}

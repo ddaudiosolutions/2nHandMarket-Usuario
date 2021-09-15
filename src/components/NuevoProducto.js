@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import Select from "react-select";
 import FormData from "form-data";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 
 //ACTIONS DE REDUX
@@ -51,7 +51,7 @@ const accesorios = [
   { value: "aleta", label: "Aleta" },
 ];
 
-const NuevoProducto = () => {
+const NuevoProducto = ({ history }) => {
   //MANEJO DE STATES LOCALES
   const [categoria, setCategoria] = useState("");
 
@@ -69,9 +69,9 @@ const NuevoProducto = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImage] = useState("");
-  const [contacto, setContacto] = useState('');
-  
-  console.log(images)
+  const [contacto, setContacto] = useState("");
+
+  //console.log(images)
 
   let subopcion;
 
@@ -106,26 +106,39 @@ const NuevoProducto = () => {
   //UTILIZAR USEDISPATCH Y TE CREA UNA FUNCION
   const dispatch = useDispatch();
 
-  //manda llamar al action de productoAction
-  const agregarProducto = (producto) =>
-    dispatch(crearNuevoProductoAction(producto));
+  //ACCDER AL STATE DEL STORE
+  const alerta = useSelector((state) => state.alerta.alerta);
 
+  //manda llamar al action de productoAction
+
+  const agregarProducto = (producto, history) =>
+    dispatch(crearNuevoProductoAction(producto, history));
+
+ 
+  //Validar Formulario
+  
+  
   //AL HACER SUBMIT EN EL FORMULARIO
-  
-  
   const submitNuevoProducto = (e) => {
     e.preventDefault();
 
+    //VALIDAR FORMULARIO
+
+    
+     
+
     let formData = new FormData();
-    formData.set('images', images)
-    formData.set('title', title)
-    formData.set('categoria', categoria)
-    formData.set('subCategoria', subCategoria)
-    formData.set('price', price)
-    formData.set('description', description)
-    formData.set('contacto', contacto)
-     agregarProducto(formData)
-  
+    formData.set("images", images);
+    formData.set("title", title);
+    formData.set("categoria", categoria);
+    formData.set("subCategoria", subCategoria);
+    formData.set("price", price);
+    formData.set("description", description);
+    formData.set("contacto", contacto);
+
+    agregarProducto(formData, history);
+
+    //history.push('/productos')
   };
 
   return (
@@ -137,6 +150,9 @@ const NuevoProducto = () => {
               <h2 className="text-center mx-auto font-wight-bold mb-5">
                 Agregar Nuevo Producto
               </h2>
+
+              {alerta ? <p className={alerta.classes}> {alerta.msg} </p> : null }
+
               <form onSubmit={submitNuevoProducto}>
                 <div className="mb-3">
                   <Label className="mb-2">Selecciona el tipo de producto</Label>
@@ -190,7 +206,6 @@ const NuevoProducto = () => {
                     name="price"
                     onChange={(e) => setPrice(Number(e.target.value))}
                   ></input>
-                 
                 </div>
 
                 <div className="mb-3">
@@ -219,11 +234,10 @@ const NuevoProducto = () => {
                   <input
                     className="form-input"
                     id="images"
-                    type='file'
-                    name="images"                                      
+                    type="file"
+                    name="images"
                     onChange={(e) => setImage(e.target.files[0])}
                   ></input>
-                   
                 </div>
                 <div className="mb-3 mt-3 text-center">
                   <button className="btn btn-success" type="submit">
@@ -231,6 +245,8 @@ const NuevoProducto = () => {
                   </button>
                 </div>
               </form>
+              {/* {cargando ? <p>Cargando.....</p> : null} */}
+              {/* {error ? <alert>HAY UN ERROR</alert> : null} */}
             </div>
           </div>
         </div>

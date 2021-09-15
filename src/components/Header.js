@@ -1,52 +1,68 @@
 import { Link } from "react-router-dom";
-//import { logout } from "../actions/loginActions";
-//i//mport { useDispatch, useSelector } from "react-redux";
-//import {history} from './helpers/history'
+import {Fragment, useEffect,} from 'react'
+import { logout } from "../actions/loginActions";
+import { useDispatch, useSelector } from "react-redux";
+import { history } from "../helpers/history";
 
 const Header = () => {
-  //const {user: currentUser} = useSelector((state) => state.registroReducer)
- // const dispatch = useDispatch()
-  
+  const { user: currentUser } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    history.listen((location) => {
+       // clear message when changing location
+    });
+  }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      console.log("seguimos logueados");
+    }
+  }, [currentUser]);
+
+  const logOut = () => {
+    dispatch(logout());
+  };
+// 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar  navbar-light bg-light">
       <div className="container-fluid">
-        
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div className="navbar-nav">
-            <Link to={'/home'} className="nav-link active">
+        {currentUser ? (
+          <Fragment>
+            <Link to={"/productos"} className="nav-link">
               Home
             </Link>
-
-            <Link to={'/productos'} className="nav-link active" >
-              Productos
+            <Link to={"/productos/nuevo"} className="nav-link">
+              Subir Producto
+            </Link>
+            <Link to={"/productos/user"} className="nav nav-link ">
+              Mis Productos
+            </Link>
+            <Link
+              to={"/home"}
+              href="/login"
+              className="nav-link"
+              onClick={logOut}
+            >
+              LogOut
+            </Link>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <Link to={"/home"} className="nav-link">
+              Home
+            </Link>
+            <Link to={"/login"} className="nav-link">
+              Login
             </Link>
 
-            <Link to={'/productos/nuevo'} className="nav-link active" >
-              Nuevo-Producto
+            <Link to={"/nuevousuario"} className="nav-link">
+              Registrase
             </Link>
-
-            <Link to={'/nuevousuario'} className="nav-link active" >
-              Resgistrate
-            </Link>
-
-            {/* <Link to={'/login'} className="nav-link active" >
-              LogIn
-            </Link> */}
-
-            
-           
-          </div>
-        </div>
+          </Fragment>
+        )}
       </div>
+      {/* </div>*/}
     </nav>
   );
 };

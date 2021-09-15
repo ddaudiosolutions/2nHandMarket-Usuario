@@ -1,7 +1,7 @@
 import { Fragment } from "react";
-import './ProductoUser.css'
-import { useHistory, } from "react-router-dom";
-import { useSelector } from "react-redux";
+import "./Producto.css";
+import { useHistory } from "react-router-dom";
+//import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 //REDUX
 import { useDispatch } from "react-redux";
@@ -9,15 +9,14 @@ import { obtenerProductoEditarActionUser } from "../actions/productoActions";
 import { borrarProductoAction } from "../actions/productoActions";
 
 const ProductoUser = ({ producto }) => {
-  const { user: currentUser } = useSelector((state) => state.auth);
-  const { title, price, images , _id } = producto;
-  console.log(_id)
+  //const { user: currentUser } = useSelector((state) => state.auth);
+  const { title, price, images, _id } = producto;
+  //console.log(_id)
   const dispatch = useDispatch();
   const history = useHistory();
- 
-  console.log(currentUser);
 
-  
+ // console.log(currentUser);
+
   //Confirmar si desea Eliminar el Producto
   const confirmarBorrarProducto = (_id) => {
     Swal.fire({
@@ -29,7 +28,7 @@ const ProductoUser = ({ producto }) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Si, Borrar Producto!",
     }).then((result) => {
-      if (result.isConfirmed) {        
+      if (result.isConfirmed) {
         //pasalor al Action
         dispatch(borrarProductoAction(_id));
         // la confirmación de esto se pasa al productoAction correspondiente
@@ -38,17 +37,14 @@ const ProductoUser = ({ producto }) => {
     //history.push('/productos')
   };
 
-  
-  const sendtoEdicion = producto => {
-    dispatch(obtenerProductoEditarActionUser(producto))   
-    console.log(producto)
-    history.push(`/productos/user/editar/${producto._id}`)
-
-  }
+  const sendtoEdicion = (producto) => {
+    dispatch(obtenerProductoEditarActionUser(producto));
+    //console.log(producto)
+    history.push(`/productos/user/editar/${producto._id}`);
+  };
   return (
     <Fragment>
-
-<div className="col">
+      <div className="col">
         <div className="card shadow-sm">
           <img
             src={images[0].url}
@@ -60,7 +56,7 @@ const ProductoUser = ({ producto }) => {
               <span className="float-end price-hp">Precio: {price} €</span>
             </div>
             <h5 className="card-title text-center">{title}</h5>
-            <div className="text-center">
+            <div className="container-fluid text-center">
               <button
                 className="btn btn-success mb-2"
                 onClick={() => sendtoEdicion(producto)}

@@ -1,7 +1,6 @@
 
 import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -9,13 +8,24 @@ import { isEmail } from "validator";
 
 import { registroActions } from "../actions/registroActions";
 
-const required = (value) => {
-  if (!value) {
+// const required = (value) => {
+//   if (!value) {
+//     return (
+//       <div className="alert alert-danger" role="alert">
+//         This field is required!
+//       </div>
+//     );
+//   }
+// };
+const vusername = (value) => {
+  if (value.length < 3 || value.length > 20) {
+    console.log(value.length)
     return (
       <div className="alert alert-danger" role="alert">
-        This field is required!
+        The username must be between 3 and 20 characters.
       </div>
     );
+    
   }
 };
 
@@ -23,21 +33,13 @@ const validEmail = (value) => {
   if (!isEmail(value)) {
     return (
       <div className="alert alert-danger" role="alert">
-        This is not a valid email.
+        El formato del Email, No es Correcto!.
       </div>
     );
   }
 };
 
-const vusername = (value) => {
-  if (value.length < 3 || value.length > 20) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The username must be between 3 and 20 characters.
-      </div>
-    );
-  }
-};
+
 
 const vpassword = (value) => {
   if (value.length < 6 || value.length > 40) {
@@ -53,7 +55,7 @@ const CrearUsuario = () => {
   const form = useRef();
   const checkBtn = useRef();
 
-  const [nombre, setUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
@@ -82,7 +84,7 @@ const CrearUsuario = () => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      dispatch(registroActions(nombre, email, password))
+      dispatch(registroActions(username, email, password))
         .then(() => {
           setSuccessful(true);
         })
@@ -105,13 +107,13 @@ const CrearUsuario = () => {
             <div>
               <div className="form-group">
                 <label htmlFor="username" >Nombre</label>
-                <input
+                <Input
                   type="text"
                   className="form-control"
                   name="nombre"
-                  value={nombre}
+                  value={username}
                   onChange={onChangeUsername}
-                  validations={[required, vusername]}
+                  validations={[vusername]}
                 />
               </div>
 
@@ -123,7 +125,7 @@ const CrearUsuario = () => {
                   name="email"
                   value={email}
                   onChange={onChangeEmail}
-                  validations={[required, validEmail]}
+                  validations={[validEmail]}
                 />
               </div>
 
@@ -135,7 +137,7 @@ const CrearUsuario = () => {
                   name="password"
                   value={password}
                   onChange={onChangePassword}
-                 validations={[required, vpassword]}
+                 validations={[vpassword]}
                 />
               </div>
 

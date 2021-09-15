@@ -3,13 +3,15 @@
 //IMPORTAMOS LOS TYPES
 
 import {
-  AGREGAR_PRODUCTO,
+  //AGREGAR_PRODUCTO,
   AGREGAR_PRODUCTO_EXITO,
   AGREGAR_PRODUCTO_ERROR,
-  COMENZAR_DESCARGA_PRODUCTOS,
+  //COMENZAR_DESCARGA_PRODUCTOS,
   DESCARGA_PRODUCTOS_EXITO,
   DESCARGA_PRODUCTOS_ERROR,
-  VER_PRODUCTO,
+  VER_PRODUCTO_ID,
+  VER_PRODUCTO_EXITO_ID,
+  //VER_PRODUCTO_ERROR_ID,
   COMENZAR_DESCARGA_PRODUCTOS_USER,
   DESCARGA_PRODUCTOS_USER_EXITO,
   DESCARGA_PRODUCTOS_USER_ERROR,
@@ -30,19 +32,21 @@ const initialState = {
   productovisionar: null,
   productoeliminiar: null,
   productoeditar: null,
+  productoId:null,
+  
 };
 
 export default function productosReducer (state = initialState, action) {
   switch (action.type) {
-    case AGREGAR_PRODUCTO:
-      return {
-        ...state,
-        loading: true,
-      };
+    // case AGREGAR_PRODUCTO:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
     case AGREGAR_PRODUCTO_EXITO:
       return {
         ...state,
-        loading: true,
+        loading: false,
         productos: [...state.productos, action.payload],
       };
     case AGREGAR_PRODUCTO_ERROR:
@@ -50,18 +54,20 @@ export default function productosReducer (state = initialState, action) {
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action.payload
       };
-    case COMENZAR_DESCARGA_PRODUCTOS:
-      return {
-        ...state,
-        loading: action.payload,
-      };
+    // case COMENZAR_DESCARGA_PRODUCTOS:
+    //   return {
+    //     ...state,
+    //     loading: action.payload,
+    //   };
     case DESCARGA_PRODUCTOS_EXITO:
+      console.log(action.payload)
       return {
-        ...state,
+        ...state,       
+        loading: false,
         error: null,
-        loading: action.payload,
+        productos: action.payload
       };
     case DESCARGA_PRODUCTOS_ERROR:
       case PRODUCTO_EDITADO_ERROR:
@@ -77,10 +83,13 @@ export default function productosReducer (state = initialState, action) {
         error: action.payload,
       };
     case DESCARGA_PRODUCTOS_USER_EXITO:
+      console.log(action.payload)
       return {
-        ...state,
+        ...state,        
+        loading: false,
         error: null,
-        loading: action.payload,
+        //productovisionar: null,
+        prodUser: action.payload
       };
     case DESCARGA_PRODUCTOS_USER_ERROR:
       return {
@@ -88,11 +97,20 @@ export default function productosReducer (state = initialState, action) {
         loading: false,
         error: action.payload,
       };
-    case VER_PRODUCTO:
-      return {
-        ...state,
-        productovisionar: action.payload,
-      };
+    // case VER_PRODUCTO_ID:
+    //   console.log(action.payload)
+    //   return {
+    //     ...state,
+    //     //prodAll: null,
+    //     productovisionar: action.payload,
+    //   };
+      case VER_PRODUCTO_EXITO_ID:
+        console.log(action.payload)
+        return {
+          ...state,
+          //prodAll: null,
+          productoId: action.payload,
+        }   
     case OBTENER_PRODUCTO_ELIMINAR:
       return {
         ...state,
@@ -107,6 +125,7 @@ export default function productosReducer (state = initialState, action) {
         productoeliminiar: null,
       };
     case OBTENER_PRODUCTO_EDITAR:
+        console.log(action.payload)
       return {
         ...state,
         productoeditar: action.payload,

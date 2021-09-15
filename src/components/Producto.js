@@ -7,8 +7,8 @@ import { useDispatch } from "react-redux";
 import { obtenerProductoIdAction } from "../actions/productoActions";
 //import { obtenerProductoVisionar } from "../actions/productoActions";
 
-const Producto = ({ producto }) => {
-  //const { user: currentUser } = useSelector((state) => state.auth);
+const Producto = ({ producto }) => {//LOD PRODUCTOS LLEGAN POR PROPS DE PRODUCTOS.JS
+ // const { user: currentUser } = useSelector((state) => state.auth);
   //console.log(producto._id)
   const { title, price, images } = producto;
   const dispatch = useDispatch();
@@ -18,6 +18,7 @@ const Producto = ({ producto }) => {
 
   const verProductoId = (producto) => {
     dispatch(obtenerProductoIdAction(producto));
+    console.log(producto)
     history.push(`/productos/${producto._id}`);
   };
 
@@ -32,7 +33,7 @@ const Producto = ({ producto }) => {
           ></img>
           <div className="card-body">
             <div className="clearfix mb-3">
-              <span className="float-end price-hp">Precio: {price} €</span>
+              <span className="price-hp">Precio: {price} €</span>
             </div>
             <h5 className="card-title text-center">{title}</h5>
             <div className="text-center ">             

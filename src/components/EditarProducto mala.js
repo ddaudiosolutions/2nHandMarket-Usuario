@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import Select from "react-select";
+//import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import FormData from "form-data";
-import {  editarProductoActionUser} from "../actions/productoActions";
+import { editarProductoAction} from "../actions/productoActions";
 import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 
 //STYLED COMPONENTS
 const Label = styled.label`
@@ -29,51 +30,75 @@ const EditarProducto = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImage] = useState("");
+  const [imagesfilename, setImagesfilenamel] = useState('')
   const [contacto, setContacto] = useState('');
-  //const [id, setId] = useState('');
+  const [id, setId] = useState('');
+
 
   const productoEditar = useSelector((state) => state.productos.productoeditar);
-  //const productos = useSelector((state) => state.productos.loading.productos);
   console.log(productoEditar)
+
+ 
  // TOMAMOS DEL STATE DEL PROUDUCTO EL ID PARA PODER PASARLO A LA NUEVA FUNCION DEL DISPATCH Y ASÍ 
  // PODER PASAR LOS DATOS AL SERVIDOR Y NO TENER EL ERROR 'UNDEFINED'
-  //let productoId = productoEditar._id
-  //console.log(productoId)
+  let productoId = productoEditar._id
+  console.log(productoId)
   
   useEffect(() => {
-    //setId(productoId)
+    setId(productoId)
     setCategoria(productoEditar.categoria)
     setSubCategoria(productoEditar.subCategoria)
     setTitle(productoEditar.title)
     setPrice(productoEditar.price)
     setDescription(productoEditar.description)
     setImage(productoEditar.images[0].url)
+    setImagesfilenamel(productoEditar.images[0].filename)
     setContacto(productoEditar.contacto)
-    //setProductoEditado(productoEditar);
-  }, [productoEditar]);
+    //setProductoEditado(productoEditar);   
+  }, [productoEditar]); //eslint-disable-line react-hooks/exhaustive-deps
+  
+  //Confirmar si desea Editar el Producto
+  const confirmarEdicion = () => {
+    Swal.fire({
+      title: "Seguro quieres editar ?",     
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Editar Producto!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //pasalor al Action
+        submitEditarProducto();
+        console.log('me han enviado')
+        // la confirmación de esto se pasa al productoAction correspondiente
+      }
+    });
+    //history.push('/productos')
+  };
 
-//console.log(productoEditar.categoria)
-
-  const editarProductoUser = (producto) =>
-    dispatch(editarProductoActionUser(producto));
-     
+  
   const submitEditarProducto = (e) => {
     e.preventDefault();      
 
     let formData = new FormData();
     formData.set("images", images);
+    formData.set('imagesfilename', imagesfilename);
     formData.set("title", title);
     formData.set("categoria", categoria);
     formData.set("subCategoria", subCategoria);
     formData.set("price", price);
     formData.set("description", description);
-    //formData.set('id', id) //PASAMOS EL ID COMO UN STATE MÁS CON EL PRODUCTO, PARA SABER QUE PRODUCTO ESTAMOS E
-   //setId(productoEditar._id)
+    formData.set("contacto", contacto)
+    formData.set('id', id) //PASAMOS EL ID COMO UN STATE MÁS CON EL PRODUCTO, PARA SABER QUE PRODUCTO ESTAMOS E
+    setId(productoId)
+    // console.log(formData.getAll('images'))
+    // console.log(formData.getAll('imagesUrl'))
+    dispatch(editarProductoAction(formData))
 
-    editarProductoUser(formData)
-    
+    //console.log(formData.get('contacto'))
     //console.log(formData);
-    history.push("/productos");
+    //history.push("/productos");
   };
 
   
@@ -86,7 +111,7 @@ const EditarProducto = () => {
               <h2 className="text-center mx-auto font-wight-bold mb-5">
                 EDITAR Producto
               </h2>
-              <form onSubmit={submitEditarProducto}>
+              <form >
                 <div className="mb-3">
                   <Label className="mb-2">Selecciona el tipo de producto</Label>
                   <select
@@ -183,11 +208,11 @@ const EditarProducto = () => {
                     className="form-control"
                     id="contacto"
                     value={contacto}
-                    rows="3"
+                    rows="4"
                     onChange={(e) => setContacto(e.target.value)}
                   ></TextArea>
                 </div>
-                <a href={images} target='_blank'>
+                <a href={images} target='_blank' rel='noreferrer'>
                 <img
                   className="card-img-top "
                   src={images}
@@ -203,15 +228,21 @@ const EditarProducto = () => {
                     name="images"
                     //value={images}
                     onChange={(e) => setImage(e.target.files[0])}
+                    //onChange ={imageHandle}
                   ></input>
                 </div>
 
-                <div className="mb-3 text-center">
-                  <button className="btn btn-success" type="submit">
+                <div className="mb-3 mt-3 text-center">
+                  <button className="btn btn-success" 
+                  //type="submit"
+                  onClick={()=>{confirmarEdicion()}}
+                  
+                  >
                     Editar Producto
                   </button>
                 </div>
               </form>
+            
             </div>
           </div>
         </div>

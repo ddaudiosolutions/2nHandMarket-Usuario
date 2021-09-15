@@ -1,14 +1,25 @@
-import { Fragment,  } from "react";
-
-import { useSelector } from "react-redux";
+import { Fragment, useEffect  } from "react";
+import {obtenerProductoIdAction} from '../actions/productoActions'
+import { useSelector, useDispatch} from "react-redux";
 import { Link } from "react-router-dom";
 import './VerProducto.css'
+
+
 const VerProducto = () => {
+  //const dispatch = useDispatch()
 
+  // useEffect(()=>{
+  //   const cargarProducto = ()=> dispatch(obtenerProductoIdAction());
+  //   cargarProducto();
+  //   // eslint-disable-next-line
+  // }, [])
+
+  const producto = useSelector((state) => state.productos.productoId);
+  console.log(producto)
+  if(!producto){return null}
+    const { title, price, description, images, contacto } = producto;
   
-  const producto = useSelector((state) => state.productos.productovisionar);
-
-  const { title, price, description, images, contacto } = producto;
+  
   //console.log(producto) 
 
   return (
@@ -24,7 +35,7 @@ const VerProducto = () => {
           </a>
           <div className="card-body">
             <div className="clearfix mb-3">
-              <span className="float-end price-hp">Precio: {price} €</span>
+              <span className="float-end price-hp1">Precio: {price} €</span>
             </div>
             <h5 className="card-title text-center">{title}</h5>
             <div className='card-header mb-2'>

@@ -1,4 +1,4 @@
-import Swal from 'sweetalert2';
+//import Swal from 'sweetalert2';
 import {    
     LOGIN_SUCCESS,
     LOGIN_FAIL,
@@ -15,11 +15,11 @@ import {
           type: LOGIN_SUCCESS,
           payload: { user: data },
         });
-        Swal.fire(
-          'Bienvenido',
-          'Te has Logeado Correctamente',
-          'success'
-        )
+        // Swal.fire(
+        //   'Bienvenido',
+        //   'Te has Logeado Correctamente',
+        //   'success'
+        // )
             
         return Promise.resolve();
       },

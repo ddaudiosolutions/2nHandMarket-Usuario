@@ -33,9 +33,9 @@ const EditarProducto = () => {
   const [contacto, setContacto] = useState('');
   const [id, setId] = useState('');
 
-
+//TOMAMOS LOS DATOS DEL PRODUCTO LLAMADO A EDICIÓN.
   const productoEditar = useSelector((state) => state.productos.productoeditar);
- // console.log(productoEditar.contacto)
+  //console.log(productoEditar)
 
  
  // TOMAMOS DEL STATE DEL PROUDUCTO EL ID PARA PODER PASARLO A LA NUEVA FUNCION DEL DISPATCH Y ASÍ 
@@ -56,10 +56,11 @@ const EditarProducto = () => {
     //setProductoEditado(productoEditar);
     
     
-  }, (productoEditar)); //eslint-disable-line react-hooks/exhaustive-deps
+  }, [productoEditar]); //eslint-disable-line react-hooks/exhaustive-deps
   
-  //console.log(setImage)
-
+  //console.log(setContacto)
+  const editarProducto = (formData ) => 
+    dispatch(editarProductoAction(formData));
   
   const submitEditarProducto = (e) => {
     e.preventDefault();      
@@ -72,12 +73,15 @@ const EditarProducto = () => {
     formData.set("subCategoria", subCategoria);
     formData.set("price", price);
     formData.set("description", description);
+    formData.set("contacto", contacto)
     formData.set('id', id) //PASAMOS EL ID COMO UN STATE MÁS CON EL PRODUCTO, PARA SABER QUE PRODUCTO ESTAMOS E
     setId(productoId)
     console.log(formData.getAll('images'))
     console.log(formData.getAll('imagesUrl'))
-    dispatch(editarProductoAction(formData))
-    console.log(images.length)
+
+    editarProducto(formData, history);
+    
+    console.log(formData.get('contacto'))
     //console.log(formData);
     history.push("/productos");
   };
@@ -189,7 +193,7 @@ const EditarProducto = () => {
                     className="form-control"
                     id="contacto"
                     value={contacto}
-                    rows="3"
+                    rows="4"
                     onChange={(e) => setContacto(e.target.value)}
                   ></TextArea>
                 </div>
@@ -213,12 +217,13 @@ const EditarProducto = () => {
                   ></input>
                 </div>
 
-                <div className="mb-3 text-center">
+                <div className="mb-3 mt-3 text-center">
                   <button className="btn btn-success" type="submit">
                     Editar Producto
                   </button>
                 </div>
               </form>
+            
             </div>
           </div>
         </div>

@@ -1,8 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 
-//import axios from "axios";
 import clienteAxios from "../config/axios";
-//const API_URL = clienteAxios;
 
 //CREAR USUARIO
 const resgistroUsuario = (nombre, email, password) => {

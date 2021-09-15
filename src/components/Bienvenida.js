@@ -9,8 +9,8 @@ const Bienvenida = () => {
     <Fragment>
       <div className="row h-200 ">
         
-          <div className="row bg-transparent">
-            <h2 className="text-center my-5 m-5">
+          <div className=" row bg-transparent">
+            <h2 className="text-center my-5 ">
               MERCADO DE 2A MANO NO PROFESIONAL
             </h2>
           </div>
@@ -18,6 +18,7 @@ const Bienvenida = () => {
             <div className="col-sm-12 text-center g-5">              
               <Link to='/nuevousuario'  >
                 <button
+                data-cy='btn-registrate'
                   className="btn btn-success btn-md"
                   style={{ color: "black" }}>
                   REGISTRATE
@@ -26,6 +27,7 @@ const Bienvenida = () => {
               
               <Link to="/login">
                 <button
+                data-cy='btn-iniciarsesion'
                   className="btn btn-warning btn-md"
                   style={{ color: "black" }}
                 >
