@@ -10,22 +10,20 @@ const Productos = () => {
   const [productosAll, setproductoAll] = useState(productos);
   console.log(productosAll);
 
-  const [busqueda, setBusqueda] = useState();
+  const [busqueda, setBusqueda] = useState("all");
   console.log(busqueda);
   const dispatch = useDispatch();
-if(busqueda === null){
 
-}
   const cargarProductos = () => dispatch(obtenerProductosAction(busqueda));
-  //cargarProductos(busqueda);
+  
   useEffect(() => {
-    //setproductoAll(productos)    //usamos el useEffect para consulatar la API por eso llamamos llamar a la función
+    cargarProductos(busqueda);
+    
     if (
       productosAll !== productos ||
       productos === undefined ||
       !productos.length
     ) {
-      
       setproductoAll(productos);
       console.log("vuelvo a llar a la api");
     }
@@ -34,10 +32,9 @@ if(busqueda === null){
   }, []);
 
   const handelBusqueda = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     cargarProductos(busqueda);
-    
-  }
+  };
 
   return (
     <Fragment>
@@ -46,7 +43,7 @@ if(busqueda === null){
         style={{ position: "relative" }}
       >
         <div>
-          <h2 className='text-center'>BUSCADOR</h2>
+          <h2 className="text-center">BUSCADOR</h2>
           <div className=" mb-3 col-6 mx-auto">
             <form onSubmit={handelBusqueda}>
               <select
@@ -66,13 +63,11 @@ if(busqueda === null){
                 <option value="mastil">Mastil</option>
                 <option value="accesorio">Accesorio</option>
               </select>
-              <button className='btn btn-success text-center mt-3' >
+              <button className="btn btn-success text-center mt-3">
                 Buscar
               </button>
             </form>
-            <div>
-              
-            </div>
+            <div></div>
             {/* <label className="mb-2">Selecciona el tipo de producto</label> */}
           </div>
         </div>

@@ -1,6 +1,6 @@
-import { Fragment, useEffect  } from "react";
-import {obtenerProductoIdAction} from '../actions/productoActions'
-import { useSelector, useDispatch} from "react-redux";
+import { Fragment,   } from "react";
+//import {obtenerProductoIdAction} from '../actions/productoActions'
+import { useSelector} from "react-redux";
 import { Link } from "react-router-dom";
 import './VerProducto.css'
 

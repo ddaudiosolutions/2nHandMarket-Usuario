@@ -5,7 +5,7 @@ import {
   //COMENZAR_DESCARGA_PRODUCTOS,
   DESCARGA_PRODUCTOS_ERROR,
   DESCARGA_PRODUCTOS_EXITO,
-  VER_PRODUCTO_ID,
+ // VER_PRODUCTO_ID,
   VER_PRODUCTO_EXITO_ID,
   // VER_PRODUCTO_ERROR_ID,
   COMENZAR_DESCARGA_PRODUCTOS_USER,
@@ -165,10 +165,10 @@ export function obtenerProductoIdAction(producto) {
     }
   };
 }
-const obtenerProductoId = (producto) => ({
-  type: VER_PRODUCTO_ID,
-  payload: producto,
-});
+// const obtenerProductoId = (producto) => ({
+//   type: VER_PRODUCTO_ID,
+//   payload: producto,
+// });
 
 const obtenerProductoIdExito = (producto) => ({
   type: VER_PRODUCTO_EXITO_ID,
@@ -260,7 +260,7 @@ export function editarProductoAction(producto) {
         producto,
         data
       );
-      //console.log(editarRespuesta.data);
+      console.log(editarRespuesta.data);
       dispatch(editarProductoUserExito(producto));
 
       Swal.fire(
