@@ -36,8 +36,8 @@ const Login = () => {
           'Empieza a comprar y vender',
           'success'
         )
-          history.push("/productos");
-          //window.location.reload();
+         // history.push("/productos");
+          window.location.reload();
         })
         .catch(() => {
           setLoading(true);
