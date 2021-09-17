@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, } from "react-router-dom";
 import {useForm} from 'react-hook-form'
 import { loginUsuario } from "../actions/loginActions";
-import Swal from 'sweetalert2';
+//import Swal from 'sweetalert2';
 
 
 const Login = () => {
@@ -62,7 +62,7 @@ const Login = () => {
                 type="text"
                 className="form-control"
                 {...register("email", {required: true,
-                pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/})}
+                pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/})}//eslint-disable-line
                 id='email'
                 value={email}
                 onChange={onChangeUsername}                

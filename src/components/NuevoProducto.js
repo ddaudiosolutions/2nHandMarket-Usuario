@@ -73,6 +73,8 @@ const NuevoProducto = ({ history }) => {
   const [contacto, setContacto] = useState("");
 
   console.log(images.size);
+  if (images.size > 100000) {
+  }
   console.log(subCategoria);
 
   let subopcion;
@@ -141,7 +143,6 @@ const NuevoProducto = ({ history }) => {
     register,
     formState: { errors },
     handleSubmit,
-    
   } = useForm({ mode: "onBlur" });
 
   return (
@@ -181,13 +182,11 @@ const NuevoProducto = ({ history }) => {
                 <div className="mb-3">
                   <Label className="mb-2">Selecciona el tipo de producto</Label>
                   <Select
-                        defaultValue=''
-                        
-                        //{...register("subCategoria")}
-                        onChange={handleSubProduct}
-                        options={subopcion}
-                      />
-                  
+                    defaultValue=""
+                    //{...register("subCategoria")}
+                    onChange={handleSubProduct}
+                    options={subopcion}
+                  />
                 </div>
                 <div className="mb-3">
                   <Label htmlFor="tituloProducto" className="form-label">
@@ -202,7 +201,7 @@ const NuevoProducto = ({ history }) => {
                     onChange={(e) => setTitle(e.target.value)}
                   ></input>
                   {errors.title?.type === "required" && (
-                    <h6 className="alert alert-warning col-6 text-center mx-auto">                      
+                    <h6 className="alert alert-warning col-6 text-center mx-auto">
                       Pon un título al anuncio
                     </h6>
                   )}
@@ -221,7 +220,6 @@ const NuevoProducto = ({ history }) => {
                   ></input>
                   {errors.price?.type === "required" && (
                     <h6 className="alert alert-warning col-6 text-center mx-auto">
-                      {" "}
                       Pon un precio al producto
                     </h6>
                   )}
@@ -241,7 +239,6 @@ const NuevoProducto = ({ history }) => {
                 </div>
                 {errors.description?.type === "required" && (
                   <h6 className="alert alert-warning col-6 text-center mx-auto">
-                    {" "}
                     Describe el producto
                   </h6>
                 )}
@@ -259,7 +256,6 @@ const NuevoProducto = ({ history }) => {
                   ></TextArea>
                   {errors.contacto?.type === "required" && (
                     <h6 className="alert alert-warning col-6 text-center mx-auto">
-                      {" "}
                       Facilita un precio
                     </h6>
                   )}
@@ -275,7 +271,6 @@ const NuevoProducto = ({ history }) => {
                   ></input>
                   {errors.images?.type === "required" && (
                     <h6 className="alert alert-warning col-6 text-center mx-auto">
-                      {" "}
                       Sube una imagen
                     </h6>
                   )}
@@ -291,7 +286,11 @@ const NuevoProducto = ({ history }) => {
                   </button>
                 </div>
               </form>
-              {/* {cargando ? <p>Cargando.....</p> : null} */}
+              {images.size > 100000 ? (
+                <h6 className="alert alert-warning col-6 text-center mx-auto">
+                  La Imagen no puede ser mayor de 100KB
+                </h6>
+              ) : null}
               {/* {error ? <alert>HAY UN ERROR</alert> : null} */}
             </div>
           </div>
