@@ -1,15 +1,15 @@
 //* AQUI ESTARÁ EL FORMULARIO PARA EL PRODUCTO
 import styled from "styled-components";
-import { useState } from "react";
+import "./NuevoProducto.css";
+import { useState, useEffect } from "react";
 import Select from "react-select";
 import FormData from "form-data";
-import {useForm} from 'react-hook-form'
+import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 
 //ACTIONS DE REDUX
 import { crearNuevoProductoAction } from "../actions/productoActions";
-
 
 const Label = styled.label`
   font-family: Anton;
@@ -53,8 +53,6 @@ const accesorios = [
 ];
 
 const NuevoProducto = ({ history }) => {
-
- 
   //MANEJO DE STATES LOCALES
   const [categoria, setCategoria] = useState("");
 
@@ -74,7 +72,8 @@ const NuevoProducto = ({ history }) => {
   const [images, setImage] = useState("");
   const [contacto, setContacto] = useState("");
 
-  //console.log(images)
+  console.log(images.size);
+  console.log(subCategoria);
 
   let subopcion;
 
@@ -117,13 +116,11 @@ const NuevoProducto = ({ history }) => {
   const agregarProducto = (producto, history) =>
     dispatch(crearNuevoProductoAction(producto, history));
 
- 
   //Validar Formulario
-  
-  
+
   //AL HACER SUBMIT EN EL FORMULARIO
   const submitNuevoProducto = () => {
-        //e.preventDefault();
+    //e.preventDefault();
 
     let formData = new FormData();
     formData.set("images", images);
@@ -139,8 +136,13 @@ const NuevoProducto = ({ history }) => {
     //history.push('/productos')
   };
 
-   //VALIDACION DE FORMULARIO
-   const {register, formState:{errors}, handleSubmit} = useForm();
+  //VALIDACION DE FORMULARIO
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    control,
+  } = useForm({ mode: "onBlur" });
 
   return (
     <div className="container-fluid bg-transparent rounded my-4 p-3">
@@ -152,14 +154,13 @@ const NuevoProducto = ({ history }) => {
                 Agregar Nuevo Producto
               </h2>
 
-              
               <form onSubmit={handleSubmit(submitNuevoProducto)}>
                 <div className="mb-3">
                   <Label className="mb-2">Selecciona el tipo de producto</Label>
                   <select
                     className="custom-select form-control"
                     defaultValue=""
-                    {...register("categoria", {required: true})}
+                    {...register("categoria", { required: true })}
                     onChange={handleProduct}
                   >
                     <option value="" selected>
@@ -171,17 +172,22 @@ const NuevoProducto = ({ history }) => {
                     <option value="mastil">Mastil</option>
                     <option value="accesorio">Accesorio</option>
                   </select>
-                  {errors.categoria?.type === 'required' && 'Selecciona una Categoria'}
+                  {errors.categoria?.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto">
+                      Selecciona una Categoria
+                    </h6>
+                  )}
                 </div>
                 <div className="mb-3">
                   <Label className="mb-2">Selecciona el tipo de producto</Label>
                   <Select
-                    defaultValue=""
-                    {...register("subCategoria", {required: false})}
-                    onChange={handleSubProduct}
-                    options={subopcion}
-                  />
-                  {errors.subCategoria?.type === 'required' && 'Selecciona una subCategoria'}
+                        defaultValue=''
+                        
+                        //{...register("subCategoria")}
+                        onChange={handleSubProduct}
+                        options={subopcion}
+                      />
+                  
                 </div>
                 <div className="mb-3">
                   <Label htmlFor="tituloProducto" className="form-label">
@@ -190,12 +196,16 @@ const NuevoProducto = ({ history }) => {
                   <input
                     type="text"
                     className="form-control"
-                    {...register("title", {required:true})}
+                    {...register("title", { required: true })}
                     id="title"
                     placeholder="Tabla Slalom ...."
                     onChange={(e) => setTitle(e.target.value)}
                   ></input>
-                  {errors.title?.type === 'required' && 'Pon un título al anuncio'}
+                  {errors.title?.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto">                      
+                      Pon un título al anuncio
+                    </h6>
+                  )}
                 </div>
                 <div className="mb-3">
                   <Label htmlFor="precioProducto" className="form-label">
@@ -205,11 +215,16 @@ const NuevoProducto = ({ history }) => {
                     type="number"
                     className="form-control"
                     id="precioProducto"
-                    placeholder="450"                    
-                    {...register("price", {required:true})}
+                    placeholder="450"
+                    {...register("price", { required: true })}
                     onChange={(e) => setPrice(Number(e.target.value))}
                   ></input>
-                  {errors.price?.type === 'required' && 'Pon un precio al producto'}
+                  {errors.price?.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto">
+                      {" "}
+                      Pon un precio al producto
+                    </h6>
+                  )}
                 </div>
 
                 <div className="mb-3">
@@ -220,11 +235,17 @@ const NuevoProducto = ({ history }) => {
                     className="form-control"
                     id="descripcionProducto"
                     rows="3"
-                    {...register('description', {required:true})}
+                    {...register("description", { required: true })}
                     onChange={(e) => setDescription(e.target.value)}
                   ></TextArea>
                 </div>
-                {errors.description?.type === 'required' && 'Describe el producto'}
+                {errors.description?.type === "required" && (
+                  <h6 className="alert alert-warning col-6 text-center mx-auto">
+                    {" "}
+                    Describe el producto
+                  </h6>
+                )}
+
                 <div className="mb-3">
                   <Label htmlFor="contacto" className="form-label">
                     Contacto
@@ -233,10 +254,15 @@ const NuevoProducto = ({ history }) => {
                     className="form-control"
                     id="contacto"
                     rows="3"
-                    {...register('contacto', {required:true})}
+                    {...register("contacto", { required: true })}
                     onChange={(e) => setContacto(e.target.value)}
                   ></TextArea>
-                  {errors.contacto?.type === 'required' && 'Deja un contacto'}
+                  {errors.contacto?.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto">
+                      {" "}
+                      Facilita un precio
+                    </h6>
+                  )}
                 </div>
                 <div>
                   <input
@@ -244,14 +270,23 @@ const NuevoProducto = ({ history }) => {
                     id="images"
                     type="file"
                     //name="images"
-                    {...register('images', {required: true})}
+                    {...register("images", { required: true })}
                     onChange={(e) => setImage(e.target.files[0])}
                   ></input>
-                  
+                  {errors.images?.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto">
+                      {" "}
+                      Sube una imagen
+                    </h6>
+                  )}
                 </div>
-                {errors.images?.type === 'required' && 'Sube una foto'}
+                {errors.images?.type === "required" && "Sube una foto"}
                 <div className="mb-3 mt-3 text-center">
-                  <button className="btn btn-success" type="submit">
+                  <button
+                    className="btn btn-success"
+                    type="submit"
+                    disabled={images.size > 100000}
+                  >
                     Agregar Producto
                   </button>
                 </div>
