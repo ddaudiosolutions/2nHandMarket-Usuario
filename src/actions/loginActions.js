@@ -15,11 +15,7 @@ import {
           type: LOGIN_SUCCESS,
           payload: { user: data },
         });
-        // Swal.fire(
-        //   'Bienvenido',
-        //   'Te has Logeado Correctamente',
-        //   'success'
-        // )
+        
             
         return Promise.resolve();
       },

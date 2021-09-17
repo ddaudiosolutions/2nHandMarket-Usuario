@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import Select from "react-select";
 import FormData from "form-data";
+import {useForm} from 'react-hook-form'
 import { useDispatch, useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -52,6 +53,8 @@ const accesorios = [
 ];
 
 const NuevoProducto = ({ history }) => {
+
+ 
   //MANEJO DE STATES LOCALES
   const [categoria, setCategoria] = useState("");
 
@@ -119,13 +122,8 @@ const NuevoProducto = ({ history }) => {
   
   
   //AL HACER SUBMIT EN EL FORMULARIO
-  const submitNuevoProducto = (e) => {
-    e.preventDefault();
-
-    //VALIDAR FORMULARIO
-
-    
-     
+  const submitNuevoProducto = () => {
+        //e.preventDefault();
 
     let formData = new FormData();
     formData.set("images", images);
@@ -141,6 +139,9 @@ const NuevoProducto = ({ history }) => {
     //history.push('/productos')
   };
 
+   //VALIDACION DE FORMULARIO
+   const {register, formState:{errors}, handleSubmit} = useForm();
+
   return (
     <div className="container-fluid bg-transparent rounded my-4 p-3">
       <div className="row justify-content-center">
@@ -151,15 +152,14 @@ const NuevoProducto = ({ history }) => {
                 Agregar Nuevo Producto
               </h2>
 
-              {alerta ? <p className={alerta.classes}> {alerta.msg} </p> : null }
-
-              <form onSubmit={submitNuevoProducto}>
+              
+              <form onSubmit={handleSubmit(submitNuevoProducto)}>
                 <div className="mb-3">
                   <Label className="mb-2">Selecciona el tipo de producto</Label>
                   <select
                     className="custom-select form-control"
                     defaultValue=""
-                    name="categoria"
+                    {...register("categoria", {required: true})}
                     onChange={handleProduct}
                   >
                     <option value="" selected>
@@ -171,15 +171,17 @@ const NuevoProducto = ({ history }) => {
                     <option value="mastil">Mastil</option>
                     <option value="accesorio">Accesorio</option>
                   </select>
+                  {errors.categoria?.type === 'required' && 'Selecciona una Categoria'}
                 </div>
                 <div className="mb-3">
                   <Label className="mb-2">Selecciona el tipo de producto</Label>
                   <Select
                     defaultValue=""
-                    name="subCategoria"
+                    {...register("subCategoria", {required: false})}
                     onChange={handleSubProduct}
                     options={subopcion}
                   />
+                  {errors.subCategoria?.type === 'required' && 'Selecciona una subCategoria'}
                 </div>
                 <div className="mb-3">
                   <Label htmlFor="tituloProducto" className="form-label">
@@ -188,11 +190,12 @@ const NuevoProducto = ({ history }) => {
                   <input
                     type="text"
                     className="form-control"
-                    name="title"
+                    {...register("title", {required:true})}
                     id="title"
                     placeholder="Tabla Slalom ...."
                     onChange={(e) => setTitle(e.target.value)}
                   ></input>
+                  {errors.title?.type === 'required' && 'Pon un título al anuncio'}
                 </div>
                 <div className="mb-3">
                   <Label htmlFor="precioProducto" className="form-label">
@@ -202,10 +205,11 @@ const NuevoProducto = ({ history }) => {
                     type="number"
                     className="form-control"
                     id="precioProducto"
-                    placeholder="450"
-                    name="price"
+                    placeholder="450"                    
+                    {...register("price", {required:true})}
                     onChange={(e) => setPrice(Number(e.target.value))}
                   ></input>
+                  {errors.price?.type === 'required' && 'Pon un precio al producto'}
                 </div>
 
                 <div className="mb-3">
@@ -216,9 +220,11 @@ const NuevoProducto = ({ history }) => {
                     className="form-control"
                     id="descripcionProducto"
                     rows="3"
+                    {...register('description', {required:true})}
                     onChange={(e) => setDescription(e.target.value)}
                   ></TextArea>
                 </div>
+                {errors.description?.type === 'required' && 'Describe el producto'}
                 <div className="mb-3">
                   <Label htmlFor="contacto" className="form-label">
                     Contacto
@@ -227,18 +233,23 @@ const NuevoProducto = ({ history }) => {
                     className="form-control"
                     id="contacto"
                     rows="3"
+                    {...register('contacto', {required:true})}
                     onChange={(e) => setContacto(e.target.value)}
                   ></TextArea>
+                  {errors.contacto?.type === 'required' && 'Deja un contacto'}
                 </div>
                 <div>
                   <input
                     className="form-input"
                     id="images"
                     type="file"
-                    name="images"
+                    //name="images"
+                    {...register('images', {required: true})}
                     onChange={(e) => setImage(e.target.files[0])}
                   ></input>
+                  
                 </div>
+                {errors.images?.type === 'required' && 'Sube una foto'}
                 <div className="mb-3 mt-3 text-center">
                   <button className="btn btn-success" type="submit">
                     Agregar Producto

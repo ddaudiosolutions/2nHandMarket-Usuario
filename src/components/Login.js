@@ -1,34 +1,19 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
-
+import { Redirect, useHistory } from "react-router-dom";
+import {useForm} from 'react-hook-form'
 import { loginUsuario } from "../actions/loginActions";
+import Swal from 'sweetalert2';
 
-const required = (value) => {
-  if (!value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        Este campo es obligatorio!!
-      </div>
-    );
-  }
-};
 
 const Login = () => {
-  const form = useRef();
-  const checkBtn = useRef();
-
   const [email, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { isLoggedIn } = useSelector((state) => state.auth);
-  const { message } = useSelector((state) => state.message);
-
+  //const { message } = useSelector((state) => state.message);
+  const history = useHistory()
   const dispatch = useDispatch();
 
   const onChangeUsername = (e) => {
@@ -41,25 +26,26 @@ const Login = () => {
     setPassword(password);
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    form.current.validateAll();
-
-    if (checkBtn.current.context._errors.length === 0) {
+  const handleLogin = () => {
+     //e.preventDefault()
+      setLoading(true)
       dispatch(loginUsuario(email, password))
         .then(() => {
-          // props.history.push("/productos");
-          window.location.reload();
+          Swal.fire(
+          'Bienvenido',
+          'Empieza a comprar y vender',
+          'success'
+        )
+          history.push("/productos");
+          //window.location.reload();
         })
         .catch(() => {
           setLoading(true);
         });
-    } else {
-      setLoading(false);
-    }
-  };
+    } 
+    
+    const {register, formState:{errors}, handleSubmit} = useForm();
+
 
   if (isLoggedIn) {
     return <Redirect to="/productos" />;
@@ -73,38 +59,42 @@ const Login = () => {
             <h3 className="text-primary">Acceso Usuarios</h3>
           </div>
 
-          <Form data-cy='formulario' onSubmit={handleLogin} ref={form}>
+          <form data-cy='formulario' onSubmit={handleSubmit(handleLogin)} >
             <div className="form-group">
               <label htmlFor="username">E-mail</label>
-              <Input
+              <input
               data-cy='email'
                 type="text"
                 className="form-control"
-                name="email"
+                {...register("email", {required: true,
+                pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/})}
+                id='email'
                 value={email}
-                onChange={onChangeUsername}
-                validations={[required]}
+                onChange={onChangeUsername}                
               />
+              {errors.email?.type === 'required' && 'Email is required'}
+              {errors.email?.type === 'pattern' && 'El formato del mail no es correcto'}
             </div>
 
             <div className="form-group">
               <label htmlFor="password">Password</label>
-              <Input
+              <input
               data-cy='password'
                 type="password"
                 className="form-control"
-                name="password"
+                {...register("password")}
                 value={password}
                 onChange={onChangePassword}
-                validations={[required]}
               />
+              {errors.password?.type === 'required'&& 'Password is required'}
             </div>
 
             <div className="form-group text-center">
               <button
-              data-cy='btn-login'
+                data-cy='btn-login'
                 className="btn btn-primary btn-block mt-3"
                 disabled={loading}
+                
               >
                 {loading && (
                   <span className="spinner-border spinner-border-sm"></span>
@@ -113,15 +103,8 @@ const Login = () => {
               </button>
             </div>
 
-            {message && (
-              <div className="form-group">
-                <div className="alert alert-danger" role="alert">
-                  {message}
-                </div>
-              </div>
-            )}
-            <CheckButton style={{ display: "none" }} ref={checkBtn} />
-          </Form>
+            
+          </form>
         </div>
       </div>
     </div>
