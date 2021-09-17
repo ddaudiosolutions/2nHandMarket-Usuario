@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect, } from "react-router-dom";
 import {useForm} from 'react-hook-form'
 import { loginUsuario } from "../actions/loginActions";
 import Swal from 'sweetalert2';
@@ -13,7 +13,7 @@ const Login = () => {
 
   const { isLoggedIn } = useSelector((state) => state.auth);
   //const { message } = useSelector((state) => state.message);
-  const history = useHistory()
+  //const history = useHistory()
   const dispatch = useDispatch();
 
   const onChangeUsername = (e) => {
@@ -29,18 +29,13 @@ const Login = () => {
   const handleLogin = () => {
      //e.preventDefault()
       setLoading(true)
+      //window.location.reload();
       dispatch(loginUsuario(email, password))
-        .then(() => {
-          Swal.fire(
-          'Bienvenido',
-          'Empieza a comprar y vender',
-          'success'
-        )
-         // history.push("/productos");
+        .then(() => {        
           window.location.reload();
         })
         .catch(() => {
-          setLoading(true);
+          setLoading(false);
         });
     } 
     

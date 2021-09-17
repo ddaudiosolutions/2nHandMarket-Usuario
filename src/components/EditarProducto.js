@@ -83,7 +83,7 @@ const EditarProducto = () => {
     
     console.log(formData.get('contacto'))
     //console.log(formData);
-    history.push("/productos");
+    history.push("/productos/user");
   };
 
   

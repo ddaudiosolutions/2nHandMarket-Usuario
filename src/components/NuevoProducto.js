@@ -1,11 +1,11 @@
 //* AQUI ESTARÁ EL FORMULARIO PARA EL PRODUCTO
 import styled from "styled-components";
 import "./NuevoProducto.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Select from "react-select";
 import FormData from "form-data";
-import { useForm, Controller } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 
 //ACTIONS DE REDUX
@@ -109,7 +109,7 @@ const NuevoProducto = ({ history }) => {
   const dispatch = useDispatch();
 
   //ACCDER AL STATE DEL STORE
-  const alerta = useSelector((state) => state.alerta.alerta);
+  //const alerta = useSelector((state) => state.alerta.alerta);
 
   //manda llamar al action de productoAction
 
@@ -141,7 +141,7 @@ const NuevoProducto = ({ history }) => {
     register,
     formState: { errors },
     handleSubmit,
-    control,
+    
   } = useForm({ mode: "onBlur" });
 
   return (

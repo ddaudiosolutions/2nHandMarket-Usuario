@@ -268,6 +268,7 @@ export function editarProductoAction(producto) {
         "El Producto se editó Correctamente",
         "success"
       ).then(function() {
+        //window.location.reload()})
         window.location = "/productos"})
       //console.log(producto);
     } catch (error) {
