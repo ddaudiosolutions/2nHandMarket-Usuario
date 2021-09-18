@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import "./NuevoProducto.css";
 import { useState } from "react";
-import Select from "react-select";
+//import Select from "react-select";
 import FormData from "form-data";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -19,40 +19,40 @@ const TextArea = styled.textarea`
   font-family: Lato;
 `;
 
-const tablas = [
-  { value: "slalom", label: "Slalom" },
-  { value: "freeride", label: "Free-Ride" },
-  { value: "freerace", label: "Free-Race" },
-  { value: "freestyle", label: "Free-Style" },
-  { value: "waves", label: "Waves" },
-];
+// const tablas = [
+//   { value: "slalom", label: "Slalom" },
+//   { value: "freeride", label: "Free-Ride" },
+//   { value: "freerace", label: "Free-Race" },
+//   { value: "freestyle", label: "Free-Style" },
+//   { value: "waves", label: "Waves" },
+// ];
 
-const velas = [
-  { value: "slalom", label: "Slalom_V" },
-  { value: "freeride", label: "Free-Ride" },
-  { value: "freerace", label: "Free-Race" },
-  { value: "freestyle", label: "Free-Style" },
-  { value: "waves", label: "Waves" },
-];
+// const velas = [
+//   { value: "slalom", label: "Slalom_V" },
+//   { value: "freeride", label: "Free-Ride" },
+//   { value: "freerace", label: "Free-Race" },
+//   { value: "freestyle", label: "Free-Style" },
+//   { value: "waves", label: "Waves" },
+// ];
 
-const botavaras = [
-  { value: "carbono", label: "Carbono" },
-  { value: "aluminio", label: "Aluminio" },
-  { value: "mixtas", label: "Mixtas" },
-];
+// const botavaras = [
+//   { value: "carbono", label: "Carbono" },
+//   { value: "aluminio", label: "Aluminio" },
+//   { value: "mixtas", label: "Mixtas" },
+// ];
 
-const mastiles = [
-  { value: "rdm", label: "RDM" },
-  { value: "sdm", label: "SDM" },
-];
+// const mastiles = [
+//   { value: "rdm", label: "RDM" },
+//   { value: "sdm", label: "SDM" },
+// ];
 
-const accesorios = [
-  { value: "arnes", label: "Arnes" },
-  { value: "alargador", label: "Alargador" },
-  { value: "aleta", label: "Aleta" },
-];
+// const accesorios = [
+//   { value: "arnes", label: "Arnes" },
+//   { value: "alargador", label: "Alargador" },
+//   { value: "aleta", label: "Aleta" },
+// ];
 
-const NuevoProducto = ({ history }) => {
+const NuevoProducto = () => {
   //MANEJO DE STATES LOCALES
   const [categoria, setCategoria] = useState("");
 
@@ -63,7 +63,7 @@ const NuevoProducto = ({ history }) => {
   const [subCategoria, setSubCategoria] = useState("");
 
   const handleSubProduct = (e) => {
-    setSubCategoria(e.value);
+    setSubCategoria(e.target.value);
   };
 
   const [title, setTitle] = useState("");
@@ -72,38 +72,38 @@ const NuevoProducto = ({ history }) => {
   const [images, setImage] = useState("");
   const [contacto, setContacto] = useState("");
 
-  console.log(images.size);
+  //console.log(images.size);
   if (images.size > 100000) {
   }
-  console.log(subCategoria);
+  //console.log(subCategoria);
 
-  let subopcion;
+  // let subopcion;
 
-  switch (categoria) {
-    case "tabla":
-      subopcion = tablas;
-      break;
+  // switch (categoria) {
+  //   case "tabla":
+  //     subopcion = tablas;
+  //     break;
 
-    case "vela":
-      subopcion = velas;
-      break;
+  //   case "vela":
+  //     subopcion = velas;
+  //     break;
 
-    case "botavara":
-      subopcion = botavaras;
-      break;
+  //   case "botavara":
+  //     subopcion = botavaras;
+  //     break;
 
-    case "mastil":
-      subopcion = mastiles;
-      break;
+  //   case "mastil":
+  //     subopcion = mastiles;
+  //     break;
 
-    case "accesorio":
-      subopcion = accesorios;
-      break;
+  //   case "accesorio":
+  //     subopcion = accesorios;
+  //     break;
 
-    default:
-      subopcion = tablas;
-      break;
-  }
+  //   default:
+  //     subopcion = tablas;
+  //     break;
+  // }
 
   //MANEJO DEL REDUX EN EL FORMULARIO
 
@@ -111,12 +111,12 @@ const NuevoProducto = ({ history }) => {
   const dispatch = useDispatch();
 
   //ACCDER AL STATE DEL STORE
-  //const alerta = useSelector((state) => state.alerta.alerta);
+  
 
   //manda llamar al action de productoAction
 
-  const agregarProducto = (producto, history) =>
-    dispatch(crearNuevoProductoAction(producto, history));
+  const agregarProducto = (producto) =>
+    dispatch(crearNuevoProductoAction(producto));
 
   //Validar Formulario
 
@@ -133,7 +133,7 @@ const NuevoProducto = ({ history }) => {
     formData.set("description", description);
     formData.set("contacto", contacto);
 
-    agregarProducto(formData, history);
+    agregarProducto(formData);
 
     //history.push('/productos')
   };
@@ -164,7 +164,7 @@ const NuevoProducto = ({ history }) => {
                     {...register("categoria", { required: true })}
                     onChange={handleProduct}
                   >
-                    <option value="" selected>
+                    <option value="" disabled>
                       Selecciona el tipo de producto
                     </option>
                     <option value="tabla">Tabla</option>
@@ -174,20 +174,54 @@ const NuevoProducto = ({ history }) => {
                     <option value="accesorio">Accesorio</option>
                   </select>
                   {errors.categoria?.type === "required" && (
-                    <h6 className="alert alert-warning col-6 text-center mx-auto">
+                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
                       Selecciona una Categoria
                     </h6>
                   )}
                 </div>
                 <div className="mb-3">
+                  <Label className="mb-2">Selecciona la SubCategoria</Label>
+                  <select
+                    className="custom-select form-control"
+                    defaultValue={subCategoria}
+                    {...register("subCategoria", { required: true })}
+                    //value={subCategoria} 
+                    onChange={handleSubProduct}
+                    // onChange={onChangeFormularioEditado}
+                  > 
+                   <option value="" disabled>
+                      Selecciona el tipo de producto
+                    </option>    
+                    <option value="slalom">Slalom</option>
+                    <option value="freeride">Free-Ride</option>
+                    <option value="freerace">Free-Race</option>
+                    <option value="freestyle">Free-Style</option>
+                    <option value="foil">Foil</option>
+                    <option value="waves">Waves</option>
+                    <option value="carbono">Carbono</option>
+                    <option value="aluminio">Aluminio</option>
+                    <option value="mixta">Mixta</option>
+                    <option value="rdm">RDM</option>
+                    <option value="sdm">SDM</option>
+                    <option value="aleta">ALETA</option>
+                    <option value="arnes">ARNES</option>
+                    <option value="alargador">ALARGADOR</option>
+                  </select>
+                  {errors.categoria?.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                      Selecciona una SubCategoria
+                    </h6>
+                  )}
+                </div>
+                {/* <div className="mb-3">
                   <Label className="mb-2">Selecciona el tipo de producto</Label>
                   <Select
-                    defaultValue=""
+                    defaultValue={subopcion}
                     //{...register("subCategoria")}
                     onChange={handleSubProduct}
                     options={subopcion}
                   />
-                </div>
+                </div> */}
                 <div className="mb-3">
                   <Label htmlFor="tituloProducto" className="form-label">
                     Producto
@@ -201,7 +235,7 @@ const NuevoProducto = ({ history }) => {
                     onChange={(e) => setTitle(e.target.value)}
                   ></input>
                   {errors.title?.type === "required" && (
-                    <h6 className="alert alert-warning col-6 text-center mx-auto">
+                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
                       Pon un título al anuncio
                     </h6>
                   )}
@@ -219,7 +253,7 @@ const NuevoProducto = ({ history }) => {
                     onChange={(e) => setPrice(Number(e.target.value))}
                   ></input>
                   {errors.price?.type === "required" && (
-                    <h6 className="alert alert-warning col-6 text-center mx-auto">
+                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
                       Pon un precio al producto
                     </h6>
                   )}
@@ -236,12 +270,13 @@ const NuevoProducto = ({ history }) => {
                     {...register("description", { required: true })}
                     onChange={(e) => setDescription(e.target.value)}
                   ></TextArea>
-                </div>
-                {errors.description?.type === "required" && (
-                  <h6 className="alert alert-warning col-6 text-center mx-auto">
+                  {errors.description?.type === "required" && (
+                  <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
                     Describe el producto
                   </h6>
                 )}
+                </div>
+                
 
                 <div className="mb-3">
                   <Label htmlFor="contacto" className="form-label">
@@ -255,8 +290,8 @@ const NuevoProducto = ({ history }) => {
                     onChange={(e) => setContacto(e.target.value)}
                   ></TextArea>
                   {errors.contacto?.type === "required" && (
-                    <h6 className="alert alert-warning col-6 text-center mx-auto">
-                      Facilita un precio
+                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                      Facilita un Contacto
                     </h6>
                   )}
                 </div>
@@ -270,12 +305,12 @@ const NuevoProducto = ({ history }) => {
                     onChange={(e) => setImage(e.target.files[0])}
                   ></input>
                   {errors.images?.type === "required" && (
-                    <h6 className="alert alert-warning col-6 text-center mx-auto">
+                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-4">
                       Sube una imagen
                     </h6>
                   )}
                 </div>
-                {errors.images?.type === "required" && "Sube una foto"}
+                
                 <div className="mb-3 mt-3 text-center">
                   <button
                     className="btn btn-success"
@@ -287,7 +322,7 @@ const NuevoProducto = ({ history }) => {
                 </div>
               </form>
               {images.size > 100000 ? (
-                <h6 className="alert alert-warning col-6 text-center mx-auto">
+                <h6 className="alert alert-warning col-6 text-center mx-auto mt-2">
                   La Imagen no puede ser mayor de 100KB
                 </h6>
               ) : null}

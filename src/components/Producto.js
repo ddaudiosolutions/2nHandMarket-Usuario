@@ -1,5 +1,6 @@
 import { Fragment } from "react";
-import './Producto.css'
+import "./Producto.css";
+//import './ProductoUser.css'
 import { useHistory } from "react-router-dom";
 //import { useSelector } from "react-redux";
 //REDUX
@@ -7,8 +8,9 @@ import { useDispatch } from "react-redux";
 import { obtenerProductoIdAction } from "../actions/productoActions";
 //import { obtenerProductoVisionar } from "../actions/productoActions";
 
-const Producto = ({ producto }) => {//LOD PRODUCTOS LLEGAN POR PROPS DE PRODUCTOS.JS
- //const { user: currentUser } = useSelector((state) => state.auth);
+const Producto = ({ producto }) => {
+  //LOD PRODUCTOS LLEGAN POR PROPS DE PRODUCTOS.JS
+  //const { user: currentUser } = useSelector((state) => state.auth);
   //console.log(producto._id)
   const { title, price, images } = producto;
   const dispatch = useDispatch();
@@ -18,7 +20,7 @@ const Producto = ({ producto }) => {//LOD PRODUCTOS LLEGAN POR PROPS DE PRODUCTO
 
   const verProductoId = (producto) => {
     dispatch(obtenerProductoIdAction(producto));
-    console.log(producto)
+    console.log(producto);
     history.push(`/productos/${producto._id}`);
   };
 
@@ -26,24 +28,22 @@ const Producto = ({ producto }) => {//LOD PRODUCTOS LLEGAN POR PROPS DE PRODUCTO
     <Fragment>
       <div className="col">
         <div className="card shadow-sm">
-          <img
-            src={images[0].url}
-            className="card-img-top mt-3"
-            alt={images[0].filename}
-          ></img>
-          <div className="card-body">
-            <div className="clearfix mb-3">
-              <span className="price-hp">Precio: {price} €</span>
-            </div>
+          <div className="card-thumbnail">
+            <img
+              src={images[0].url}
+              className="card-img-top"
+              alt={images[0].filename}
+            ></img>
+          </div>
+          <div className="card-body text-center">
+            <h5 className="price-hp">Precio: {price} €</h5>
             <h5 className="card-title text-center">{title}</h5>
-            <div className="text-center ">             
-              <button
-                className="btn btn-primary "
-                onClick={() => verProductoId(producto)}
-              >
-                Ver Producto
-              </button>
-            </div>
+            <button
+              className="btn btn-primary "
+              onClick={() => verProductoId(producto)}
+            >
+              Ver Producto
+            </button>
           </div>
         </div>
       </div>

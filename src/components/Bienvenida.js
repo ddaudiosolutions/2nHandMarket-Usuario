@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import {  Link } from "react-router-dom";
 
-import "./Bienvenida.css";
+//import "./Bienvenida.css";
 
 
 const Bienvenida = () => {
@@ -16,19 +16,19 @@ const Bienvenida = () => {
           </div>
           <div className="row">
             <div className="col-sm-12 text-center g-5">              
-              <Link to='/nuevousuario'  >
+              <Link to='/nuevousuario' >
                 <button
                 data-cy='btn-registrate'
-                  className="btn btn-success btn-md"
+                  className="btn btn-success btn-md me-2"
                   style={{ color: "black" }}>
-                  REGISTRATE
+                  Registrarse
                 </button>
                 </Link>
               
               <Link to="/login">
                 <button
                 data-cy='btn-iniciarsesion'
-                  className="btn btn-warning btn-md"
+                  className="btn btn-warning btn-md ms-3"
                   style={{ color: "black" }}
                 >
                   Iniciar Sesion

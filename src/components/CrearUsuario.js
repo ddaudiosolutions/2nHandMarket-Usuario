@@ -8,15 +8,7 @@ import { isEmail } from "validator";
 
 import { registroActions } from "../actions/registroActions";
 
-// const required = (value) => {
-//   if (!value) {
-//     return (
-//       <div className="alert alert-danger" role="alert">
-//         This field is required!
-//       </div>
-//     );
-//   }
-// };
+
 const vusername = (value) => {
   if (value.length < 3 || value.length > 20) {
     console.log(value.length)

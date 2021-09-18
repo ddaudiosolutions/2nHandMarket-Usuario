@@ -39,23 +39,24 @@ const Productos = () => {
   return (
     <Fragment>
       <div
-        className="container-fluid  my-2 p-1 "
+        className="container-fluid  my-2 p-1 mt-4"
         style={{ position: "relative" }}
       >
         <div>
-          <h2 className="text-center">BUSCADOR</h2>
+          {/* <h2 className="text-center">ENCUENTRA LO QUE ESTÁS BUSCANDO</h2> */}
           <div className=" mb-3 col-6 mx-auto">
             <form onSubmit={handelBusqueda}>
-              <select
+             <div className='container d-flex '>
+             <select
                 className="form-select col-6"
-                defaultValue=""
+                defaultValue={busqueda}
                 name="categoria"
-                value={busqueda}
-                onChange={(e) => setBusqueda(e.target.value)}
+                //value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)} 
               >
-                <option value="" selected>
+                {/* <option value="" selected>
                   Selecciona el tipo de producto
-                </option>
+                </option> */}
                 <option value="all">Ver Todos los Productos</option>
                 <option value="tabla">Tabla</option>
                 <option value="vela">Vela</option>
@@ -63,9 +64,11 @@ const Productos = () => {
                 <option value="mastil">Mastil</option>
                 <option value="accesorio">Accesorio</option>
               </select>
-              <button className="btn btn-success text-center mt-3">
+              <button className="btn btn-success text-center ms-2">
                 Buscar
               </button>
+             </div>
+              
             </form>
             <div></div>
             {/* <label className="mb-2">Selecciona el tipo de producto</label> */}

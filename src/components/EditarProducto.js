@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 //import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
 import FormData from "form-data";
 import { editarProductoAction} from "../actions/productoActions";
 import { useHistory } from "react-router-dom";
-
+import './EditarProducto.css'
 //STYLED COMPONENTS
 const Label = styled.label`
   font-family: Anton;
@@ -41,7 +42,7 @@ const EditarProducto = () => {
  // TOMAMOS DEL STATE DEL PROUDUCTO EL ID PARA PODER PASARLO A LA NUEVA FUNCION DEL DISPATCH Y ASÍ 
  // PODER PASAR LOS DATOS AL SERVIDOR Y NO TENER EL ERROR 'UNDEFINED'
   let productoId = productoEditar._id
-  console.log(productoId)
+ // console.log(productoId)
   
   useEffect(() => {
     setId(productoId)
@@ -62,8 +63,8 @@ const EditarProducto = () => {
   const editarProducto = (formData ) => 
     dispatch(editarProductoAction(formData));
   
-  const submitEditarProducto = (e) => {
-    e.preventDefault();      
+  const submitEditarProducto = () => {
+    //e.preventDefault();      
 
     let formData = new FormData();
     formData.set("images", images);
@@ -85,7 +86,24 @@ const EditarProducto = () => {
     //console.log(formData);
     history.push("/productos/user");
   };
+//console.log(title)
+  //VALIDACION DE FORMULARIO
+  const {
+    register,
+    formState:{errors},    
+    handleSubmit,
+  } = useForm({    mode:"onBlur",              
+                defaultValues:{
+                  categoria: productoEditar.categoria,
+                  subCategoria: productoEditar.subCategoria,                           
+                   title: productoEditar.title,
+                   price: productoEditar.price,
+                   description: productoEditar.description,
+                    contacto:productoEditar.contacto
+                },
+                });
 
+ 
   
   return (
     <div className="container mt-5">
@@ -93,19 +111,18 @@ const EditarProducto = () => {
         <div className="col-md-8">
           <div className="card">
             <div className="card-body">
-              <h2 className="text-center mx-auto font-wight-bold mb-5">
-                EDITAR Producto
+              <h2 className="col-6 text-center mx-auto  mb-5 bg-transparent rounded">
+                Editar Producto
               </h2>
-              <form onSubmit={submitEditarProducto}>
+              <form onSubmit={handleSubmit(submitEditarProducto)}>
                 <div className="mb-3">
                   <Label className="mb-2">Selecciona el tipo de producto</Label>
                   <select
-                    className="custom-select form-control"
+                    className="custom-select form-control"                    
+                    {...register("categoria", { required: true })}
                     defaultValue={categoria}
-                    name="categoria"
-                    value={categoria}
                     onChange={(e) => setCategoria(e.target.value)}
-                    // onChange={onChangeFormularioEditado}
+                    
                   >
                     
                     <option value="tabla">Tabla</option>
@@ -114,16 +131,19 @@ const EditarProducto = () => {
                     <option value="mastil">Mastil</option>
                     <option value="accesorio">Accesorio</option>
                   </select>
+                  {/* {errors.categoria?.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto">
+                      Selecciona una Categoria
+                    </h6>
+                  )} */}
                 </div>
                 <div className="mb-3">
                   <Label className="mb-2">Selecciona la Categoria</Label>
                   <select
                     className="custom-select form-control"
                     defaultValue={subCategoria}
-                    name="subCategoria"
-                    value={subCategoria} 
+                    {...register("subCategoria", { required: true })}                     
                     onChange={(e) => setSubCategoria(e.target.value)}
-                    // onChange={onChangeFormularioEditado}
                   >
                     
                     
@@ -142,6 +162,11 @@ const EditarProducto = () => {
                     <option value="arnes">ARNES</option>
                     <option value="alargador">ALARGADOR</option>
                   </select>
+                  {/* {errors.categoria?.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                      Selecciona una SubCategoria
+                    </h6>
+                  )} */}
                 </div>
                 <div className="mb-3">
                   <Label htmlFor="tituloProducto" className="form-label">
@@ -149,13 +174,19 @@ const EditarProducto = () => {
                   </Label>
                   <input
                     type="text"
-                    className="form-control"
-                    name="title"
-                    value={title}
-                    id="title"
-                    placeholder="Tabla Slalom ...."
+                    className="form-control"                    
+                    //defaultValue={title}
+                    id="title"                    
+                    //name={title}
+                    {...register("title",{ required: true })}
+                    placeholder="...."
                     onChange={(e) => setTitle(e.target.value)}
                   ></input>
+                  {/* {errors.title?.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                      Pon un título al anuncio
+                    </h6>
+                  )} */}
                 </div>
                 <div className="mb-3">
                   <Label htmlFor="precioProducto" className="form-label">
@@ -165,11 +196,17 @@ const EditarProducto = () => {
                     type="number"
                     className="form-control"
                     id="precioProducto"
-                    placeholder="450"
-                    name="price"
-                    value={price}
+                    placeholder="....."
+                    //name='price'
+                    {...register("price", { required: true })}
+                   // defaultValue={price}
                     onChange={(e) => setPrice(Number(e.target.value))}
                   ></input>
+                  {errors.price?.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                      Pon un precio al producto
+                    </h6>
+                  )}
                 </div>
 
                 <div className="mb-3">
@@ -178,13 +215,20 @@ const EditarProducto = () => {
                   </Label>
                   <TextArea
                     className="form-control"
-                    id="descripcionProducto"
-                    rows="3"
-                    name="description"
-                    value={description}
+                    id="description"
+                    rows="3" 
+                   // name="description"                   
+                    //defaultValue={description}
+                    {...register("description", { required: true })}
                     onChange={(e) => setDescription(e.target.value)}
                   ></TextArea>
+                  {errors.description?.type === "required" && (
+                  <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                    Describe el producto
+                  </h6>
+                )}
                 </div>
+                
                 <div className="mb-3">
                   <Label htmlFor="contacto" className="form-label">
                     Contacto
@@ -192,17 +236,25 @@ const EditarProducto = () => {
                   <TextArea
                     className="form-control"
                     id="contacto"
-                    value={contacto}
+                    //name="contacto"
+                    //defaultValue={contacto}
+                    {...register("contacto", { required: true })}
                     rows="4"
                     onChange={(e) => setContacto(e.target.value)}
                   ></TextArea>
+                  {errors.contacto?.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                      Facilita un Contacto
+                    </h6>
+                  )}
                 </div>
+                
                 <a href={images} target='_blank' rel='noreferrer'>
                 <img
                   className="card-img-top "
                   src={images}
                   style={{width: '200px'}}
-                  alt="imagen nula"
+                  alt="Imagen Cambiada"
                 ></img>
                   </a>
                 <div>
@@ -210,19 +262,30 @@ const EditarProducto = () => {
                     className="form-input"
                     id="images"
                     type="file"
-                    name="images"
-                    //value={images}
+                    //name="images"
+                    {...register("images", { required: false })}
                     onChange={(e) => setImage(e.target.files[0])}
                     //onChange ={imageHandle}
                   ></input>
+                  
                 </div>
+                
 
                 <div className="mb-3 mt-3 text-center">
-                  <button className="btn btn-success" type="submit">
+                  <button
+                    className="btn btn-success"
+                    type="submit"
+                    disabled={images.size > 100000}
+                  >
                     Editar Producto
                   </button>
                 </div>
               </form>
+              {images.size > 100000 ? (
+                <h6 className="alert alert-warning col-6 text-center mx-auto">
+                  La Imagen no puede ser mayor de 100KB
+                </h6>
+              ) : null}
             
             </div>
           </div>
