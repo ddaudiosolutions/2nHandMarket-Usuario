@@ -64,7 +64,7 @@ const Productos = () => {
                 <option value="mastil">Mastil</option>
                 <option value="accesorio">Accesorio</option>
               </select>
-              <button className="btn btn-success text-center ms-2">
+              <button className="btn btn-outline-primary text-center ms-2">
                 Buscar
               </button>
              </div>

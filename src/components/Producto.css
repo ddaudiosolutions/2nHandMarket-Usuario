@@ -1,6 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
 
 
 body {
@@ -9,7 +7,7 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
-  background-color: rgb(248, 248, 248);
+  background-color: rgb(247, 247, 247);
 }
 
 h2 {
@@ -18,15 +16,14 @@ h2 {
 
 
 
-/* .card {
-  background: rgb(255, 255, 255);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
-  transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
-    0.3s box-shadow,
-    0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
-  border: 0;
-  border-radius: 1rem;
-} */
+.me-0 {
+  margin-left: 0.05rem !important;
+}
+
+.card {
+  max-height: 300px;
+  background-color: rgb(255, 255, 255);
+}
 
 .card-img,
 .card-img-top {
@@ -34,32 +31,36 @@ h2 {
   border-top-right-radius: calc(1rem - 1px);
 }
 
- .card h5 {
-  overflow: hidden;
-  /* height: 20px; */
+ .titleH5 {
+  overflow: hidden;  
   font-weight: 500;
   font-size: 0.8rem;
+  /* font-size: 0.5vw; */
   text-transform: uppercase;
+  font-family: Saira;
 } 
 
 .card-img-top {
   width: 100%;
-  max-height: 150px;
+  height: 150px;
   object-fit: cover;
   border-radius: 3px;
    /* objectFit: 'cover' ; */
   /* padding: 1px; */
 }
 
-
+.card-body {
+  padding: 0.2rem;
+}
 
 .card h2 {
   font-size: 1rem;
-  font-weight:lighter;
+  font-weight: lighter;
 }
 
 .card:hover {
-  transform: scale(1.01);
+  /* transform: scale(1.01); */
+  transition: 0.05s;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
 }
 
@@ -71,39 +72,96 @@ h2 {
   border-radius: 10px;
 }
 
+.col {
+  padding: 0px;
+}
 
-.btn-warning {
-  background: none #f7810a;
-  color: #ffffff;
-  fill: #ffffff;
-  border: none;
+.btn-outline-warning {
+  color: red;
+  background: transparent;
+  border: 1px solid;
   text-decoration: none;
   outline: 0;
-  box-shadow: -1px 6px 19px rgba(247, 129, 10, 0.25);
-  /* border-radius: 100px; */
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
+}
+
+.btn-outline-warning:hover {
+  color: rgb(255, 255, 255);
+  background: red;
+  border: 1px solid;
+  text-decoration: none;
+  outline: 0;
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
 }
 
 
 
-.btn-success {
-  color: #ffffff;
-  fill: #ffffff;
-  border: none;
+.btn-outline-success {
+  background-color: transparent;
+  color: #237a00;
+  /* fill: #ffffff; */
+  border: 1px solid;
   text-decoration: none;
   outline: 0;
-  box-shadow: -1px 6px 19px rgba(247, 129, 10, 0.25);
-  /* border-radius: 100px; */
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
 }
 
-.bg-danger {
-  font-size: 1rem;
+.btn-outline-primary{
+  background-color: transparent;
+  color: #e02b20;
+  /* fill: #ffffff; */
+  border: 1px solid;
+  text-decoration: none;
+  outline: 0;
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
+  
+}
+
+.btn-outline-primary:hover{
+  background-color: red;
+  color: #ffffff;
+  /* transition: 1000ms;   */
+  border: 1px solid;
+    outline: 0;
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 500;
+  letter-spacing: 0.03rem;
+}
+
+
+.bg-outline-info {
+  background-color: transparent;
+  color: #237a00;  
+  border: 1px solid;
+  text-decoration: none;
+  outline: 0;
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
 }
 
 .price-hp { 
+  font-family: Saira;
+  font-weight: 400;
   text-align: center;
-   font-size: 1rem;
-  font-weight: bold;
-  color: rgb(168, 5, 5); 
+   font-size: 0.9rem;
+   letter-spacing: 0.04rem;
+  
+  color: rgb(231, 100, 100); 
  }
 
 

@@ -2,12 +2,20 @@
 
 
 .bg-nav{
-  background-color:rgb(54, 53, 53);
+  background-color:rgb(49, 49, 49);
 }
 .typeHeader{
-  font-family: Anton;
-  font-size: 1.3rem;
-  letter-spacing: 0.1rem;
+  font-family: Saira Stencil One;
+  font-size: 1.2rem;
+  letter-spacing: 0.05rem;
   color: rgb(255, 255, 255);
+  font-weight: bold;
+}
+
+.typeHeader:hover{
+  font-family: Saira Stencil One;
+  font-size: 1.2rem;
+  letter-spacing: 0.05rem;
+  color: rgb(189, 30, 30);
   font-weight: bold;
 }

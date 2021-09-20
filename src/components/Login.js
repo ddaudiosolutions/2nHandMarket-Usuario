@@ -39,7 +39,7 @@ const Login = () => {
         });
     } 
     
-    const {register, formState:{errors}, handleSubmit} = useForm();
+    const {register, formState:{errors}, handleSubmit} = useForm({ mode: "onBlur" });
 
 
   if (isLoggedIn) {
@@ -64,24 +64,30 @@ const Login = () => {
                 {...register("email", {required: true,
                 pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/})}//eslint-disable-line
                 id='email'
-                value={email}
+                //value={email}
                 onChange={onChangeUsername}                
               />
-              {errors.email?.type === 'required' && 'Email is required'}
-              {errors.email?.type === 'pattern' && 'El formato del mail no es correcto'}
+              {errors.email?.type === 'required' && <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                Email is required
+                    </h6>}
+              {errors.email?.type === 'pattern' && <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                  El mail no es correcto
+                    </h6>  }
             </div>
 
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input
-              data-cy='password'
+                data-cy='password'
                 type="password"
                 className="form-control"
-                {...register("password")}
-                value={password}
+                {...register("password", {required: true})}
+                //value={password}
                 onChange={onChangePassword}
               />
-              {errors.password?.type === 'required'&& 'Password is required'}
+              {errors.password?.type === 'required' && <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                Password is required
+                    </h6>}
             </div>
 
             <div className="form-group text-center">

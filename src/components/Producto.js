@@ -27,8 +27,8 @@ const Producto = ({ producto }) => {
   return (
     <Fragment>
       <div className="col">
-        <div className="card shadow-sm">
-          <div className="card-thumbnail">
+        <div className="card shadow-sm gap-2  me-0">
+          <div className="">
             <img
               src={images[0].url}
               className="card-img-top"
@@ -36,10 +36,10 @@ const Producto = ({ producto }) => {
             ></img>
           </div>
           <div className="card-body text-center">
-            <h5 className="price-hp">Precio: {price} €</h5>
-            <h5 className="card-title text-center">{title}</h5>
+            <h5 className="price-hp">{price}€</h5>
+            <h5 className="titleH5 card-title text-center">{title}</h5>
             <button
-              className="btn btn-primary "
+              className="btn btn-outline-primary mt-2 mb-1" 
               onClick={() => verProductoId(producto)}
             >
               Ver Producto

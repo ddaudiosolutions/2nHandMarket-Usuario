@@ -131,11 +131,11 @@ const EditarProducto = () => {
                     <option value="mastil">Mastil</option>
                     <option value="accesorio">Accesorio</option>
                   </select>
-                  {/* {errors.categoria?.type === "required" && (
+                  {errors.categoria?.type === "required" && (
                     <h6 className="alert alert-warning col-6 text-center mx-auto">
                       Selecciona una Categoria
                     </h6>
-                  )} */}
+                  )}
                 </div>
                 <div className="mb-3">
                   <Label className="mb-2">Selecciona la Categoria</Label>
@@ -162,11 +162,11 @@ const EditarProducto = () => {
                     <option value="arnes">ARNES</option>
                     <option value="alargador">ALARGADOR</option>
                   </select>
-                  {/* {errors.categoria?.type === "required" && (
+                  {errors.categoria?.type === "required" && (
                     <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
                       Selecciona una SubCategoria
                     </h6>
-                  )} */}
+                  )}
                 </div>
                 <div className="mb-3">
                   <Label htmlFor="tituloProducto" className="form-label">
@@ -182,11 +182,11 @@ const EditarProducto = () => {
                     placeholder="...."
                     onChange={(e) => setTitle(e.target.value)}
                   ></input>
-                  {/* {errors.title?.type === "required" && (
+                  {errors.title?.type === "required" && (
                     <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
                       Pon un título al anuncio
                     </h6>
-                  )} */}
+                  )}
                 </div>
                 <div className="mb-3">
                   <Label htmlFor="precioProducto" className="form-label">

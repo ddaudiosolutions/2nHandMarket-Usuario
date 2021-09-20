@@ -52,20 +52,20 @@ const ProductoUser = ({ producto }) => {
             alt={images[0].filename}
           ></img>
           <div className="card-body">
-            <div className="clearfix mb-3">
-              <span className="float-end price-hp">Precio: {price} €</span>
+            <div className="card-body text-center">
+              <span className="price-hp">{price} €</span>
             </div>
-            <h5 className="card-title text-center">{title}</h5>
+            <h5 className="titleH5 card-title text-center">{title}</h5>
             <div className="container-fluid text-center">
               <button
-                className="btn btn-success mb-2"
+                className="btn btn-outline-success "
                 onClick={() => sendtoEdicion(producto)}
               >
                 Editar Producto
               </button>
 
               <button
-                className="btn btn-danger ml-2"
+                className="btn btn-outline-warning mt-2 mb-1"
                 onClick={() => confirmarBorrarProducto(_id)}
               >
                 Eliminar Producto
