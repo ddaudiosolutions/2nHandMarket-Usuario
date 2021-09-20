@@ -147,9 +147,9 @@ const NuevoProducto = () => {
   } = useForm({ mode: "onBlur" });
 
   return (
-    <div className="container-fluid  rounded my-4 p-3">
+    <div className="container-fluid  rounded my-4 p-2">
       <div className="d-flex justify-content-center">
-        <div className="rounded col-md-12 col-sm-12 shadow-lg p-3 bg-trasparent">
+        <div className="rounded col-12 col-sm-12 shadow-lg p-3 bg-trasparent">
           {/* <div className="card"> */}
             {/* <div className="card-body"> */}
               <h2 className="text-center mx-auto font-wight-bold mb-5">
