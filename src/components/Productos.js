@@ -15,10 +15,10 @@ const Productos = () => {
   const dispatch = useDispatch();
 
   const cargarProductos = () => dispatch(obtenerProductosAction(busqueda));
-  
+
   useEffect(() => {
     cargarProductos(busqueda);
-    
+
     if (
       productosAll !== productos ||
       productos === undefined ||
@@ -26,8 +26,7 @@ const Productos = () => {
     ) {
       setproductoAll(productos);
       console.log("vuelvo a llar a la api");
-    }
-
+        }
     // eslint-disable-next-line
   }, []);
 
@@ -46,29 +45,28 @@ const Productos = () => {
           {/* <h2 className="text-center">ENCUENTRA LO QUE ESTÁS BUSCANDO</h2> */}
           <div className=" mb-3 col-6 mx-auto">
             <form onSubmit={handelBusqueda}>
-             <div className='container d-flex '>
-             <select
-                className="form-select col-6"
-                defaultValue={busqueda}
-                name="categoria"
-                //value={busqueda}
-                onChange={(e) => setBusqueda(e.target.value)} 
-              >
-                {/* <option value="" selected>
+              <div className="container d-flex ">
+                <select
+                  className="form-select col-6"
+                  defaultValue={busqueda}
+                  name="categoria"
+                  //value={busqueda}
+                  onChange={(e) => setBusqueda(e.target.value)}
+                >
+                  {/* <option value="" selected>
                   Selecciona el tipo de producto
                 </option> */}
-                <option value="all">Ver Todos los Productos</option>
-                <option value="tabla">Tabla</option>
-                <option value="vela">Vela</option>
-                <option value="botavara">Botavara</option>
-                <option value="mastil">Mastil</option>
-                <option value="accesorio">Accesorio</option>
-              </select>
-              <button className="btn btn-outline-primary text-center ms-2">
-                Buscar
-              </button>
-             </div>
-              
+                  <option value="all">Ver Últimos los Productos</option>
+                  <option value="tabla">Tabla</option>
+                  <option value="vela">Vela</option>
+                  <option value="botavara">Botavara</option>
+                  <option value="mastil">Mastil</option>
+                  <option value="accesorio">Accesorio</option>
+                </select>
+                <button className="btn btn-outline-primary text-center ms-2">
+                  Buscar
+                </button>
+              </div>
             </form>
             <div></div>
             {/* <label className="mb-2">Selecciona el tipo de producto</label> */}

@@ -56,16 +56,16 @@ const ProductoUser = ({ producto }) => {
               <span className="price-hp">{price} €</span>
             </div>
             <h5 className="titleH5 card-title text-center">{title}</h5>
-            <div className="container-fluid text-center">
+            <div className="container-fluid text-center mt-3 mb-3 gap-2">
               <button
-                className="btn btn-outline-success "
+                className="btn btn-outline-success me-2"
                 onClick={() => sendtoEdicion(producto)}
               >
                 Editar Producto
               </button>
 
               <button
-                className="btn btn-outline-warning mt-2 mb-1"
+                className="btn btn-outline-warning "
                 onClick={() => confirmarBorrarProducto(_id)}
               >
                 Eliminar Producto

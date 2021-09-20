@@ -18,9 +18,9 @@ const Bienvenida = () => {
             <div className="col-sm-12 text-center g-5">              
               <Link to='/nuevousuario' >
                 <button
-                data-cy='btn-registrate'
-                  className="btn btn-success btn-md me-2"
-                  style={{ color: "black" }}>
+                  data-cy='btn-registrate'
+                  className="btn btn-outline-success me-2"
+                  >
                   Registrarse
                 </button>
                 </Link>
@@ -28,8 +28,8 @@ const Bienvenida = () => {
               <Link to="/login">
                 <button
                 data-cy='btn-iniciarsesion'
-                  className="btn btn-warning btn-md ms-3"
-                  style={{ color: "black" }}
+                  className="btn btn-outline-info  ms-3"
+                  
                 >
                   Iniciar Sesion
                 </button>

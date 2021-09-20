@@ -12,11 +12,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { crearNuevoProductoAction } from "../actions/productoActions";
 
 const Label = styled.label`
-  font-family: Anton;
+  font-family: Saira;
 `;
 
 const TextArea = styled.textarea`
-  font-family: Lato;
+  font-family: Saira;
 `;
 
 // const tablas = [
@@ -72,6 +72,7 @@ const NuevoProducto = () => {
   const [images, setImage] = useState("");
   const [contacto, setContacto] = useState("");
 
+  console.log(title.length)
   //console.log(images.size);
   if (images.size > 100000) {
   }
@@ -146,11 +147,11 @@ const NuevoProducto = () => {
   } = useForm({ mode: "onBlur" });
 
   return (
-    <div className="container-fluid bg-transparent rounded my-4 p-3">
-      <div className="row justify-content-center">
-        <div className="col-md-8">
-          <div className="card1">
-            <div className="card-body">
+    <div className="container-fluid  rounded my-4 p-3">
+      <div className="d-flex justify-content-center">
+        <div className="rounded col-md-12 col-sm-12 shadow-lg p-3 bg-trasparent">
+          {/* <div className="card"> */}
+            {/* <div className="card-body"> */}
               <h2 className="text-center mx-auto font-wight-bold mb-5">
                 Agregar Nuevo Producto
               </h2>
@@ -159,7 +160,7 @@ const NuevoProducto = () => {
                 <div className="mb-3">
                   <Label className="mb-2">Selecciona el tipo de producto</Label>
                   <select
-                    className="custom-select form-control"
+                    className="custom-select form-control pproducto"
                     defaultValue=""
                     {...register("categoria", { required: true })}
                     onChange={handleProduct}
@@ -182,7 +183,7 @@ const NuevoProducto = () => {
                 <div className="mb-3">
                   <Label className="mb-2">Selecciona la SubCategoria</Label>
                   <select
-                    className="custom-select form-control"
+                    className="custom-select form-control pproducto"
                     defaultValue={subCategoria}
                     {...register("subCategoria", { required: true })}
                     //value={subCategoria} 
@@ -207,21 +208,13 @@ const NuevoProducto = () => {
                     <option value="arnes">ARNES</option>
                     <option value="alargador">ALARGADOR</option>
                   </select>
-                  {errors.categoria?.type === "required" && (
+                  {errors.subCategoria?.type === "required" && (
                     <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
                       Selecciona una SubCategoria
                     </h6>
                   )}
                 </div>
-                {/* <div className="mb-3">
-                  <Label className="mb-2">Selecciona el tipo de producto</Label>
-                  <Select
-                    defaultValue={subopcion}
-                    //{...register("subCategoria")}
-                    onChange={handleSubProduct}
-                    options={subopcion}
-                  />
-                </div> */}
+                
                 <div className="mb-3">
                   <Label htmlFor="tituloProducto" className="form-label">
                     Producto
@@ -229,16 +222,20 @@ const NuevoProducto = () => {
                   <input
                     type="text"
                     className="form-control"
-                    {...register("title", { required: true })}
+                    {...register("title", { required: true, maxLength: { value: 20}})}
                     id="title"
-                    placeholder="Tabla Slalom ...."
+                    placeholder="...."
                     onChange={(e) => setTitle(e.target.value)}
                   ></input>
-                  {errors.title?.type === "required" && (
-                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+
+                  {errors.title && errors.title.type === 'required' && <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
                       Pon un título al anuncio
-                    </h6>
-                  )}
+                    </h6> }
+                    {errors.title && errors.title.type === 'maxLength' && <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                      Demasiados Caracteres máx 20!!
+                    </h6> }
+                    
+                 
                 </div>
                 <div className="mb-3">
                   <Label htmlFor="precioProducto" className="form-label">
@@ -249,10 +246,11 @@ const NuevoProducto = () => {
                     className="form-control"
                     id="precioProducto"
                     placeholder="450"
-                    {...register("price", { required: true })}
+                    {...register("price", { required: true, message: 'Ponle un precio' })}
                     onChange={(e) => setPrice(Number(e.target.value))}
-                  ></input>
-                  {errors.price?.type === "required" && (
+                  >                    
+                  </input>                                  
+                  {errors.price && errors.price.type === "required" && (
                     <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
                       Pon un precio al producto
                     </h6>
@@ -313,7 +311,7 @@ const NuevoProducto = () => {
                 
                 <div className="mb-3 mt-3 text-center">
                   <button
-                    className="btn btn-success"
+                    className="btn btn-outline-warning"
                     type="submit"
                     disabled={images.size > 100000}
                   >
@@ -329,8 +327,8 @@ const NuevoProducto = () => {
               {/* {error ? <alert>HAY UN ERROR</alert> : null} */}
             </div>
           </div>
-        </div>
-      </div>
+        {/* </div> */}
+      {/* </div> */}
     </div>
   );
 };

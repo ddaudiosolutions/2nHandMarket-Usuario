@@ -1,6 +1,6 @@
 
-import React, { useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 // import Form from "react-validation/build/form";
 // import input from "react-validation/build/input";
 // import CheckButton from "react-validation/build/button";
@@ -10,50 +10,18 @@ import { useForm } from "react-hook-form";
 import { registroActions } from "../actions/registroActions";
 
 
-// const vusername = (value) => {
-//   if (value.length < 3 || value.length > 20) {
-//     console.log(value.length)
-//     return (
-//       <div className="alert alert-danger" role="alert">
-//         The username must be between 3 and 20 characters.
-//       </div>
-//     );
-    
-//   }
-// };
 
-// const validEmail = (value) => {
-//   if (!isEmail(value)) {
-//     return (
-//       <div className="alert alert-danger" role="alert">
-//         El formato del Email, No es Correcto!.
-//       </div>
-//     );
-//   }
-// };
-
-
-
-// const vpassword = (value) => {
-//   if (value.length < 6 || value.length > 40) {
-//     return (
-//       <div className="alert alert-danger" role="alert">
-//         The password must be between 6 and 40 characters.
-//       </div>
-//     );
-//   }
-// };
 
 const CrearUsuario = () => {
-  const form = useRef();
-  const checkBtn = useRef();
+  // const form = useRef();
+  // const checkBtn = useRef();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
 
-  const { message } = useSelector(state => state.message);
+  // const { message } = useSelector(state => state.message);
   const dispatch = useDispatch();
 
   const onChangeUsername = (e) => {
@@ -77,11 +45,10 @@ const CrearUsuario = () => {
     handleSubmit,
   } = useForm({    mode:"onBlur" });
   const handleRegister = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     setSuccessful(false);
-    form.current.validateAll();
-
-    if (checkBtn.current.context._errors.length === 0) {
+    // form.current.validateAll();
+    
       dispatch(registroActions(username, email, password))
         .then(() => {
           setSuccessful(true);
@@ -89,22 +56,24 @@ const CrearUsuario = () => {
         .catch(() => {
           setSuccessful(false);
         });
-    }
+   
   };
 
+  const re = /^((^<>()\[\]\\.,;:\s@"]+(\.^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
   return (
-    <div className="container-fluid vh-100" style={{ marginTop: "300px" }}>
+    <div className="container-fluid vh-100" style={{ marginTop: "100px" }}>
       <div className="d-flex justify-content-center">
-        <div className="rounded col-md-4 col-sm-12 shadow-lg p-5 bg-success">
+        <div className="rounded col-md-5 col-sm-12 shadow-lg p-4 bg-trasparent">
           <div className="text-center" >
-            <h3 className="" >Registrarse</h3>
+            <h3 className="loginH3" >Registrarse</h3>
           </div>
 
         <form onSubmit={handleSubmit(handleRegister)} >
           {!successful && (
             <div>
-              <div className="form-group">
-                <label htmlFor="username" >Nombre</label>
+              <div className="form-group mb-2">
+                <label htmlFor="username" className="loginLabel">Nombre</label>
                 <input
                   type="text"
                   className="form-control"
@@ -121,19 +90,20 @@ const CrearUsuario = () => {
                   )}
               </div>
 
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
+              <div className="form-group mb-2">
+                <label htmlFor="email" className="loginLabel">Email</label>
                 <input
-                  type="text"
+                  type="email"
+                  required
                   className="form-control"
                   //name="email"
-                  {...register("email", {required: true,
-                    pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/})}//eslint-disable-line
-                  //value={email}
+                  {...register("email", {required: 'Introduce un correo',
+                     pattern: {re}})}//eslint-disable-line
+                  
                   onChange={onChangeEmail}
-                  //validations={[validEmail]}
+                  
                 />
-                {errors.email?.type === "required" && (
+                {errors.email && (                  
                     <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
                       Introduce un correo Válido
                     </h6>
@@ -141,12 +111,12 @@ const CrearUsuario = () => {
               </div>
 
               <div className="form-group mb-3">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password" className="loginLabel">Password</label>
                 <input
                   type="password"
                   className="form-control"
                   name="password"
-                  {...register("password", {required: true, maxLength: 8, minLength: 6})}
+                  {...register("password", {required: true})}
                   //value={password}
                   onChange={onChangePassword}
                  //validations={[vpassword]}
@@ -156,7 +126,7 @@ const CrearUsuario = () => {
                       Debes introducir una contraseña
                     </h6>
                   )}
-                  {errors.password?.type === "required" && (
+                  {errors.password?.type === "pattern" && (
                     <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
                       Debes introducir una contraseña entre 6 y 8 caracteres
                     </h6>
@@ -164,7 +134,7 @@ const CrearUsuario = () => {
               </div>
 
               <div className="form-group text-center">
-                <button className="btn btn-primary btn-block ">Registrarse</button>
+                <button className="btn btn-outline-info btn-block ">Registrarse</button>
               </div>
             </div>
           )}

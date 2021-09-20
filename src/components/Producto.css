@@ -9,12 +9,20 @@ body {
   background-position: center;
   background-color: rgb(247, 247, 247);
 }
-
-h2 {
-  font-weight: 900;
+h2{
+  font-family: Saira;
 }
 
+.loginLabel{
+  font-family: Saira;
+}
 
+.loginH3 {
+  font-family: Saira;
+  color: rgb(124, 124, 124);
+  border: 1px solid ;
+  border-radius: 3px;
+}
 
 .me-0 {
   margin-left: 0.05rem !important;
@@ -100,7 +108,30 @@ h2 {
   letter-spacing: 0.03rem;
 }
 
+.btn-outline-info{
+  color: rgb(4, 93, 226);
+  background: transparent;
+  border: 1px solid;
+  text-decoration: none;
+  outline: 0;
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
+}
 
+.btn-outline-info:hover{
+  background-color: rgb(4, 93, 226);
+  color: white;
+  /* background: transparent; */
+  border: 1px solid;
+  text-decoration: none;
+  outline: 0;
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
+}
 
 .btn-outline-success {
   background-color: transparent;
@@ -142,9 +173,9 @@ h2 {
 }
 
 
-.bg-outline-info {
+.btn-outline-info {
   background-color: transparent;
-  color: #237a00;  
+  /* color: #0058ca;   */
   border: 1px solid;
   text-decoration: none;
   outline: 0;

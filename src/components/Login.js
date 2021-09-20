@@ -42,21 +42,21 @@ const Login = () => {
     const {register, formState:{errors}, handleSubmit} = useForm({ mode: "onBlur" });
 
 
-  if (isLoggedIn) {
-    return <Redirect to="/productos" />;
-  }
+    if (isLoggedIn) {
+      return <Redirect to="/productos" />;
+    }
 
   return (
-    <div className="container-fluid vh-100" style={{ marginTop: "300px" }}>
+    <div className="container-fluid vh-100" style={{ marginTop: "100px" }}>
       <div className="d-flex justify-content-center">
-        <div className="rounded col-md-4 col-sm-12 shadow-lg p-5 bg-warning">
+        <div className="rounded col-md-4 col-sm-12 shadow-lg p-3 bg-transparent">
           <div className="text-center">
-            <h3 className="text-primary">Acceso Usuarios</h3>
+            <h3 className="loginH3">Acceso Usuarios</h3>
           </div>
 
           <form data-cy='formulario' onSubmit={handleSubmit(handleLogin)} >
-            <div className="form-group">
-              <label htmlFor="username">E-mail</label>
+            <div className="form-group mb-2">
+              <label className='loginLabel' htmlFor="username">E-mail</label>
               <input
               data-cy='email'
                 type="text"
@@ -76,7 +76,7 @@ const Login = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">Password</label>
+              <label className='loginLabel' htmlFor="password">Password</label>
               <input
                 data-cy='password'
                 type="password"
@@ -93,10 +93,10 @@ const Login = () => {
             <div className="form-group text-center">
               <button
                 data-cy='btn-login'
-                className="btn btn-primary btn-block mt-3"
-                disabled={loading}
-                
+                className="btn btn-outline-info btn-block mt-3"
+                disabled={loading}                
               >
+
                 {loading && (
                   <span className="spinner-border spinner-border-sm"></span>
                 )}
