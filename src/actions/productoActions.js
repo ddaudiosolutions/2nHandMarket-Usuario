@@ -148,27 +148,14 @@ const descargarProductosUserExito = (prodUser) => ({
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //VER UN SOLO PRODUCTO
+//NO USAMOS TRY CATCH, EL PRODUCTO YA ESTÁ EN MEMORIA, NO LLAMAMOS A LA API
 export function obtenerProductoIdAction(producto) {
-  return async (dispatch) => {
+  return (dispatch) => {
     dispatch(obtenerProductoIdExito(producto));
-    try {
-      // const respuestaprodId = await clienteAxios.get(
-      //   `/api/productos/${producto._id}`,
-      //   data
-      // );
-      // console.log(respuestaprodId.data.productoId)
-      // await dispatch(obtenerProductoIdExito(respuestaprodId.data.productoId));
-      //console.log(respuestaprodId.data.productoId);
-    } catch (error) {
-      console.log(error);
-      dispatch(descargarProductosError());
-    }
+    
   };
 }
-// const obtenerProductoId = (producto) => ({
-//   type: VER_PRODUCTO_ID,
-//   payload: producto,
-// });
+
 
 const obtenerProductoIdExito = (producto) => ({
   type: VER_PRODUCTO_EXITO_ID,
@@ -225,20 +212,21 @@ const eliminarProductoError = () => ({
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //COLOCAR PRODUCTO EN EDICIÓN
+//NO USAMOS TRY CATCH, EL PRODUCTO YA ESTÁ EN MEMORIA, NO LLAMAMOS A LA API
 export function obtenerProductoEditarActionUser(producto) {
-  return async (dispatch) => {
+  return  (dispatch) => {
     dispatch(obtenerProductoEditar(producto));
-    try {
-      const respuesta = await clienteAxios.get(
-        `/api/productos/user/editar/${producto._id}`,
-        data
-      );
-      dispatch(obtenerProductoEditar(respuesta.data.producto));
-      console.log(respuesta.data.producto)
-    } catch (error) {
-      console.log(error);
-      dispatch(descargarProductosError());
-    }
+    // try {
+    //   const respuesta = await clienteAxios.get(
+    //     `/api/productos/user/editar/${producto._id}`,
+    //     data
+    //   );
+    //   dispatch(obtenerProductoEditar(respuesta.data.producto));
+    //   console.log(respuesta.data.producto)
+    // } catch (error) {
+    //   console.log(error);
+    //   dispatch(descargarProductosError());
+    // }
     console.log(producto);
   };
 }

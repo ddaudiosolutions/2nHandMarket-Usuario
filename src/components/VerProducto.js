@@ -1,17 +1,10 @@
 import { Fragment } from "react";
-//import {obtenerProductoIdAction} from '../actions/productoActions'
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./VerProducto.css";
 
 const VerProducto = () => {
-  //const dispatch = useDispatch()
-
-  // useEffect(()=>{
-  //   const cargarProducto = ()=> dispatch(obtenerProductoIdAction());
-  //   cargarProducto();
-  //   // eslint-disable-next-line
-  // }, [])
+ 
 
   const producto = useSelector((state) => state.productos.productoId);
   console.log(producto);
@@ -19,8 +12,7 @@ const VerProducto = () => {
     return null;
   }
   const { title, price, description, images, contacto } = producto;
-
-  //console.log(producto)
+  
 
   return (
     <Fragment>

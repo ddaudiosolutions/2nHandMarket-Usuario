@@ -107,8 +107,7 @@ export default function productosReducer (state = initialState, action) {
       case VER_PRODUCTO_EXITO_ID:
         console.log(action.payload)
         return {
-          ...state,
-          //prodAll: null,
+          ...state,          
           productoId: action.payload,
         }   
     case OBTENER_PRODUCTO_ELIMINAR:
