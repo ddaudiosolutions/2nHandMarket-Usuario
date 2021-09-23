@@ -18,9 +18,10 @@ const Producto = ({ producto }) => {
 
   // console.log(currentUser)
 
-  const verProductoId = (producto) => {
+  const verProductoId = (producto ) => {
     dispatch(obtenerProductoIdAction(producto));
     console.log(producto);
+
     history.push(`/productos/${producto._id}`);
   };
 
@@ -40,7 +41,7 @@ const Producto = ({ producto }) => {
             <h5 className="titleH5 card-title text-center">{title}</h5>
             <button
               className="btn btn-outline-primary mt-2 mb-1" 
-              onClick={() => verProductoId(producto)}
+              onClick={() => verProductoId(producto) }
             >
               Ver Producto
             </button>

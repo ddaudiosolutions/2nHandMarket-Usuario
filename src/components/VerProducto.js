@@ -1,19 +1,26 @@
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation} from "react-router-dom";
 import "./VerProducto.css";
 
 const VerProducto = () => {
  
+  const history = useHistory();
+  // let location = useLocation();
 
+  // location = {
+  //   pathname: '/productos',
+  //   state: {setBusqueda: "all"}
+  // }
   const producto = useSelector((state) => state.productos.productoId);
   console.log(producto);
+
   if (!producto) {
     return null;
   }
   const { title, price, description, images, contacto } = producto;
   
-
+  
   return (
     <Fragment>
       <div className="col">
@@ -38,8 +45,9 @@ const VerProducto = () => {
               <span className="card-title  pproducto text-center">Contacto:</span>
               <p className="card-title pproducto ">{contacto}</p>
             </div>
+            {/* <button className= 'btn btn-info' onClick={(e)=>history.push({pathname:'/productos', state: {setBusqueda: 'vela'}})}>Volver a productos</button> */}
             <div className="text-center my-4">
-              <Link to="/productos" className="btn btn-outline-success">
+              <Link to={'/productos'} className="btn btn-outline-success">
                 VOLVER A PRODUCTOS
               </Link>
             </div>

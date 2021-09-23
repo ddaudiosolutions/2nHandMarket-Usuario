@@ -18,6 +18,8 @@ import {
   COMENZAR_EDICION_PRODUCTO,
   PRODUCTO_EDITADO_EXITO,
   PRODUCTO_EDITADO_ERROR,
+  DESCARGA_PAGINAS_EXITO,
+  DESCARGA_PAGINAS_USER_EXITO
 } from "../types";
 
 import clienteAxios from "../config/axios";
@@ -88,15 +90,20 @@ const agregarProductoError = (estado) => ({
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //FUNCION QUE DESCARGA LOS PRODUCTOS DE LA BBDD
-export function obtenerProductosAction(busqueda) {
-  console.log(busqueda)
+export function obtenerProductosAction(busqueda, pageNumber) {
+  console.log(pageNumber)
+  // pageNumber = 1
   return async (dispatch) => {
     //dispatch(descargarProductos());
     try {
       
-      const productosAll = await clienteAxios.get(`/api/productos/${busqueda}`,  data);
+      const productosAll = await clienteAxios.get(`/api/productos/${busqueda}?page=${pageNumber}`,  data);
+
       dispatch(descargarProductosExito(productosAll.data.prodAll));
+      dispatch(descargarPaginasProductosExito(productosAll.data.totalPages))
+
       console.log(productosAll.data.prodAll);
+      console.log(productosAll.data.totalPages)
     } catch (error) {
       console.log(error);
       dispatch(descargarProductosError());
@@ -119,14 +126,25 @@ const descargarProductosError = (error) => ({
   payload: error,
 });
 
+const descargarPaginasProductosExito = (paginas) => ({
+  type: DESCARGA_PAGINAS_EXITO,
+  payload: paginas,
+});
+
+/////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 //DESCARGAR PRODUCTOS USUARIO
-export function obtenerProductosActionUser() {
+export function obtenerProductosActionUser(pageNuser) {
+  console.log(pageNuser)
   return async (dispatch) => {
     dispatch(descargarProductosUser());
     try {
-      const respuestaUser = await clienteAxios.get("/api/productos/user", data);
+      const respuestaUser = await clienteAxios.get(`/api/productos/user?=${pageNuser}`, data);
       const productosUser = respuestaUser.data.prodUser;
+      const paginasUser = respuestaUser.data.totalPagesUs;
+      console.log(paginasUser)
       dispatch(descargarProductosUserExito(productosUser));
+      dispatch(descargarPaginasUserExito(paginasUser))
       console.log(productosUser);
     } catch (error) {
       console.log(error);
@@ -145,14 +163,18 @@ const descargarProductosUserExito = (prodUser) => ({
   payload: prodUser,
 });
 
+const descargarPaginasUserExito = (paginas) => ({
+  type: DESCARGA_PAGINAS_USER_EXITO,
+  payload: paginas,
+});
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //VER UN SOLO PRODUCTO
 //NO USAMOS TRY CATCH, EL PRODUCTO YA ESTÁ EN MEMORIA, NO LLAMAMOS A LA API
 export function obtenerProductoIdAction(producto) {
   return (dispatch) => {
-    dispatch(obtenerProductoIdExito(producto));
-    
+    dispatch(obtenerProductoIdExito(producto));    
   };
 }
 

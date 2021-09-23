@@ -21,6 +21,9 @@ import {
   OBTENER_PRODUCTO_EDITAR,
   PRODUCTO_EDITADO_EXITO,
   PRODUCTO_EDITADO_ERROR,
+  DESCARGA_PAGINAS_EXITO,
+  DESCARGA_PAGINAS_USER_EXITO
+
 } from "../types";
 
 //CADA REDUCER TIENE SU PROPIO STATE
@@ -33,6 +36,8 @@ const initialState = {
   productoeliminiar: null,
   productoeditar: null,
   productoId:null,
+  paginas:null,
+  paginasUser: null
   
 };
 
@@ -137,7 +142,20 @@ export default function productosReducer (state = initialState, action) {
           producto.id === action.payload.id ? (producto = action.payload) : producto
         )
       };
-
+      
+      //LLAMADO DE ESTADO DE PAGINAS PARA BUSQUEDA Y PARA USUARIO
+      case DESCARGA_PAGINAS_EXITO:
+        console.log(action.payload)
+        return{
+          ...state,
+          paginas: action.payload
+        }
+        case DESCARGA_PAGINAS_USER_EXITO:
+          console.log(action.payload)
+          return{
+            ...state,
+            paginasUser: action.payload
+          }
     default:
       return state;
   }
