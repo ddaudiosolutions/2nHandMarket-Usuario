@@ -43,12 +43,7 @@ const Productos = () => {
         </div>
         <div>
           {paginasUser.map((paginaUser) => (
-            // <button
-            //   key={paginaUser}
-            //   onClick={() =>{setPageNuser(paginaUser); console.log("paginas user pulsada")}}
-            // >
-            //   {paginaUser + 1}
-            // </button>
+            
             <PaginasBtn key={paginaUser} paginaS={paginaUser} envioPagina={envioPagina}/>
           ))}
         </div>

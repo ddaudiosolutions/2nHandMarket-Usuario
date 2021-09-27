@@ -43,7 +43,7 @@ const Login = () => {
 
 
     if (isLoggedIn) {
-      return <Redirect to="/productos" />;
+      return  <Redirect to={'/productos?busqueda=all&page=0'}></Redirect>;
     }
 
   return (

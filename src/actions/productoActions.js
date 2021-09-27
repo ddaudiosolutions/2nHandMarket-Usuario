@@ -19,7 +19,9 @@ import {
   PRODUCTO_EDITADO_EXITO,
   PRODUCTO_EDITADO_ERROR,
   DESCARGA_PAGINAS_EXITO,
-  DESCARGA_PAGINAS_USER_EXITO
+  DESCARGA_PAGINAS_USER_EXITO,
+  OBTENER_CATEGORIA_EXITO,
+  OBTENER_PAGINA_ACTUAL
 } from "../types";
 
 import clienteAxios from "../config/axios";
@@ -97,7 +99,7 @@ export function obtenerProductosAction(busqueda, pageNumber) {
     //dispatch(descargarProductos());
     try {
       
-      const productosAll = await clienteAxios.get(`/api/productos/${busqueda}?page=${pageNumber}`,  data);
+      const productosAll = await clienteAxios.get(`/api/productos?busqueda=${busqueda}&page=${pageNumber}`,  data);
 
       dispatch(descargarProductosExito(productosAll.data.prodAll));
       dispatch(descargarPaginasProductosExito(productosAll.data.totalPages))
@@ -279,7 +281,7 @@ export function editarProductoAction(producto) {
         "success"
       ).then(function() {
         //window.location.reload()})
-        window.location = "/productos"})
+        window.location = "/productos?busqueda=all&page=0"})
       //console.log(producto);
     } catch (error) {
       console.log(error);
@@ -301,3 +303,28 @@ const editarProductoUserError = (estado) => ({
   type: PRODUCTO_EDITADO_ERROR,
   payload: estado,
 });
+
+export function obtenerCategoriaActions (categoria) {
+  return (dispatch) => {
+    dispatch(obtenerCategoriaExito(categoria));
+  };
+
+}
+
+const obtenerCategoriaExito = (categoria) => ({
+  type: OBTENER_CATEGORIA_EXITO,
+  payload: categoria
+})
+
+export function obtenerPaginaAction (pagina){
+  console.log(pagina)
+  return (dispatch) => {
+    dispatch(obtenerPaginaActual(pagina))
+  }
+}
+
+const obtenerPaginaActual = (pagina) => ({
+  type: OBTENER_PAGINA_ACTUAL,
+  payload: pagina
+
+} )

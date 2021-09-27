@@ -1,22 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import {Fragment, useEffect,} from 'react'
 import { logout } from "../actions/loginActions";
 import { useDispatch, useSelector } from "react-redux";
-import { history } from "../helpers/history";
+//import { history } from "../helpers/history";
 import "./Bienvenida.css";
-const Header = () => {
+const Header = () => {  
+ 
   const { user: currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    history.listen((location) => {
-       // clear message when changing location
-    });
-  }, []);
-
-  useEffect(() => {
     if (currentUser) {
       console.log("seguimos logueados");
+      <Redirect to={'/productos?busqueda=all&page=0'}></Redirect>
     }
   }, [currentUser]);
 
@@ -29,7 +25,7 @@ const Header = () => {
       <div className="container-fluid">
         {currentUser ? (
           <Fragment>
-            <Link to={"/productos"} className="nav-link typeHeader">
+            <Link to={'/productos?busqueda=all&page=0'} className="nav-link typeHeader">
               Home
             </Link>
             <Link to={"/productos/nuevo"} className="nav-link typeHeader">

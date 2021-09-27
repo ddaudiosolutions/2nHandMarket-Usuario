@@ -28,7 +28,7 @@ const Producto = ({ producto }) => {
   return (
     <Fragment>
       <div className="col">
-        <div className="card shadow-sm gap-2  me-0">
+        <div className="card shadow-sm me-1 ms-1 ">
           <div className="">
             <img
               src={images[0].url}
