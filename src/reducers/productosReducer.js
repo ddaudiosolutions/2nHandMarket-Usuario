@@ -74,6 +74,11 @@ export default function productosReducer(state = initialState, action) {
         productos: action.payload,
       };
     case DESCARGA_PRODUCTOS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error401: action.payload,
+      };
     case PRODUCTO_EDITADO_ERROR:
       return {
         ...state,

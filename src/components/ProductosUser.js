@@ -41,12 +41,12 @@ const Productos = () => {
                 <ProductoUser key={producto._id} producto={producto} />
               ))}
         </div>
-        <div>
+        {/* <div>
           {paginasUser.map((paginaUser) => (
             
             <PaginasBtn key={paginaUser} paginaS={paginaUser} envioPagina={envioPagina}/>
           ))}
-        </div>
+        </div> */}
       </div>
     </Fragment>
   );

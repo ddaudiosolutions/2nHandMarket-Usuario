@@ -15,6 +15,8 @@ const Productos = () => {
 
   const productos = useSelector((state) => state.productos.productos);
   const paginasTotales = useSelector((state) => state.productos.paginas);  
+  const errores = useSelector((state)=> state.productos.error401)
+  console.log(errores)
 
   const paginas = new Array(paginasTotales).fill(null).map((v, i) => i);  
 
@@ -40,6 +42,9 @@ const Productos = () => {
 
   return (
     <Fragment>
+
+      {errores ?        
+        <h2 className='col-6 alert alert-warning mx-auto mt-5 text-center'>Inicia Sesión o Registrate</h2>: null}
       <div
         className="container-fluid  my-2 p-1 mt-4"
         style={{ position: "relative" }}

@@ -107,8 +107,8 @@ export function obtenerProductosAction(busqueda, pageNumber) {
       console.log(productosAll.data.prodAll);
       console.log(productosAll.data.totalPages)
     } catch (error) {
-      console.log(error);
-      dispatch(descargarProductosError());
+      console.log(error.response);
+      dispatch(descargarProductosError(error.response.status));
     }
   };
 }
