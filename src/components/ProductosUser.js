@@ -2,13 +2,13 @@ import { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { obtenerProductosActionUser } from "../actions/productoActions";
 import ProductoUser from "./ProductoUser";
-import PaginasBtn from './PaginasBtn';
+//import PaginasBtn from './PaginasBtn';
 
 const Productos = () => {
   const productos = useSelector((state) => state.productos.prodUser);
-  const paginasUserTotal = useSelector((state) => state.productos.paginasUser);
+  //const paginasUserTotal = useSelector((state) => state.productos.paginasUser);
 
-  const paginasUser = new Array(paginasUserTotal).fill(null).map((v, i) => i);
+  //const paginasUser = new Array(paginasUserTotal).fill(null).map((v, i) => i);
 
   const [pageNuser, setPageNuser] = useState("0")
 

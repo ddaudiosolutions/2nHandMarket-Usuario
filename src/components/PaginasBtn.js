@@ -1,5 +1,5 @@
 import './Producto.css'
-import { Link} from "react-router-dom";
+//import { Link} from "react-router-dom";
 import { useSelector} from "react-redux";
 
 const PaginasBtn = ({paginaS, envioPagina,  busquedaquery}) => {
