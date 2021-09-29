@@ -3,13 +3,13 @@
 import clienteAxios from "../config/axios";
 
 //CREAR USUARIO
-const resgistroUsuario = (nombre, email, password) => {
-  return clienteAxios.post('/api/usuarios', {
-    nombre,
-    email,
-    password,
-  });
-};
+// const resgistroUsuario = (nombre, email, password) => {
+//   return clienteAxios.post('/api/usuarios', {
+//     nombre,
+//     email,
+//     password,
+//   });
+// };
 
 //ACCESO LOGIN
 const loginUsuario = (email, password) => {
@@ -21,8 +21,7 @@ const loginUsuario = (email, password) => {
     .then((response) => {
       
       if (response.data.token) {       
-        localStorage.setItem("user", JSON.stringify(response.data.token));
-       
+        localStorage.setItem("user", JSON.stringify(response.data.token));       
       }   
       console.log(response.data.token)
       return response.data;
@@ -35,7 +34,7 @@ const logout = () => {
 };
 
 export default {
-  resgistroUsuario,
+ // resgistroUsuario,
   loginUsuario,
   logout,
 };

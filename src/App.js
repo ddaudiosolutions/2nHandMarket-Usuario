@@ -1,7 +1,7 @@
 //import { Fragment, useEffect } from "react";
 import {  Router, Route, Switch, } from "react-router-dom";
 import Header from "./components/Header";
-import Bienvenida from "./components/Bienvenida";
+// import Bienvenida from "./components/Bienvenida";
 import Productos from "./components/Productos";
 import ProductosUser from "./components/ProductosUser";
 import NuevoProducto from "./components/NuevoProducto";
@@ -29,8 +29,8 @@ function App() {
           <Header />
           <div className="container">
             <Switch>
-              <Route exact path="/" component={Bienvenida} />
-              <Route exact path="/home" component={Bienvenida} />
+              <Route exact path="/" component={Login} />
+              <Route exact path="/home" component={Login} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/productos/nuevo" component={NuevoProducto} />
               <Route exact path="/productos" component={Productos} />

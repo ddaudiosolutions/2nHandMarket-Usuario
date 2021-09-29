@@ -58,11 +58,13 @@ export function crearNuevoProductoAction(producto, history) {
         "El Producto se subió Correctamente",
         "success"
       ).then(function() {
-        window.location = "/productos"});
+       // history.push('/productos?busqueda=ultimos_productos&page=0');
+        window.location = "/productos?busqueda=ultimos_productos&page=0"
+      });
 
       //console.log(producto)
     } catch (error) {
-      console.log(error.response.data.errors);
+      //console.log(error.response.data.errors);
       dispatch(agregarProductoError(true));
       await Swal.fire({
         icon: "error",
@@ -70,7 +72,7 @@ export function crearNuevoProductoAction(producto, history) {
         text: "Algo ha fallado! Vuelve a intentarlo en unos minutos",
       }).then((result) => {
         if (result.isConfirmed) {
-          history.push("/productos");
+          history.push('/productos?busqueda=ultimos_productos&page=0');
         }
       });
     }

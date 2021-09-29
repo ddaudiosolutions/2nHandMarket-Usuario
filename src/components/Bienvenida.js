@@ -7,15 +7,12 @@ import {  Link } from "react-router-dom";
 const Bienvenida = () => {
   return (
     <Fragment>
-      <div className="row h-200 ">
+      <div className="row ">
         
-          <div className=" row bg-transparent">
-            <h2 className="text-center my-5 ">
-              MERCADO DE 2A MANO NO PROFESIONAL
-            </h2>
-          </div>
-          <div className="row">
-            <div className="col-sm-12 text-center g-5">              
+          <div className="row">            
+            <div className="col-sm-12 text-center g-5">  
+            <img src='/WINDMARKET_LOGO_CIRCULO_uadyzn.png' 
+            alt='WindyMArket_Logo' style={{width:'20%'}} className='me-3'></img>            
               <Link to='/nuevousuario' >
                 <button
                   data-cy='btn-registrate'

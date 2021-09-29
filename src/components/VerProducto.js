@@ -16,35 +16,38 @@ const VerProducto = () => {
   }
   const { title, price, description, images, contacto } = producto;
   
+  let string = busqueda.toUpperCase()
   
   return (
     <Fragment>
       <div className="col">
-        <div className="card1 h-100 mt-5">
-          <a href={images[0].url} target="_blank" rel="noreferrer">
+        <div className="card1 col col-lg-6 col-md-6 col-xl-6 mt-5 mx-auto">
+          <a  href={images[0].url} target="_blank" rel="noreferrer">
             <img
               src={images[0].url}
-              className="card-img-top1 mt-3"
+              className="card-img-top1"
               alt={images[0].filename}
             ></img>
           </a>
           <div className="card-body">
+          <h5 className="card-title titleH5V rounded text-center">{title}</h5>
             <div className="clearfix mb-3 text-center">
               <span className=" price-hp1">Precio: {price} €</span>
             </div>
-            <h5 className="card-title titleH5V rounded text-center">{title}</h5>
+            
             <div className="card-header mb-2">
-              <span className="card-title pproducto text-center">Descripción:</span>
-              <p className="card-title pproducto">{description}</p>
+              {/* <span className="card-title pproductoTitle text-center">Descripción:</span> */}
+              <p className="card-title pproductoTitle">{description}</p>
             </div>
             <div className="card-header">
-              <span className="card-title  pproducto text-center">Contacto:</span>
-              <p className="card-title pproducto ">{contacto}</p>
+              {/* <span className="card-title  pproductoTitle text-center">Contacto:</span> */}
+              <p className="card-title pproductoTitle ">{contacto}</p>
             </div>
             
             <div className="text-center my-4">
+              
               <Link to={`/productos?busqueda=${busqueda}&page=${paginaActual}`} className="btn btn-outline-success">
-                VOLVER A PRODUCTOS
+                Volver a Categoria: {string}
               </Link>
             </div>
           </div>

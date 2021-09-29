@@ -168,11 +168,11 @@ const NuevoProducto = () => {
                     <option value="" disabled>
                       Selecciona el tipo de producto
                     </option>
-                    <option value="tabla">Tabla</option>
-                    <option value="vela">Vela</option>
-                    <option value="botavara">Botavara</option>
-                    <option value="mastil">Mastil</option>
-                    <option value="accesorio">Accesorio</option>
+                    <option value="tablas">Tablas</option>
+                    <option value="velas">Velas</option>
+                    <option value="botavaras">Botavaras</option>
+                    <option value="mastiles">Mastiles</option>
+                    <option value="accesorios">Accesorios</option>
                   </select>
                   {errors.categoria?.type === "required" && (
                     <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">

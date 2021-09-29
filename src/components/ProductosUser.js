@@ -30,11 +30,11 @@ const Productos = () => {
   return (
     <Fragment>
       {/* <h2 className="text-center">Mis Productos</h2> */}
-      <div
+      {/* <div
         className="container-fluid bg-trasparent my-2 p-1"
         style={{ position: "relative" }}
-      >
-        <div className="row row-cols-2 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+      > */}
+        <div className="row row-cols-2 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3 justify-content-center ">
           {productos === undefined
             ? null
             : productos.map((producto) => (
@@ -47,7 +47,7 @@ const Productos = () => {
             <PaginasBtn key={paginaUser} paginaS={paginaUser} envioPagina={envioPagina}/>
           ))}
         </div> */}
-      </div>
+      {/* </div> */}
     </Fragment>
   );
 };

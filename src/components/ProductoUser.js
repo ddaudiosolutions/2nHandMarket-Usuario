@@ -45,7 +45,7 @@ const ProductoUser = ({ producto }) => {
   return (
     <Fragment>
       <div className="col">
-        <div className="card shadow-sm">
+        <div className="card shadow-sm me-1 ms-1 mt-4">
           <img
             src={images[0].url}
             className="card-img-top mt-3"

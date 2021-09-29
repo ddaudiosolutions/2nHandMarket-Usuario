@@ -20,14 +20,17 @@ import {
   
     switch (type) {
       case REGISTER_SUCCESS:
+        //console.log(action.payload)
         return {
           ...state,
-          //isLoggedIn: false,
+          //isLoggedIn: true,
         };
       case REGISTER_FAIL:
+        console.log(action.payload)
         return {
           ...state,
           isLoggedIn: false,
+          message: action.payload
         };
       case LOGIN_SUCCESS:
         return {
