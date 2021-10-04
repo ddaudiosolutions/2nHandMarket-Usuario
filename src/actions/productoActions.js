@@ -111,7 +111,7 @@ export function obtenerProductosAction(busqueda, pageNumber) {
       console.log(error.response);
       if(error.response.status === 401){
         console.log('estamos sin TOKEN')
-        dispatch(descargarProductosError())
+        //dispatch(descargarProductosError())
         window.location= '/home';
         
       }
