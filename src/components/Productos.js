@@ -1,6 +1,6 @@
 import { Fragment, useEffect } from "react";
 import { useSelector, useDispatch,  } from "react-redux";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Link,  Redirect,  useHistory } from "react-router-dom";
 import {
   obtenerProductosAction,
   obtenerCategoriaActions,
@@ -13,13 +13,13 @@ const Productos = () => {
 
   const history = useHistory();
 
-  const location = useLocation();
-  console.log(location);
+  //const location = useLocation();
+  //console.log(location);
 
   const productos = useSelector((state) => state.productos.productos);
   const paginasTotales = useSelector((state) => state.productos.paginas);
   const errores = useSelector((state) => state.productos.error401);
-
+  
 
   const paginas = new Array(paginasTotales).fill(null).map((v, i) => i);
 
@@ -40,17 +40,18 @@ const Productos = () => {
     cargarCategoria(busquedaquery);
     cargarProductos(busquedaquery, pagequery);
     dispatch(obtenerPaginaAction(pagequery));
-    console.log("vuelvo a llar a la api");
+   // console.log("vuelvo a llar a la api");
     // eslint-disable-next-line
   }, [busquedaquery, pagequery]);
 
   return (
     <Fragment>
-      {errores ? (
+      {errores ? ((
         <h2 className="col-6 alert alert-warning mx-auto mt-5 text-center">
           Inicia Sesión o Registrate
-        </h2>
-      ) : null}
+        </h2>,
+        <Redirect to='/login'></Redirect>
+      )) : null}
       <div
         className="container-fluid  my-2 p-1 mt-4"
         style={{ position: "relative" }}

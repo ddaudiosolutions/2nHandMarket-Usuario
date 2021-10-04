@@ -179,7 +179,19 @@ h2{
     outline: 0;
   font-size: 0.7rem;
   font-family: Saira;
-  font-weight: 500;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
+}
+
+.btn-outline-primary:link{
+  background-color: #e02b20;
+  color: #ffffff;
+  /* transition: 1000ms;   */
+  border: 1px solid;
+    outline: 0;
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
   letter-spacing: 0.03rem;
 }
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { loginUsuario } from "../actions/loginActions";
+import { loginUsuarioActions } from "../actions/loginActions";
 //import Swal from 'sweetalert2';
 
 const Login = () => {
@@ -29,7 +29,7 @@ const Login = () => {
     //e.preventDefault()
     setLoading(true);
     //window.location.reload();
-    dispatch(loginUsuario(email, password))
+    dispatch(loginUsuarioActions(email, password))
       .then(() => {
         window.location.reload();
       })

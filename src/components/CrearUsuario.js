@@ -16,7 +16,8 @@ const CrearUsuario = () => {
   const dispatch = useDispatch();
 
   const onChangeUsername = (e) => {
-    const nombre = e.target.value;
+    e.preventDefault()
+    const nombre = (e.target.value).toUpperCase();
     setUsername(nombre);
   };
 
@@ -77,6 +78,7 @@ const CrearUsuario = () => {
                       Nombre
                     </label>
                     <input
+                      onInput='this.value'
                       type="text"
                       className="form-control"
                       //name="nombre"

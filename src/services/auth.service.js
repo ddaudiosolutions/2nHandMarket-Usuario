@@ -12,6 +12,21 @@ import clienteAxios from "../config/axios";
 // };
 
 //ACCESO LOGIN
+// const loginUsuario = (email, password) => {
+//   return clienteAxios
+//     .post('/api/auth', {
+//       email,
+//       password,
+//     })
+//     .then((response) => {
+      
+//       if (response.data.token) {       
+//         localStorage.setItem("user", JSON.stringify(response.data.token));       
+//       }   
+//       console.log(response.data.token)
+//       return response.data;
+//     });
+// };
 const loginUsuario = (email, password) => {
   return clienteAxios
     .post('/api/auth', {
@@ -19,11 +34,11 @@ const loginUsuario = (email, password) => {
       password,
     })
     .then((response) => {
-      
-      if (response.data.token) {       
-        localStorage.setItem("user", JSON.stringify(response.data.token));       
-      }   
-      console.log(response.data.token)
+      if (response.data.token) {
+        localStorage.setItem("userN", JSON.stringify(response.data.nombre))
+        localStorage.setItem("user", JSON.stringify(response.data.token));
+      }
+
       return response.data;
     });
 };
@@ -31,10 +46,12 @@ const loginUsuario = (email, password) => {
 //BORRAR LOGIN
 const logout = () => {
   localStorage.removeItem("user");
+  localStorage.removeItem("userN");
 };
 
 export default {
  // resgistroUsuario,
   loginUsuario,
+  //login,
   logout,
 };

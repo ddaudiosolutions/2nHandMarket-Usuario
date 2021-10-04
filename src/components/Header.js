@@ -8,6 +8,9 @@ const Header = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
+  const nombreUser = localStorage.getItem("userN");
+  //console.log(nombreUser)
+
   useEffect(() => {
     if (currentUser) {
       console.log("seguimos logueados");
@@ -20,30 +23,75 @@ const Header = () => {
   };
   //
   return (
-    <nav className="bg-nav row justify-content-center">
-      <div className="col col-lg-4 col-xl-4 ">
-          <img
-            src="/LOGO_CIRCULAR_SIN_FONDO.png"
-            alt="WindyMArket_Logo"
-            style={{ width: "8rem" }}
-            className="d-flex ms-5 mt-3 mb-4"
-          ></img>
-        </div>
-      <div className="col-6 d-flex  bg-nav rounded">        
+    <nav className="bg-nav  d-flex align-items-end ">
+      <div className="container-fluid col ">
+        <Link to={"/productos?busqueda=ultimos_productos&page=0"}
+              className="nav-link typeHeader  ">
+                <img
+          src="/LOGO_CIRCULAR_SIN_FONDO.png"
+          alt="WindyMArket_Logo"
+          style={{ width: "8rem" }}
+          className="navbar-brand ms-4 mt-2 mb-2"
+          
+        ></img>
+        </Link>
+        
+      </div>
+      <div className="d-flex justify-content-end me-4 mb-2">
         {currentUser ? (
           <Fragment>
-            <Link
+            {/* <Link
               to={"/productos?busqueda=ultimos_productos&page=0"}
-              className="nav-link typeHeader mx-auto "
+              className="nav-link typeHeader  "
             >
               Home
-            </Link>
-            <Link to={"/productos/nuevo"} className="nav-link mx-auto typeHeader">
+            </Link> */}
+            <div className="">
+              <button
+                type="button"
+                className="btn btn-outline-primary "
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Bienvenid@ {nombreUser}
+              </button>
+              <ul className="dropdown-menu">
+                <li>
+                  <Link
+                    to={"/productos/nuevo"}
+                    className="nav-link  typeHeader"
+                  >
+                    Subir Producto
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={"/productos/user"}
+                    className="nav-link  typeHeader"
+                  >
+                    Mis Productos
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={"/home"}
+                    href="/login"
+                    className="nav-link typeHeader"
+                    onClick={logOut}
+                  >
+                    LogOut
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* <Link to={"/productos/nuevo"} className="nav-link  typeHeader">
               Subir Producto
             </Link>
-            <Link to={"/productos/user"} className="nav nav-link mx-auto typeHeader">
+            <Link to={"/productos/user"} className="nav nav-link  typeHeader">
               Mis Productos
             </Link>
+            <h5 className="nav nav-link  typeHeaderUser">{nombreUser}</h5>
             <Link
               to={"/home"}
               href="/login"
@@ -51,7 +99,7 @@ const Header = () => {
               onClick={logOut}
             >
               LogOut
-            </Link>
+            </Link> */}
           </Fragment>
         ) : (
           <Fragment>

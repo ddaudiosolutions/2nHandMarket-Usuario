@@ -34,7 +34,7 @@ export function registroActions(nombre, email, password) {
     return Promise.resolve();
 
       } catch(error){
-
+        console.log(error)
       }
     }
   }

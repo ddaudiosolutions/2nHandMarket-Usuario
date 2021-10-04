@@ -95,22 +95,28 @@ const agregarProductoError = (estado) => ({
 
 //FUNCION QUE DESCARGA LOS PRODUCTOS DE LA BBDD
 export function obtenerProductosAction(busqueda, pageNumber) {
-  console.log(pageNumber)
+  //console.log(pageNumber)
   // pageNumber = 1
   return async (dispatch) => {
     //dispatch(descargarProductos());
-    try {
-      
+    try {      
       const productosAll = await clienteAxios.get(`/api/productos?busqueda=${busqueda}&page=${pageNumber}`,  data);
 
       dispatch(descargarProductosExito(productosAll.data.prodAll));
       dispatch(descargarPaginasProductosExito(productosAll.data.totalPages))
 
-      console.log(productosAll.data.prodAll);
+      console.log(productosAll.data);
       console.log(productosAll.data.totalPages)
     } catch (error) {
       console.log(error.response);
-      dispatch(descargarProductosError(error.response.status));
+      if(error.response.status === 401){
+        console.log('estamos sin TOKEN')
+        dispatch(descargarProductosError())
+        window.location= '/home';
+        
+      }
+      // dispatch(descargarProductosError(error.response.data))     
+              
     }
   };
 }
@@ -319,7 +325,7 @@ const obtenerCategoriaExito = (categoria) => ({
 })
 
 export function obtenerPaginaAction (pagina){
-  console.log(pagina)
+  //console.log(pagina)
   return (dispatch) => {
     dispatch(obtenerPaginaActual(pagina))
   }

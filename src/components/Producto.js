@@ -12,7 +12,7 @@ const Producto = ({ producto }) => {
   //LOD PRODUCTOS LLEGAN POR PROPS DE PRODUCTOS.JS
   //const { user: currentUser } = useSelector((state) => state.auth);
   //console.log(producto._id)
-  const { title, price, images, description } = producto;
+  const { title, price, images, description} = producto;
   const dispatch = useDispatch();
   const history = useHistory();
 
