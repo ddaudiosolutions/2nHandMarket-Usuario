@@ -15,7 +15,10 @@ const Header = () => {
     if (currentUser) {
       console.log("seguimos logueados");
       <Redirect to={"/productos?busqueda=ultimos_productos&page=0"}></Redirect>;
+    } else {
+      logOut();
     }
+    // eslint-disable-next-line
   }, [currentUser]);
 
   const logOut = () => {
@@ -25,64 +28,66 @@ const Header = () => {
   return (
     <nav className="bg-nav  d-flex align-items-end ">
       <div className="container-fluid col ">
-        <Link to={"/productos?busqueda=ultimos_productos&page=0"}
-              className="nav-link typeHeader  ">
-                <img
-          src="/LOGO_CIRCULAR_SIN_FONDO.png"
-          alt="WindyMArket_Logo"
-          style={{ width: "8rem" }}
-          className="navbar-brand ms-4 mt-2 mb-2"
-          
-        ></img>
+        <Link
+          to={"/productos?busqueda=ultimos_productos&page=0"}
+          className="nav-link typeHeader  "
+        >
+          <img
+            src="/LOGO_CIRCULAR_SIN_FONDO.png"
+            alt="WindyMArket_Logo"
+            style={{ width: "8rem" }}
+            className="navbar-brand ms-4 mt-2 mb-2"
+          ></img>
         </Link>
-        
       </div>
-      <div className="d-flex justify-content-end me-4 mb-2">
+      <div className=" me-4 mb-3">
         {currentUser ? (
           <Fragment>
-            {/* <Link
-              to={"/productos?busqueda=ultimos_productos&page=0"}
-              className="nav-link typeHeader  "
-            >
-              Home
-            </Link> */}
             <div className="">
-              <button
-                type="button"
-                className="btn btn-outline-primary "
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Bienvenid@ {nombreUser}
-              </button>
-              <ul className="dropdown-menu">
-                <li>
-                  <Link
-                    to={"/productos/nuevo"}
-                    className="nav-link  typeHeader"
-                  >
-                    Subir Producto
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/productos/user"}
-                    className="nav-link  typeHeader"
-                  >
-                    Mis Productos
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/home"}
-                    href="/login"
-                    className="nav-link typeHeader"
-                    onClick={logOut}
-                  >
-                    LogOut
-                  </Link>
-                </li>
-              </ul>
+              <div className=" d-flex text-center">
+                <h5 className="typeHeader mt-1 text-center ">
+                  Bienvenid@ {nombreUser}
+                </h5>
+              </div>
+
+              <div className="d-flex justify-content-center">
+                <button
+                  type="button"
+                  className="btn btn-outline-primary "
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Mi Cuenta
+                </button>
+                <ul className="dropdown-menu">
+                  <li>
+                    <Link
+                      to={"/productos/nuevo"}
+                      className="nav-link  typeHeader"
+                    >
+                      Subir Producto
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/productos/user"}
+                      className="nav-link  typeHeader"
+                    >
+                      Mis Productos
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/home"}
+                      href="/login"
+                      className="nav-link typeHeader"
+                      onClick={logOut}
+                    >
+                      LogOut
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
 
             {/* <Link to={"/productos/nuevo"} className="nav-link  typeHeader">

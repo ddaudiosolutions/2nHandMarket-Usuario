@@ -24,17 +24,17 @@ import {
         //console.log(action.payload)
         return {
           ...state,
-          //isLoggedIn: true,
+          isLoggedIn: true,
         };
       case REGISTER_FAIL:
-        console.log(action.payload)
+        //console.log(action.payload)
         return {
           ...state,
           isLoggedIn: false,
           message: action.payload
         };
       case LOGIN_SUCCESS:
-        console.log(payload.user)
+        //console.log(payload.user)
         return {
           ...state,
           isLoggedIn: true,
@@ -50,7 +50,8 @@ import {
         return {
           ...state,
           isLoggedIn: false,
-          user: null,
+          user: action.payload,
+          
         };
       case LOGOUT:
         return {

@@ -3,7 +3,7 @@ import {
   AGREGAR_PRODUCTO_EXITO,
   AGREGAR_PRODUCTO_ERROR,
   //COMENZAR_DESCARGA_PRODUCTOS,
-  DESCARGA_PRODUCTOS_ERROR,
+ // DESCARGA_PRODUCTOS_ERROR,
   DESCARGA_PRODUCTOS_EXITO,
  // VER_PRODUCTO_ID,
   VER_PRODUCTO_EXITO_ID,
@@ -21,11 +21,18 @@ import {
   DESCARGA_PAGINAS_EXITO,
   DESCARGA_PAGINAS_USER_EXITO,
   OBTENER_CATEGORIA_EXITO,
-  OBTENER_PAGINA_ACTUAL
+  OBTENER_PAGINA_ACTUAL,
+  DESCARGA_PRODUCTOS_AUTHOR_EXITO
 } from "../types";
+
+import {  
+  LOGIN_FAIL,
+  
+} from '../actions/types'
 
 import clienteAxios from "../config/axios";
 import Swal from "sweetalert2";
+
 
 const user = JSON.parse(localStorage.getItem("user"));
 const data = {
@@ -93,10 +100,12 @@ const agregarProductoError = (estado) => ({
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
 //FUNCION QUE DESCARGA LOS PRODUCTOS DE LA BBDD
 export function obtenerProductosAction(busqueda, pageNumber) {
   //console.log(pageNumber)
   // pageNumber = 1
+  
   return async (dispatch) => {
     //dispatch(descargarProductos());
     try {      
@@ -110,30 +119,27 @@ export function obtenerProductosAction(busqueda, pageNumber) {
     } catch (error) {
       console.log(error.response);
       if(error.response.status === 401){
-        console.log('estamos sin TOKEN')
-        //dispatch(descargarProductosError())
-        window.location= '/home';
-        
-      }
-      // dispatch(descargarProductosError(error.response.data))     
-              
-    }
+        console.log('estamos sin TOKEN');
+        console.log('hemos cerrado'); 
+        dispatch(descargarProductosError401(error.response.data))  
+      }                  
+    } 
   };
 }
 
-// const descargarProductos = () => ({
-//   type: COMENZAR_DESCARGA_PRODUCTOS,
-//   payload: true,
-// });
 
 const descargarProductosExito = (prodAll) => ({
   type: DESCARGA_PRODUCTOS_EXITO,
   payload: prodAll,
 });
 
-const descargarProductosError = (error) => ({
-  type: DESCARGA_PRODUCTOS_ERROR,
-  payload: error,
+const descargarProductosError401 = () => ({
+  type: LOGIN_FAIL,  
+});
+
+const descargarProductosError = () => ({
+  type: LOGIN_FAIL,
+  
 });
 
 const descargarPaginasProductosExito = (paginas) => ({
@@ -145,17 +151,17 @@ const descargarPaginasProductosExito = (paginas) => ({
 ///////////////////////////////////////////////////////////////////////
 //DESCARGAR PRODUCTOS USUARIO
 export function obtenerProductosActionUser(pageNuser) {
-  console.log(pageNuser)
+  //console.log(pageNuser)
   return async (dispatch) => {
     dispatch(descargarProductosUser());
     try {
       const respuestaUser = await clienteAxios.get(`/api/productos/user?=${pageNuser}`, data);
       const productosUser = respuestaUser.data.prodUser;
       const paginasUser = respuestaUser.data.totalPagesUs;
-      console.log(paginasUser)
+      //console.log(paginasUser)
       dispatch(descargarProductosUserExito(productosUser));
       dispatch(descargarPaginasUserExito(paginasUser))
-      console.log(productosUser);
+      //console.log(productosUser);
     } catch (error) {
       console.log(error);
       dispatch(descargarProductosError());
@@ -336,3 +342,50 @@ const obtenerPaginaActual = (pagina) => ({
   payload: pagina
 
 } )
+
+/////////
+///////////////////////
+// DESCARGAR TODOS LOS PRODUCTOS DE UN USUARIO
+/////////
+///////////////////////
+/////////
+///////////////////////
+export function obtenerProductosActionAuthor(producto) {
+  console.log(producto.author._id)
+ 
+  return async (dispatch) => {
+    //dispatch(descargarProductos());
+    try {      
+      const productosAuthor = await clienteAxios.get(`/api/productos/auth?authorid=${producto.author._id}`,  data);
+      console.log(productosAuthor.data)
+      dispatch(descargarProductosAuthorExito(productosAuthor.data.prodAuth));
+      //dispatch(descargarPaginasProductosExito(productosAuthor.data))
+
+      //console.log(productosAuthor.data);
+      //console.log(productosAuthor.data.totalPages)
+    } catch (error) {
+      console.log(error.response);
+      if(error.response.status === 401){
+        console.log('estamos sin TOKEN');
+        console.log('hemos cerrado'); 
+        dispatch(descargarProductosError401(error.response.data))  
+      }                  
+    } 
+  };
+}
+
+
+const descargarProductosAuthorExito = (prodAuth) => ({
+  type: DESCARGA_PRODUCTOS_AUTHOR_EXITO,
+  payload: prodAuth,
+});
+
+const descargarProductosAuthorError401 = () => ({
+  type: LOGIN_FAIL,  
+});
+
+const descargarProductosAuthorError = () => ({
+  type: LOGIN_FAIL,
+  
+});
+

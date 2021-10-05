@@ -1,36 +1,28 @@
 import { Fragment } from "react";
 import "./Producto.css";
-import parse from 'date-fns/parse'
-//import {toDate, format} from 'date-fns'
 //import './ProductoUser.css'
 import { useHistory } from "react-router-dom";
 //import { useSelector } from "react-redux";
 //REDUX
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { obtenerProductoIdAction } from "../actions/productoActions";
 //import { obtenerProductoVisionar } from "../actions/productoActions";
 
-const Producto = ({ producto }) => {
+const ProductoAuthor = ({ producto }) => {
   //LOD PRODUCTOS LLEGAN POR PROPS DE PRODUCTOS.JS
   //const { user: currentUser } = useSelector((state) => state.auth);
   //console.log(producto._id)
-  const { title, price, images, description, creado} = producto;
+  const { title, price, images, description} = producto;
   const dispatch = useDispatch();
   const history = useHistory();
 
-   console.log(creado)
+   console.log(producto)
 
   const verProductoId = (producto) => {
     dispatch(obtenerProductoIdAction(producto));
     console.log(producto);
-
     history.push(`/productos/${producto._id}`);
   };
-
-  // const date = new Date(creado)
-  // const clonedDate = toDate(date)
-  // const clonedDateFormat= format(clonedDate, 'dd-MM-yyyy')
-  // console.log(clonedDateFormat)
 
   return (
     <Fragment>
@@ -62,4 +54,4 @@ const Producto = ({ producto }) => {
   );
 };
 
-export default Producto;
+export default ProductoAuthor;

@@ -23,12 +23,14 @@ import {
   DESCARGA_PAGINAS_USER_EXITO,
   OBTENER_CATEGORIA_EXITO,
   OBTENER_PAGINA_ACTUAL,
+  DESCARGA_PRODUCTOS_AUTHOR_EXITO
 } from "../types";
 
 //CADA REDUCER TIENE SU PROPIO STATE
 
 const initialState = {
   productos: [],
+  productosAuth: [],
   error: null,
   loading: false,
   productovisionar: null,
@@ -179,6 +181,14 @@ export default function productosReducer(state = initialState, action) {
         ...state,
         categoria: action.payload,
       };
+
+      case DESCARGA_PRODUCTOS_AUTHOR_EXITO:
+        console.log(action.payload);
+        return {
+          ...state,
+          productosAuth: action.payload
+
+        }
 
     default:
       return state;

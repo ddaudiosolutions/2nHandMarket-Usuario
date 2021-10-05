@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { loginUsuarioActions } from "../actions/loginActions";
-//import Swal from 'sweetalert2';
+
 
 const Login = () => {
   const [email, setUsername] = useState("");
@@ -11,8 +11,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const { isLoggedIn } = useSelector((state) => state.auth);
-  //const { message } = useSelector((state) => state.message);
-  //const history = useHistory()
+
   const dispatch = useDispatch();
 
   const onChangeUsername = (e) => {
@@ -38,6 +37,7 @@ const Login = () => {
       });
   };
 
+//MANEJO DE MENSAJES DE ERROR
   const {
     register,
     formState: { errors },

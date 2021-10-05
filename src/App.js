@@ -9,6 +9,7 @@ import EditarProducto from "./components/EditarProducto";
 import CrearUsuario from "./components/CrearUsuario";
 import Login from "./components/Login";
 import VerProducto from "./components/VerProducto";
+import ProductosAuth from "./components/ProductosAuth";
 //import { logout } from "./actions/loginActions";
 import { history } from "./helpers/history";
 //import { clearMessage } from "./actions/message";
@@ -23,8 +24,7 @@ function App() {
     // <Fragment>
     //(
       <Router history={history}>
-        <Provider store={store}>
-          
+        <Provider store={store}>          
           
           <Header />
           <div className="container">
@@ -34,6 +34,7 @@ function App() {
               <Route exact path="/login" component={Login} />
               <Route exact path="/productos/nuevo" component={NuevoProducto} />
               <Route exact path="/productos" component={Productos} />
+              <Route exact path="/productos/auth" component={ProductosAuth} />
               <Route exact path="/productos/user" component={ProductosUser} />
               <Route exact path="/productos/:id" component={VerProducto} />
               <Route
@@ -43,6 +44,7 @@ function App() {
               />
               <Route exact path="/productos/user/:id" component={VerProducto} />
               <Route exact path="/nuevousuario" component={CrearUsuario} />
+              
               {/* <Route exact path="/login" component={Login} /> */}
             </Switch>
           </div>
