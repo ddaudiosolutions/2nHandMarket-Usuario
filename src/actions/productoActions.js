@@ -46,10 +46,7 @@ const data = {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //CREAR NUEVOS PRODUCTOS
 export function crearNuevoProductoAction(producto, history) {
-  //console.log(producto)
-  // for(let value of producto){
-  //   console.log(value)
-  // }
+  
   return async (dispatch) => {
     //dispatch(agregarProducto());
     try {
@@ -284,7 +281,7 @@ export function editarProductoAction(producto) {
       const editarRespuesta = await clienteAxios.put(
         `/api/productos/user/editar/${productoId}`,
         producto,
-        data
+        //data
       );
       console.log(editarRespuesta.data);
       dispatch(editarProductoUserExito(producto));
@@ -295,7 +292,7 @@ export function editarProductoAction(producto) {
         "success"
       ).then(function() {
         //window.location.reload()})
-        window.location = "/productos?busqueda=all&page=0"})
+        window.location = "/productos?busqueda=ultimos_productos&page=0"})
       //console.log(producto);
     } catch (error) {
       console.log(error);
@@ -380,12 +377,12 @@ const descargarProductosAuthorExito = (prodAuth) => ({
   payload: prodAuth,
 });
 
-const descargarProductosAuthorError401 = () => ({
-  type: LOGIN_FAIL,  
-});
+// const descargarProductosAuthorError401 = () => ({
+//   type: LOGIN_FAIL,  
+// });
 
-const descargarProductosAuthorError = () => ({
-  type: LOGIN_FAIL,
+// const descargarProductosAuthorError = () => ({
+//   type: LOGIN_FAIL,
   
-});
+// });
 

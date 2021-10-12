@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import "./VerProducto.css";
@@ -13,29 +13,42 @@ const VerProducto = () => {
   const producto = useSelector((state) => state.productos.productoId);
   const busqueda = useSelector((state) => state.productos.categoria);
   const paginaActual = useSelector((state) => state.productos.paginaActual);
-  console.log(busqueda, paginaActual);
+ 
+  //console.log(datosUsuario);
 
   //const productos = useSelector((state) => state.productos.prodUser);
   const dispatch = useDispatch();
   const history = useHistory();
+  
+  //const avatarGet = useSelector((state) => state.auth.avatar);    
+   
+  //const [avatarUrl, setAvatarUrl] = useState('') 
+  
+   useEffect(() => {
+    if (!producto) {
+      return null;
+    }
+       //setAvatarUrl(avatarGet.imagesAvatar[0].url)
+       
+   }, [])
 
-  if (!producto) {
-    return null;
-  }
+  
 
   const { title, price, description, images, contacto, author, creado } = producto;
-  console.log(author._id);
+  //console.log(author._id);
   
   
   ///CONVERTIMOS LA FECHA A UN FORMATO COMUN
   const date = new Date(creado)
   const clonedDate = toDate(date)
   const clonedDateFormat= format(clonedDate, 'dd-MM-yyyy')
-  console.log(clonedDateFormat)
-
+  //console.log(clonedDateFormat)
+  
   
   let authorName = author.nombre.toLowerCase();
-  console.log(authorName);
+  let authorDireccion = author.direccion;
+  console.log(author)
+  
   let string = busqueda.toUpperCase();
 
    const cargarProductosAuthor = (producto) => {dispatch(obtenerProductosActionAuthor(producto));
@@ -46,16 +59,16 @@ const VerProducto = () => {
 
   return (
     <Fragment>
-      <div className="container col-sm-12 col-md-11 col-lg-8 col-xl-8">
+      <div className="container col-sm-9 col-md-9 col-lg-7 col-xl-7">
         <div className="cardVerProducto mt-3 ">
           <div className="d-flex justify-content-start  mt-3" 
           type='button'
           onClick={()=> cargarProductosAuthor(producto)}>
-            <img
-              src="/AvatarDavid.jpg"
+            {/* <img
+              src={avatarUrl}
               className="card-img-topAvatar ms-4 mt-3"
               alt="avatarUser"
-            ></img>
+            ></img> */}
             <h5 className="h5Avatar ms-2 mt-4">{authorName}</h5>
           </div>
 
@@ -89,7 +102,10 @@ const VerProducto = () => {
             </div>
             <div className="card-header">
               {/* <span className="card-title  pproductoTitle text-center">Contacto:</span> */}
-              <p className="card-title pproductoTitle ">{contacto}</p>
+              
+              <p className="card-title pproductoTitle ">{author.email}</p>
+              <p className="card-title pproductoTitle ">{author.telefono}</p>
+              <p className="card-title pproductoTitle ">{author.direccion}</p>
             </div>
 
             <div className="text-center my-4">

@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import "./Producto.css";
-import parse from 'date-fns/parse'
+//import parse from 'date-fns/parse'
 //import {toDate, format} from 'date-fns'
 //import './ProductoUser.css'
 import { useHistory } from "react-router-dom";
@@ -11,26 +11,15 @@ import { obtenerProductoIdAction } from "../actions/productoActions";
 //import { obtenerProductoVisionar } from "../actions/productoActions";
 
 const Producto = ({ producto }) => {
-  //LOD PRODUCTOS LLEGAN POR PROPS DE PRODUCTOS.JS
-  //const { user: currentUser } = useSelector((state) => state.auth);
-  //console.log(producto._id)
-  const { title, price, images, description, creado} = producto;
+  const { title, price, images, description } = producto;
   const dispatch = useDispatch();
   const history = useHistory();
 
-   console.log(creado)
-
   const verProductoId = (producto) => {
     dispatch(obtenerProductoIdAction(producto));
-    console.log(producto);
 
     history.push(`/productos/${producto._id}`);
   };
-
-  // const date = new Date(creado)
-  // const clonedDate = toDate(date)
-  // const clonedDateFormat= format(clonedDate, 'dd-MM-yyyy')
-  // console.log(clonedDateFormat)
 
   return (
     <Fragment>
@@ -54,7 +43,6 @@ const Producto = ({ producto }) => {
             <div className="excerpt pproductoTitle m-1 mb-4" rows="1">
               {description}
             </div>
-           
           </div>
         </div>
       </div>

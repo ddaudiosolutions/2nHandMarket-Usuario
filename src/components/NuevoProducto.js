@@ -19,38 +19,7 @@ const TextArea = styled.textarea`
   font-family: Saira;
 `;
 
-// const tablas = [
-//   { value: "slalom", label: "Slalom" },
-//   { value: "freeride", label: "Free-Ride" },
-//   { value: "freerace", label: "Free-Race" },
-//   { value: "freestyle", label: "Free-Style" },
-//   { value: "waves", label: "Waves" },
-// ];
 
-// const velas = [
-//   { value: "slalom", label: "Slalom_V" },
-//   { value: "freeride", label: "Free-Ride" },
-//   { value: "freerace", label: "Free-Race" },
-//   { value: "freestyle", label: "Free-Style" },
-//   { value: "waves", label: "Waves" },
-// ];
-
-// const botavaras = [
-//   { value: "carbono", label: "Carbono" },
-//   { value: "aluminio", label: "Aluminio" },
-//   { value: "mixtas", label: "Mixtas" },
-// ];
-
-// const mastiles = [
-//   { value: "rdm", label: "RDM" },
-//   { value: "sdm", label: "SDM" },
-// ];
-
-// const accesorios = [
-//   { value: "arnes", label: "Arnes" },
-//   { value: "alargador", label: "Alargador" },
-//   { value: "aleta", label: "Aleta" },
-// ];
 
 const NuevoProducto = () => {
   //MANEJO DE STATES LOCALES
@@ -76,35 +45,7 @@ const NuevoProducto = () => {
   //console.log(images.size);
   if (images.size > 100000) {
   }
-  //console.log(subCategoria);
-
-  // let subopcion;
-
-  // switch (categoria) {
-  //   case "tabla":
-  //     subopcion = tablas;
-  //     break;
-
-  //   case "vela":
-  //     subopcion = velas;
-  //     break;
-
-  //   case "botavara":
-  //     subopcion = botavaras;
-  //     break;
-
-  //   case "mastil":
-  //     subopcion = mastiles;
-  //     break;
-
-  //   case "accesorio":
-  //     subopcion = accesorios;
-  //     break;
-
-  //   default:
-  //     subopcion = tablas;
-  //     break;
-  // }
+  
 
   //MANEJO DEL REDUX EN EL FORMULARIO
 
@@ -284,7 +225,8 @@ const NuevoProducto = () => {
                     className="form-control"
                     id="contacto"
                     rows="3"
-                    {...register("contacto", { required: true })}
+                    placeholder='Se utilizaran los datos de contacto guardados en el perfil'
+                    {...register("contacto", { required: false })}
                     onChange={(e) => setContacto(e.target.value)}
                   ></TextArea>
                   {errors.contacto?.type === "required" && (
@@ -295,7 +237,7 @@ const NuevoProducto = () => {
                 </div>
                 <div>
                   <input
-                    className="form-input"
+                    className="form-input btn-file-upload"
                     id="images"
                     type="file"
                     //name="images"

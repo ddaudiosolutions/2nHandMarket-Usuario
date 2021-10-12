@@ -10,6 +10,9 @@ import CrearUsuario from "./components/CrearUsuario";
 import Login from "./components/Login";
 import VerProducto from "./components/VerProducto";
 import ProductosAuth from "./components/ProductosAuth";
+import Usuario from './components/Usuario';
+import EditarUser from './components/EditarUser';
+import Avatar from './components/Avatar'
 //import { logout } from "./actions/loginActions";
 import { history } from "./helpers/history";
 //import { clearMessage } from "./actions/message";
@@ -17,6 +20,7 @@ import { history } from "./helpers/history";
 //Redux
 import { Provider} from "react-redux";
 import store from "./store";
+import Bienvenida from "./components/Bienvenida";
 
 function App() {
   
@@ -29,14 +33,17 @@ function App() {
           <Header />
           <div className="container">
             <Switch>
-              <Route exact path="/" component={Login} />
-              <Route exact path="/home" component={Login} />
+              <Route exact path="/" component={Productos} />
+              {/* <Route exact path="/home" component={Productos} /> */}
               <Route exact path="/login" component={Login} />
               <Route exact path="/productos/nuevo" component={NuevoProducto} />
               <Route exact path="/productos" component={Productos} />
               <Route exact path="/productos/auth" component={ProductosAuth} />
               <Route exact path="/productos/user" component={ProductosUser} />
+              <Route exact path="/usuarios/editar/:id" component={EditarUser} />
               <Route exact path="/productos/:id" component={VerProducto} />
+              <Route exact path="/usuarios/:id" component={Usuario} />
+              <Route exact path="/usuarios/avatar/:id" component={Avatar} />
               <Route
                 exact
                 path="/productos/user/editar/:id"
@@ -45,7 +52,7 @@ function App() {
               <Route exact path="/productos/user/:id" component={VerProducto} />
               <Route exact path="/nuevousuario" component={CrearUsuario} />
               
-              {/* <Route exact path="/login" component={Login} /> */}
+            
             </Switch>
           </div>
         </Provider>

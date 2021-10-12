@@ -78,7 +78,7 @@ const EditarProducto = () => {
 
     editarProducto(formData, history);
 
-    console.log(formData.get("contacto"));
+    //console.log(formData.get("contacto"));
     //console.log(formData);
     history.push("/productos/user");
   };

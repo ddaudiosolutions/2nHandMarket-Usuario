@@ -1,11 +1,6 @@
-import { Fragment, useEffect } from "react";
-import { useSelector, useDispatch,  } from "react-redux";
-import { Link,    Redirect,    useHistory } from "react-router-dom";
-import {
-  obtenerProductosAction,
-  obtenerCategoriaActions,
-  obtenerPaginaAction,
-} from "../actions/productoActions";
+import { Fragment,  } from "react";
+import { useSelector,   } from "react-redux";
+
 import Producto from "./Producto";
 import "./Producto.css";
 
