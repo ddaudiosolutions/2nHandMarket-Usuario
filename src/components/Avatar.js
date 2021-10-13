@@ -16,7 +16,7 @@ const Avatar = () => {
 
     useEffect(() => {
         setAvatarUrl(avatarGet.imagesAvatar[0].url)
-        
+        // eslint-disable-next-line
     }, [])
 
 

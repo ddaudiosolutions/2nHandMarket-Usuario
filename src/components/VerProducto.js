@@ -11,13 +11,14 @@ import { toDate, format } from "date-fns";
 
 const VerProducto = () => {
  
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [imagesUrl, setImagesUrl] = useState("");
-  const [contacto, setContacto] = useState("");
-  const [creado, setCreado] = useState("");
-  const [author, setAuthor] = useState("");
+  // eslint-disable-next-line
+  const [title, setTitle] = useState("");// eslint-disable-next-line
+  const [price, setPrice] = useState("");// eslint-disable-next-line
+  const [description, setDescription] = useState("");// eslint-disable-next-line
+  const [imagesUrl, setImagesUrl] = useState("");// eslint-disable-next-line
+  const [contacto, setContacto] = useState("");// eslint-disable-next-line
+  const [creado, setCreado] = useState("");// eslint-disable-next-line
+  const [author, setAuthor] = useState("");// eslint-disable-next-line
   
   const producto = useSelector((state) => state.productos.productoIdApi);
   console.log(producto);
@@ -36,12 +37,14 @@ const VerProducto = () => {
 
  
   const enviarproductoid = (url) => (
-    console.log("fetching axios"), dispatch(obtenerProductoIdApiAction(url)));
+    //console.log("fetching axios"), 
+    dispatch(obtenerProductoIdApiAction(url)));
     
 
   useEffect(() => {
     console.log("useeffect");
     enviarproductoid(productoIdurl);
+    // eslint-disable-next-line
   }, []);
 
   if (producto === null) return null;
@@ -56,7 +59,7 @@ const VerProducto = () => {
   console.log(clonedDateFormat);
 
   let authorName = producto.author.nombre;
-  let authorDireccion = author.direccion;
+  //let authorDireccion = author.direccion;
   console.log(authorName);
 
   // let string = busqueda;
@@ -65,9 +68,9 @@ const VerProducto = () => {
   // }
 
   const cargarProductosAuthor = (producto) => {
-    dispatch(obtenerProductosActionAuthor(producto));
-    //console.log(producto.author)
-    history.push("/productos/auth");
+    dispatch(obtenerProductosActionAuthor(producto.author._id));
+    console.log(producto.author._id)
+    history.push(`/productos/auth/${producto.author._id}`);
   };
 
   return (
@@ -124,9 +127,9 @@ const VerProducto = () => {
               <p className="card-title pproductoTitle ">
                 {producto.author.email}
               </p>
-              <p className="card-title pproductoTitle ">
+              {/* <p className="card-title pproductoTitle ">
                 {producto.author.telefono}
-              </p>
+              </p> */}
               <p className="card-title pproductoTitle ">
                 {producto.author.direccion}
               </p>

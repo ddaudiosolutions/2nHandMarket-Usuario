@@ -1,12 +1,12 @@
-import { Link, Redirect } from "react-router-dom";
-import { Fragment, useEffect, useState } from "react";
+import { Link,  } from "react-router-dom";
+import { Fragment, useEffect,  } from "react";
 import { logout } from "../actions/loginActions";
 import { useDispatch, useSelector } from "react-redux";
 import { obtenerDatosUsuarioAction } from "../actions/loginActions";
 //import { history } from "../helpers/history";
 import "./Bienvenida.css";
 const Header = () => {
-  const { user: currentUser } = useSelector((state) => state.auth);
+  //const { user: currentUser } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 

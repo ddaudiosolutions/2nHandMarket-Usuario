@@ -8,7 +8,7 @@ import {
   DESCARGA_DATOS_USUARIO_EXITO,
   OBTENER_USUARIO_EDITAR,
   EDITAR_DATOS_USUARIO_EXITO,
-  OBTENER_AVATAR_EXITO
+  //OBTENER_AVATAR_EXITO
 } from "./types";
 
 import AuthService from "../services/auth.service";

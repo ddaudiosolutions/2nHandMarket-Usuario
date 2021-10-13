@@ -1,7 +1,7 @@
 import { Fragment, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link,  useHistory } from "react-router-dom";
 import {
   obtenerProductosAction,
   obtenerCategoriaActions,
@@ -11,6 +11,7 @@ import Producto from "./Producto";
 import "./Producto.css";
 
 const Productos = () => {
+  
   const history = useHistory();
 
   const productos = useSelector((state) => state.productos.productos);

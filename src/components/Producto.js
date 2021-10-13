@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 //import { useSelector } from "react-redux";
 //REDUX
 import { useDispatch } from "react-redux";
-import { obtenerProductoIdAction, obtenerProductoIdApiAction } from "../actions/productoActions";
+import {  obtenerProductoIdApiAction } from "../actions/productoActions";
 //import { obtenerProductoVisionar } from "../actions/productoActions";
 
 const Producto = ({ producto }) => {

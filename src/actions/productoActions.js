@@ -369,18 +369,20 @@ const obtenerPaginaActual = (pagina) => ({
 ///////////////////////
 /////////
 ///////////////////////
-export function obtenerProductosActionAuthor(producto) {
-  console.log(producto.author._id)
+export function obtenerProductosActionAuthor(authId) {
+  console.log(authId)
  
   return async (dispatch) => {
     //dispatch(descargarProductos());
     try {      
-      const productosAuthor = await clienteAxios.get(`/api/productos/auth?authorid=${producto.author._id}`,  data);
+     // const productosAuthor = await clienteAxios.get(`/api/productos/auth?authorid=${producto.author._id}`,  data);
+      const productosAuthor = await clienteAxios.get(`/api/productos/auth/${authId}`);
       console.log(productosAuthor.data)
       dispatch(descargarProductosAuthorExito(productosAuthor.data.prodAuth));
       //dispatch(descargarPaginasProductosExito(productosAuthor.data))
+      //window.location = '/productos/auth';
 
-      //console.log(productosAuthor.data);
+      console.log(productosAuthor.data.prodAuth);
       //console.log(productosAuthor.data.totalPages)
     } catch (error) {
       console.log(error.response);

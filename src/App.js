@@ -21,7 +21,7 @@ import { history } from "./helpers/history";
 //Redux
 import { Provider} from "react-redux";
 import store from "./store";
-import Bienvenida from "./components/Bienvenida";
+//import Bienvenida from "./components/Bienvenida";
 
 function App() {
   
@@ -39,7 +39,7 @@ function App() {
               <Route exact path="/login" component={Login} />
               <Route exact path="/productos/nuevo" component={NuevoProducto} />
               <Route exact path="/productos" component={Productos} />
-              <Route exact path="/productos/auth" component={ProductosAuth} />
+              <Route exact path="/productos/auth/:id" component={ProductosAuth} />
               <Route exact path="/productos/user" component={ProductosUser} />
               <Route exact path="/usuarios/editar/:id" component={EditarUser} />
               <Route exact path="/productos/:id" component={VerProducto} />
