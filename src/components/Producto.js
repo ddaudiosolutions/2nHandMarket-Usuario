@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 //import { useSelector } from "react-redux";
 //REDUX
 import { useDispatch } from "react-redux";
-import { obtenerProductoIdAction } from "../actions/productoActions";
+import { obtenerProductoIdAction, obtenerProductoIdApiAction } from "../actions/productoActions";
 //import { obtenerProductoVisionar } from "../actions/productoActions";
 
 const Producto = ({ producto }) => {
@@ -16,8 +16,8 @@ const Producto = ({ producto }) => {
   const history = useHistory();
 
   const verProductoId = (producto) => {
-    dispatch(obtenerProductoIdAction(producto));
-
+    dispatch(obtenerProductoIdApiAction(producto._id));
+    console.log(producto._id)
     history.push(`/productos/${producto._id}`);
   };
 

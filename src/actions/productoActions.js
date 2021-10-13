@@ -7,6 +7,7 @@ import {
   DESCARGA_PRODUCTOS_EXITO,
  // VER_PRODUCTO_ID,
   VER_PRODUCTO_EXITO_ID,
+  VER_PRODUCTO_EXITO_API_ID,
   // VER_PRODUCTO_ERROR_ID,
   COMENZAR_DESCARGA_PRODUCTOS_USER,
   DESCARGA_PRODUCTOS_USER_EXITO,
@@ -182,6 +183,27 @@ const descargarPaginasUserExito = (paginas) => ({
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+export function obtenerProductoIdApiAction(productoid) {
+  console.log(productoid)
+  return  async (dispatch) => {
+    try{
+      const productoIdApi =  await clienteAxios.get(`/api/productos/${productoid}`)
+      console.log(productoIdApi.data.productoId)
+      dispatch(obtenerProductoIdApiExito(productoIdApi.data.productoId));
+    }
+    catch(error){
+      console.log(error)
+    }
+        
+  };
+}
+
+const obtenerProductoIdApiExito = (productoApi) => ({
+  type: VER_PRODUCTO_EXITO_API_ID,
+  payload: productoApi,
+});
 
 //VER UN SOLO PRODUCTO
 //NO USAMOS TRY CATCH, EL PRODUCTO YA ESTÁ EN MEMORIA, NO LLAMAMOS A LA API

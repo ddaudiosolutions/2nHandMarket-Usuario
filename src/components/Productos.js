@@ -1,4 +1,5 @@
 import { Fragment, useEffect } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import {
@@ -13,6 +14,7 @@ const Productos = () => {
   const history = useHistory();
 
   const productos = useSelector((state) => state.productos.productos);
+  console.log(productos)
   const paginasTotales = useSelector((state) => state.productos.paginas);
   //const errores = useSelector((state) => state.productos.error401);
   //const { isLoggedIn } = useSelector((state) => state.auth);
@@ -38,8 +40,13 @@ const Productos = () => {
     dispatch(obtenerPaginaAction(pagequery));
 
     // eslint-disable-next-line
-  }, [busquedaquery, pagequery]);
+  }, [ busquedaquery, pagequery]);
 
+  // if(productos.length < 1) {
+  //  console.log('no tengo productos');
+  //   //window.location('/productos?busqueda=ultimos_productos&page=0')
+  //   history.push('/productos?busqueda=ultimos_productos&page=0')
+  // }
   // if(isLoggedIn === false){
   //   console.log('NO ESTAMOS LOGEADOS')
   //   return <Redirect to={"/home"}></Redirect>;
