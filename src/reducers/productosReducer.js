@@ -76,6 +76,7 @@ export default function productosReducer(state = initialState, action) {
         loading: false,
         error: null,
         productos: action.payload,
+        productoIdApi: null,
       };
     case DESCARGA_PRODUCTOS_ERROR:
       return {
@@ -101,7 +102,7 @@ export default function productosReducer(state = initialState, action) {
         ...state,
         loading: false,
         error: null,
-        //productovisionar: null,
+        productoIdApi: null,
         prodUser: action.payload,
       };
     case DESCARGA_PRODUCTOS_USER_ERROR:
@@ -187,6 +188,7 @@ export default function productosReducer(state = initialState, action) {
       console.log(action.payload);
       return {
         ...state,
+        productoIdApi: null,
         categoria: action.payload,
       };
 
@@ -194,7 +196,8 @@ export default function productosReducer(state = initialState, action) {
         console.log(action.payload);
         return {
           ...state,
-          productosAuth: action.payload
+          productosAuth: action.payload,
+          productoIdApi: null
 
         }
 

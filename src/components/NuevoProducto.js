@@ -38,10 +38,10 @@ const NuevoProducto = () => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [images, setImage] = useState("");
+  const [images, setImage] = useState('');
   const [contacto, setContacto] = useState("");
 
-  console.log(title.length)
+ console.log(images)
   //console.log(images.size);
   if (images.size > 100000) {
   }
@@ -67,7 +67,10 @@ const NuevoProducto = () => {
     //e.preventDefault();
 
     let formData = new FormData();
-    formData.set("images", images);
+    for (var i = 0; i<images.length; i++){
+      formData.append("images", images[i]);
+    }
+    
     formData.set("title", title);
     formData.set("categoria", categoria);
     formData.set("subCategoria", subCategoria);
@@ -76,7 +79,7 @@ const NuevoProducto = () => {
     formData.set("contacto", contacto);
 
     agregarProducto(formData);
-
+    console.log(formData.getAll('images'))
     //history.push('/productos')
   };
 
@@ -240,9 +243,10 @@ const NuevoProducto = () => {
                     className="form-input btn-file-upload"
                     id="images"
                     type="file"
+                    multiple
                     //name="images"
                     {...register("images", { required: true })}
-                    onChange={(e) => setImage(e.target.files[0])}
+                    onChange={(e) => setImage(e.target.files)}
                   ></input>
                   {errors.images?.type === "required" && (
                     <h6 className="alert alert-warning col-6 text-center mx-auto mt-4">

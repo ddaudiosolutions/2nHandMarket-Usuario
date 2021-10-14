@@ -1,4 +1,4 @@
-import { Fragment,  useEffect } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import "./VerProducto.css";
@@ -9,35 +9,37 @@ import {
 
 import { toDate, format } from "date-fns";
 
-
-
 const VerProducto = () => {
+ 
   // eslint-disable-next-line
-  // const [title, setTitle] = useState(""); // eslint-disable-next-line
-  // const [price, setPrice] = useState(""); // eslint-disable-next-line
-  // const [description, setDescription] = useState(""); // eslint-disable-next-line
-  // const [imagesUrl, setImagesUrl] = useState(""); // eslint-disable-next-line
-  // const [contacto, setContacto] = useState(""); // eslint-disable-next-line
-  // const [creado, setCreado] = useState(""); // eslint-disable-next-line
-  // const [author, setAuthor] = useState(""); // eslint-disable-next-line
-
+  const [title, setTitle] = useState("");// eslint-disable-next-line
+  const [price, setPrice] = useState("");// eslint-disable-next-line
+  const [description, setDescription] = useState("");// eslint-disable-next-line
+  const [imagesUrl, setImagesUrl] = useState("");// eslint-disable-next-line
+  const [contacto, setContacto] = useState("");// eslint-disable-next-line
+  const [creado, setCreado] = useState("");// eslint-disable-next-line
+  const [author, setAuthor] = useState("");// eslint-disable-next-line
+  
   const producto = useSelector((state) => state.productos.productoIdApi);
   console.log(producto);
 
   const productoIdurl = window.location.pathname.split("/")[2];
   console.log(productoIdurl);
+ 
 
   let paginaActual = useSelector((state) => state.productos.paginaActual);
   if (paginaActual === undefined) {
     paginaActual = 0;
   }
-
+  
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const enviarproductoid = (url) =>
-    //console.log("fetching axios"),
-    dispatch(obtenerProductoIdApiAction(url));
+ 
+  const enviarproductoid = (url) => (
+    //console.log("fetching axios"), 
+    dispatch(obtenerProductoIdApiAction(url)));
+    
 
   useEffect(() => {
     console.log("useeffect");
@@ -67,7 +69,7 @@ const VerProducto = () => {
 
   const cargarProductosAuthor = (producto) => {
     dispatch(obtenerProductosActionAuthor(producto.author._id));
-    console.log(producto.author._id);
+    console.log(producto.author._id)
     history.push(`/productos/auth/${producto.author._id}`);
   };
 
@@ -87,60 +89,21 @@ const VerProducto = () => {
             ></img> */}
             <h5 className="h5Avatar ms-3 mt-4">{authorName}</h5>
           </div>
-          <div>
-            <div
-              id="carouselExampleControlsNoTouching"
-              className="carousel carousel-dark slide"
-              data-bs-touch="false"
-              data-bs-interval="false"
-            >
-              <div className="carousel-inner">
-                <div className="carousel-item active">
-                  <img
-                    src={producto.images[0].url}
-                    style={{ height: "25rem" }}
-                    key={producto.images[0]._id}
-                    className="card-img-top mt-3"
-                    alt="..."
-                  ></img>
-                </div>
-                {producto.images.slice(1).map(
-                  (image) => (
-                    <div className="carousel-item" >
-                    <img src={image.url} style={{ height: "25rem" }} key={image._id} className="card-img-top mt-3" alt="..."></img>
-                   </div>
-                  )
-                )}
 
-                {/* <div className="carousel-item">
-                  <img src={producto.images[1].url} style={{ height: "25rem" }} className="card-img-top mt-3" alt="..."></img>
-                </div> */}
-              </div>
-              <button
-                className="carousel-control-prev"
-                type="button"
-                data-bs-target="#carouselExampleControlsNoTouching"
-                data-bs-slide="prev"
-              >
-                <span
-                  className="carousel-control-prev-icon"
-                  aria-hidden="true"
-                ></span>
-                <span className="visually-hidden">Previous</span>
-              </button>
-              <button
-                className="carousel-control-next"
-                type="button"
-                data-bs-target="#carouselExampleControlsNoTouching"
-                data-bs-slide="next"
-              >
-                <span
-                  className="carousel-control-next-icon"
-                  aria-hidden="true"
-                ></span>
-                <span className="visually-hidden">Next</span>
-              </button>
-            </div>
+          <div className="container">
+            <a
+              className=" "
+              href={producto.images[1].url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                src={producto.images[1].url}
+                style={{ height: "25rem" }}
+                className="card-img-top mt-3 "
+                alt={producto.images[1].filename}
+              ></img>
+            </a>
           </div>
 
           <div className="card-body">

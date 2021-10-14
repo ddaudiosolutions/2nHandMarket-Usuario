@@ -29,19 +29,19 @@ const EditarProducto = () => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [images, setImage] = useState("");
-  const [imagesfilename, setImagesfilenamel] = useState("");
+  const [images, setImage] = useState('');
+  //const [newimages, setNewImages] = useState('');
   const [contacto, setContacto] = useState("");
   const [id, setId] = useState("");
 
   //TOMAMOS LOS DATOS DEL PRODUCTO LLAMADO A EDICIÓN.
   const productoEditar = useSelector((state) => state.productos.productoeditar);
-  //console.log(productoEditar)
+  console.log(productoEditar)
 
   // TOMAMOS DEL STATE DEL PROUDUCTO EL ID PARA PODER PASARLO A LA NUEVA FUNCION DEL DISPATCH Y ASÍ
   // PODER PASAR LOS DATOS AL SERVIDOR Y NO TENER EL ERROR 'UNDEFINED'
-  let productoId = productoEditar._id;
-  // console.log(productoId)
+  let productoId = productoEditar._id;   
+ 
 
   useEffect(() => {
     setId(productoId);
@@ -50,21 +50,24 @@ const EditarProducto = () => {
     setTitle(productoEditar.title);
     setPrice(productoEditar.price);
     setDescription(productoEditar.description);
-    setImage(productoEditar.images[0].url);
-    setImagesfilenamel(productoEditar.images[0].filename);
-    setContacto(productoEditar.contacto);
+    setImage(productoEditar.images);   
+    //setImagesfilenamel(productoEditar.images[0].filename);
+    setContacto(productoEditar.author.nombre);
     //setProductoEditado(productoEditar);
   }, [productoEditar]); //eslint-disable-line react-hooks/exhaustive-deps
-
-  //console.log(setContacto)
-  const editarProducto = (formData) => dispatch(editarProductoAction(formData));
+  
+  
+  const editarProducto = (formData, id) => dispatch(editarProductoAction(formData, id));
 
   const submitEditarProducto = () => {
     //e.preventDefault();
 
     let formData = new FormData();
-    formData.set("images", images);
-    formData.set("imagesfilename", imagesfilename);
+    for (var i = 0; i<images.length; i++){
+      formData.set("images", images[i]);
+    }
+    ;
+    //formData.set("imagesfilename", imagesfilename);
     formData.set("title", title);
     formData.set("categoria", categoria);
     formData.set("subCategoria", subCategoria);
@@ -74,10 +77,10 @@ const EditarProducto = () => {
     formData.set("id", id); //PASAMOS EL ID COMO UN STATE MÁS CON EL PRODUCTO, PARA SABER QUE PRODUCTO ESTAMOS E
     setId(productoId);
     console.log(formData.getAll("images"));
-    console.log(formData.getAll("imagesUrl"));
+    //console.log(formData.getAll("imagesUrl"));
 
-    editarProducto(formData, history);
-
+    editarProducto(formData, id, history);
+    console.log(images)
     //console.log(formData.get("contacto"));
     //console.log(formData);
     history.push("/productos/user");
@@ -96,7 +99,7 @@ const EditarProducto = () => {
       title: productoEditar.title,
       price: productoEditar.price,
       description: productoEditar.description,
-      contacto: productoEditar.contacto,
+      contacto: productoEditar.author.nombre,
     },
   });
 
@@ -229,7 +232,7 @@ const EditarProducto = () => {
                 className="form-control"
                 id="contacto"
                 //name="contacto"
-                //defaultValue={contacto}
+                defaultValue={contacto}
                 {...register("contacto", { required: true })}
                 rows="4"
                 onChange={(e) => setContacto(e.target.value)}
@@ -241,22 +244,23 @@ const EditarProducto = () => {
               )}
             </div>
 
-            <a href={images} target="_blank" rel="noreferrer">
+            {/* <a href={images} target="_blank" rel="noreferrer">
               <img
                 className="card-img-top "
                 src={images}
                 style={{ width: "200px" }}
                 alt="Imagen Cambiada"
               ></img>
-            </a>
+            </a> */}
             <div>
               <input
                 className="form-input"
                 id="images"
                 type="file"
+                multiple
                 //name="images"
                 {...register("images", { required: false })}
-                onChange={(e) => setImage(e.target.files[0])}
+                onChange={(e) => setImage(e.target.files)}
                 //onChange ={imageHandle}
               ></input>
             </div>

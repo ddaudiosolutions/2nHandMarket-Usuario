@@ -51,6 +51,7 @@ const ProductoUser = ({ producto }) => {
             className="card-img-top mt-3"
             alt={images[0].filename}
           ></img>
+          
           <div className="card-body">
             <div className="card-body text-center">
               <span className="price-hp">{price} €</span>

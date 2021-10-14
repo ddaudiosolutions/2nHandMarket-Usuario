@@ -16,7 +16,7 @@ import {
   PRODUCTO_ELIMINADO_ERROR,
   PRODUCTO_ELIMINADO_EXITO,
   OBTENER_PRODUCTO_EDITAR,
-  COMENZAR_EDICION_PRODUCTO,
+  //COMENZAR_EDICION_PRODUCTO,
   PRODUCTO_EDITADO_EXITO,
   PRODUCTO_EDITADO_ERROR,
   DESCARGA_PAGINAS_EXITO,
@@ -47,7 +47,8 @@ const data = {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //CREAR NUEVOS PRODUCTOS
 export function crearNuevoProductoAction(producto, history) {
-  
+  //const images = producto.getAll('images')
+  //console.log(images)
   return async (dispatch) => {
     //dispatch(agregarProducto());
     try {
@@ -294,16 +295,16 @@ const obtenerProductoEditar = (producto) => ({
 
 //////////////////////////////////////////////////
 //EDITAR EL PRODUCTO /////
-export function editarProductoAction(producto) {
-  const productoId = producto.getAll("id");
+export function editarProductoAction(producto, id) {
+  const productoId = producto.getAll('images');
   console.log(productoId);
   return async (dispatch) => {
-    dispatch(editarProducto());
+   // dispatch(editarProducto());
     try {
       const editarRespuesta = await clienteAxios.put(
-        `/api/productos/user/editar/${productoId}`,
+        `/api/productos/user/editar/${id}`,
         producto,
-        //data
+        data
       );
       console.log(editarRespuesta.data);
       dispatch(editarProductoUserExito(producto));
@@ -323,9 +324,9 @@ export function editarProductoAction(producto) {
   };
 }
 
-const editarProducto = () => ({
-  type: COMENZAR_EDICION_PRODUCTO,
-});
+// const editarProducto = () => ({
+//   type: COMENZAR_EDICION_PRODUCTO,
+// });
 
 const editarProductoUserExito = (producto) => ({
   type: PRODUCTO_EDITADO_EXITO,
