@@ -1,4 +1,4 @@
-import { Fragment,  useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import "./VerProducto.css";
@@ -8,8 +8,6 @@ import {
 } from "../actions/productoActions";
 
 import { toDate, format } from "date-fns";
-
-
 
 const VerProducto = () => {
   // eslint-disable-next-line
@@ -96,21 +94,39 @@ const VerProducto = () => {
             >
               <div className="carousel-inner">
                 <div className="carousel-item active">
-                  <img
-                    src={producto.images[0].url}
-                    style={{ height: "25rem" }}
-                    key={producto.images[0]._id}
-                    className="card-img-top mt-3"
-                    alt="..."
-                  ></img>
+                  <a
+                    className=" "
+                    href={producto.images[0].url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img
+                      src={producto.images[0].url}
+                      style={{ height: "25rem" }}
+                      key={producto.images[0]._id}
+                      className="card-img-top mt-3"
+                      alt="..."
+                    ></img>
+                  </a>
                 </div>
-                {producto.images.slice(1).map(
-                  (image) => (
-                    <div className="carousel-item" >
-                    <img src={image.url} style={{ height: "25rem" }} key={image._id} className="card-img-top mt-3" alt="..."></img>
-                   </div>
-                  )
-                )}
+                {producto.images.slice(1).map((image) => (
+                  <div className="carousel-item">
+                    <a
+                    className=" "
+                    href={image.url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img
+                      src={image.url}
+                      style={{ height: "25rem" }}
+                      key={image._id}
+                      className="card-img-top mt-3"
+                      alt="..."
+                    ></img>
+                    </a>
+                  </div>
+                ))}
 
                 {/* <div className="carousel-item">
                   <img src={producto.images[1].url} style={{ height: "25rem" }} className="card-img-top mt-3" alt="..."></img>

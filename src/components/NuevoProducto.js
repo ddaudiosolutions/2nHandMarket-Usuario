@@ -22,6 +22,10 @@ const TextArea = styled.textarea`
 
 
 const NuevoProducto = () => {
+
+  //UTILIZAR USEDISPATCH Y TE CREA UNA FUNCION
+  const dispatch = useDispatch();
+
   //MANEJO DE STATES LOCALES
   const [categoria, setCategoria] = useState("");
 
@@ -41,20 +45,8 @@ const NuevoProducto = () => {
   const [images, setImage] = useState('');
   const [contacto, setContacto] = useState("");
 
- console.log(images)
-  //console.log(images.size);
-  if (images.size > 100000) {
-  }
-  
-
   //MANEJO DEL REDUX EN EL FORMULARIO
-
-  //UTILIZAR USEDISPATCH Y TE CREA UNA FUNCION
-  const dispatch = useDispatch();
-
-  //ACCDER AL STATE DEL STORE
-  
-
+  //ACCDER AL STATE DEL STORE 
   //manda llamar al action de productoAction
 
   const agregarProducto = (producto) =>
@@ -89,7 +81,9 @@ const NuevoProducto = () => {
     formState: { errors },
     handleSubmit,
   } = useForm({ mode: "onBlur" });
+  
 
+ 
   return (
     <div className="container-fluid  rounded my-4 p-2">
       <div className="d-flex justify-content-center">
@@ -239,6 +233,11 @@ const NuevoProducto = () => {
                   )}
                 </div>
                 <div>
+                  <div>
+                  <Label className=''/ >Sube Tus Fotos:<Label/>
+                  <text className='text-danger'> Las Imagenes no pueden pesar más de 1MB cada Una </text>
+                  </div>
+                  
                   <input
                     className="form-input btn-file-upload"
                     id="images"
@@ -259,15 +258,20 @@ const NuevoProducto = () => {
                   <button
                     className="btn btn-outline-warning"
                     type="submit"
-                    disabled={images.size > 100000}
+                    disabled={images.size > 100000 || images.length > 4}
                   >
                     Agregar Producto
                   </button>
                 </div>
               </form>
-              {images.size > 100000 ? (
+              {images.size > 1000000 ? (
                 <h6 className="alert alert-warning col-6 text-center mx-auto mt-2">
-                  La Imagen no puede ser mayor de 100KB
+                  La Imagen no puede ser mayor de 1MB
+                </h6>
+              ) : null}
+              {images.length > 4 ? (
+                <h6 className="alert alert-warning col-6 text-center mx-auto mt-2">
+                  Solo puedes subir un maximo de 4 fotos
                 </h6>
               ) : null}
               {/* {error ? <alert>HAY UN ERROR</alert> : null} */}

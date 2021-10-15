@@ -41,8 +41,16 @@ const EditarProducto = () => {
   // TOMAMOS DEL STATE DEL PROUDUCTO EL ID PARA PODER PASARLO A LA NUEVA FUNCION DEL DISPATCH Y ASÍ
   // PODER PASAR LOS DATOS AL SERVIDOR Y NO TENER EL ERROR 'UNDEFINED'
   let productoId = productoEditar._id;   
- 
+  
+  const [imagesTotales, setImagesTotales] = useState('')
+  console.log(imagesTotales)
 
+  let imagesState = parseInt(productoEditar.images.length)
+  console.log(imagesState)
+  let imagesSelect = parseInt(images.length)
+  console.log(imagesSelect)
+
+  
   useEffect(() => {
     setId(productoId);
     setCategoria(productoEditar.categoria);
@@ -50,11 +58,11 @@ const EditarProducto = () => {
     setTitle(productoEditar.title);
     setPrice(productoEditar.price);
     setDescription(productoEditar.description);
-    setImage(productoEditar.images);   
-    //setImagesfilenamel(productoEditar.images[0].filename);
+    setImage(images);   
+    setImagesTotales(imagesState + imagesSelect);
     setContacto(productoEditar.author.nombre);
     //setProductoEditado(productoEditar);
-  }, [productoEditar]); //eslint-disable-line react-hooks/exhaustive-deps
+  }, [  images]); //eslint-disable-line react-hooks/exhaustive-deps
   
   
   const editarProducto = (formData, id) => dispatch(editarProductoAction(formData, id));
@@ -278,6 +286,11 @@ const EditarProducto = () => {
           {images.size > 100000 ? (
             <h6 className="alert alert-warning col-6 text-center mx-auto">
               La Imagen no puede ser mayor de 100KB
+            </h6>
+          ) : null}
+          {imagesTotales > 4 ? (
+            <h6 className="alert alert-warning col-6 text-center mx-auto">
+              El numero maximo de imagenes es 4
             </h6>
           ) : null}
         </div>
