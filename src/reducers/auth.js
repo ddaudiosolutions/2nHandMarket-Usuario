@@ -15,7 +15,7 @@ import {
 
   } from '../actions/types'
   
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("userToken"));
   
   const initialState =  {
     user: user

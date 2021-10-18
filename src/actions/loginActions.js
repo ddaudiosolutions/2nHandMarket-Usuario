@@ -13,7 +13,8 @@ import {
 
 import AuthService from "../services/auth.service";
 import clienteAxios from "../config/axios";
-const user = JSON.parse(localStorage.getItem("user"));
+
+const user = JSON.parse(localStorage.getItem("userToken"));
 const data = {
   headers: {
     "x-auth-token": user,
@@ -33,8 +34,8 @@ export function loginUsuarioActions(email, password) {
       dispatch(loginExito(loginUsuario.data));
       console.log(loginUsuario.data);
       if (loginUsuario.data) {
-        localStorage.setItem("userN", JSON.stringify(loginUsuario.data.nombre));
-        localStorage.setItem("user", JSON.stringify(loginUsuario.data.token));
+        localStorage.setItem("userName", JSON.stringify(loginUsuario.data.nombre));
+        localStorage.setItem("userToken", JSON.stringify(loginUsuario.data.accessToken));
         localStorage.setItem("userId", loginUsuario.data.id);
       }
       //obtenerDatosUsuarioAction(loginUsuario.data.id);

@@ -35,7 +35,7 @@ import clienteAxios from "../config/axios";
 import Swal from "sweetalert2";
 
 
-const user = JSON.parse(localStorage.getItem("user"));
+const user = JSON.parse(localStorage.getItem("userToken"));
 const data = {
   headers: {
     "x-auth-token": user,
@@ -108,7 +108,7 @@ export function obtenerProductosAction(busqueda, pageNumber) {
   return async (dispatch) => {
     //dispatch(descargarProductos());
     try {      
-      const productosAll = await clienteAxios.get(`/api/productos?busqueda=${busqueda}&page=${pageNumber}`,  data);
+      const productosAll = await clienteAxios.get(`/api/productos?busqueda=${busqueda}&page=${pageNumber}`);
 
       dispatch(descargarProductosExito(productosAll.data.prodAll));
       dispatch(descargarPaginasProductosExito(productosAll.data.totalPages))

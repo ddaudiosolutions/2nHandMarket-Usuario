@@ -1,5 +1,5 @@
 //import { Fragment, useEffect } from "react";
-import {  Router, Route, Switch, } from "react-router-dom";
+import {  Router, Route, Switch, Redirect} from "react-router-dom";
 import Header from "./components/Header";
 // import Bienvenida from "./components/Bienvenida";
 import Productos from "./components/Productos";
@@ -13,7 +13,7 @@ import ProductosAuth from "./components/ProductosAuth";
 import Usuario from './components/Usuario';
 import EditarUser from './components/EditarUser';
 import Avatar from './components/Avatar'
-import Inicio from './components/Inicio'
+//import Inicio from './components/Inicio'
 //import { logout } from "./actions/loginActions";
 import { history } from "./helpers/history";
 //import { clearMessage } from "./actions/message";
@@ -34,8 +34,8 @@ function App() {
           <Header />
           <div className="container">
             <Switch>
-              <Route exact path="/" component={Inicio} />
-              {/* <Route exact path="/home" component={Productos} /> */}
+              {/* <Route exact path="/" component={Productos} /> */}
+              <Redirect exact from="/" to="productos?busqueda=ultimos_productos&page=0" />
               <Route exact path="/login" component={Login} />
               <Route exact path="/productos/nuevo" component={NuevoProducto} />
               <Route exact path="/productos" component={Productos} />

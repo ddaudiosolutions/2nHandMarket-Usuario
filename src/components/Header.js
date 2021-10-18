@@ -1,17 +1,18 @@
 import { Link,  } from "react-router-dom";
 import { Fragment, useEffect,  } from "react";
 import { logout } from "../actions/loginActions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { obtenerDatosUsuarioAction } from "../actions/loginActions";
 //import { history } from "../helpers/history";
 import "./Bienvenida.css";
 const Header = () => {
   //const { user: currentUser } = useSelector((state) => state.auth);
-  const { user } = useSelector((state) => state.auth);
+  //const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const nombreUser = localStorage.getItem("userN");
+  const nombreUser = localStorage.getItem("userName");
   const userId = localStorage.getItem("userId");
+  const userTokenCheck = localStorage.getItem('userToken')
   //console.log(user.user)
   // const avatarGet = useSelector((state) => state.auth.avatar);
   //console.log(avatarGet.imagesAvatar);
@@ -42,7 +43,7 @@ const Header = () => {
         </Link>
       </div>
       <div className=" me-4 mb-3">
-        {user === null ? (
+        {userTokenCheck === null ? (
           <Fragment>
             {/* <Link to={"/productos?busqueda=ultimos_productos&page=0"} className="nav-link typeHeader">
               Home
@@ -111,14 +112,14 @@ const Header = () => {
                         Mi perfil
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
                         to={`/usuarios/avatar/${userId}`}
                         className="nav-link typeHeader"
                       >
                         Avatar
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link
                         to={"/productos?busqueda=ultimos_productos&page=0"}

@@ -43,16 +43,7 @@ const Productos = () => {
     // eslint-disable-next-line
   }, [ busquedaquery, pagequery]);
 
-  // if(productos.length < 1) {
-  //  console.log('no tengo productos');
-  //   //window.location('/productos?busqueda=ultimos_productos&page=0')
-  //   history.push('/productos?busqueda=ultimos_productos&page=0')
-  // }
-  // if(isLoggedIn === false){
-  //   console.log('NO ESTAMOS LOGEADOS')
-  //   return <Redirect to={"/home"}></Redirect>;
-  // }
-
+  
   return (
     <Fragment>
       <div

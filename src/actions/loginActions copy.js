@@ -13,7 +13,7 @@ import {
 
   import AuthService from "../services/auth.service";
  import clienteAxios from "../config/axios";
- const user = JSON.parse(localStorage.getItem("user"));
+ const user = JSON.parse(localStorage.getItem("userToken"));
  const data = {
   headers: {
     "x-auth-token": user,

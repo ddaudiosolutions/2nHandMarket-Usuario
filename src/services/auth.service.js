@@ -25,8 +25,8 @@
 
 //BORRAR LOGIN
 const logout = () => {
-  localStorage.removeItem("user");
-  localStorage.removeItem("userN");
+  localStorage.removeItem("userToken");
+  localStorage.removeItem("userName");
   localStorage.removeItem("userId")
 };
 
