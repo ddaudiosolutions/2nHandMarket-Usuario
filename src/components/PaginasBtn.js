@@ -12,7 +12,7 @@ const PaginasBtn = ({paginaS, envioPagina,  busquedaquery}) => {
         <button className='rounded btn btn-select page-link ' onClick={() => {   
             // <Link to={`/productos?busqueda=${busquedaquery}&page=${paginaS}`} className="btn btn-outline-success"/>             
             envioPagina(paginaS)
-            console.log(paginaS, busquedaquery)
+           // console.log(paginaS, busquedaquery)
                }}>{paginaS + 1}</button>
      );
 }

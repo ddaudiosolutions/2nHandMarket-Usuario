@@ -13,6 +13,9 @@ import ProductosAuth from "./components/ProductosAuth";
 import Usuario from './components/Usuario';
 import EditarUser from './components/EditarUser';
 import Avatar from './components/Avatar'
+import NuevoBuscoPost from './components/NuevoBuscoPost';
+import VerBuscoPost from './components/VerBuscoPost'
+import EditarBuscoPost from './components/EditarBuscoPost'
 //import Inicio from './components/Inicio'
 //import { logout } from "./actions/loginActions";
 import { history } from "./helpers/history";
@@ -24,10 +27,11 @@ import store from "./store";
 //import Bienvenida from "./components/Bienvenida";
 
 function App() {
+
+ 
   
   return (
-    // <Fragment>
-    //(
+  
       <Router history={history}>
         <Provider store={store}>          
           
@@ -52,16 +56,16 @@ function App() {
               />
               <Route exact path="/productos/user/:id" component={VerProducto} />
               <Route exact path="/nuevousuario" component={CrearUsuario} />
+              <Route exact path="/buscoposts/nuevo" component={NuevoBuscoPost} />
+              <Route exact path="/buscoposts/user/editar/:id" component={EditarBuscoPost} />
+              <Route exact path="/buscoposts/:id" component={VerBuscoPost} />
               
             
             </Switch>
           </div>
         </Provider>
       </Router>
-    //),
-    //{
-      /* </Fragment> */
-   // }
+  
   );
 }
 

@@ -1,11 +1,15 @@
 import { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { obtenerProductosActionUser } from "../actions/productoActions";
+import {obtenerBuscoPostsUserAction} from '../actions/buscoPostActions'
 import ProductoUser from "./ProductoUser";
+import BuscoPostUser from "./BuscoPostUser";
 //import PaginasBtn from './PaginasBtn';
 
 const Productos = () => {
   const productos = useSelector((state) => state.productos.prodUser);
+  const buscoPostsUser = useSelector((state)=> state.buscoposts.buscoPostsUser)
+  console.log(buscoPostsUser)
   //const paginasUserTotal = useSelector((state) => state.productos.paginasUser);
 
   //const paginasUser = new Array(paginasUserTotal).fill(null).map((v, i) => i);
@@ -19,21 +23,19 @@ const Productos = () => {
   const dispatch = useDispatch();
 
   const cargarProductosUser = (pageNuser) => dispatch(obtenerProductosActionUser(pageNuser));
+  const cargarPostsUser = ()=> dispatch(obtenerBuscoPostsUserAction())
+
   useEffect(() => {
-    //consultar la API
-    
+    //consultar la API    
     cargarProductosUser(pageNuser);
     envioPagina()
+    cargarPostsUser()
     // eslint-disable-next-line
   }, [pageNuser]);
   
   return (
     <Fragment>
-      {/* <h2 className="text-center">Mis Productos</h2> */}
-      {/* <div
-        className="container-fluid bg-trasparent my-2 p-1"
-        style={{ position: "relative" }}
-      > */}
+     
         <div className="row row-cols-2 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3 justify-content-center ">
           {productos === undefined
             ? null
@@ -41,13 +43,14 @@ const Productos = () => {
                 <ProductoUser key={producto._id} producto={producto} />
               ))}
         </div>
-        {/* <div>
-          {paginasUser.map((paginaUser) => (
-            
-            <PaginasBtn key={paginaUser} paginaS={paginaUser} envioPagina={envioPagina}/>
-          ))}
-        </div> */}
-      {/* </div> */}
+        <div className="row row-cols-2 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3 justify-content-center ">
+        {buscoPostsUser === undefined
+            ? null
+            : buscoPostsUser.map((postUser) => (
+                <BuscoPostUser key={postUser._id} postUser={postUser} />
+              ))}
+        </div>
+       
     </Fragment>
   );
 };

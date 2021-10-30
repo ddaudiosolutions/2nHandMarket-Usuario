@@ -10,6 +10,7 @@ import {
   //VER_PRODUCTO_ID,
   VER_PRODUCTO_EXITO_ID,
   VER_PRODUCTO_EXITO_API_ID,
+  VER_PRODUCTO_ERROR_API_ID,
   //VER_PRODUCTO_ERROR_ID,
   COMENZAR_DESCARGA_PRODUCTOS_USER,
   DESCARGA_PRODUCTOS_USER_EXITO,
@@ -77,6 +78,7 @@ export default function productosReducer(state = initialState, action) {
         error: null,
         productos: action.payload,
         productoIdApi: null,
+        productosAuth: null,
       };
     case DESCARGA_PRODUCTOS_ERROR:
       return {
@@ -105,6 +107,7 @@ export default function productosReducer(state = initialState, action) {
         productoIdApi: null,
         prodUser: action.payload,
       };
+      case VER_PRODUCTO_ERROR_API_ID:
     case DESCARGA_PRODUCTOS_USER_ERROR:
       return {
         ...state,
@@ -197,7 +200,7 @@ export default function productosReducer(state = initialState, action) {
         return {
           ...state,
           productosAuth: action.payload,
-          productoIdApi: null
+          //productoIdApi: null
 
         }
 

@@ -8,11 +8,15 @@ import {
   DESCARGA_DATOS_USUARIO_EXITO,
   OBTENER_USUARIO_EDITAR,
   EDITAR_DATOS_USUARIO_EXITO,
+  USUARIO_ELIMINADO_EXITO
+
   //OBTENER_AVATAR_EXITO
 } from "./types";
 
 import AuthService from "../services/auth.service";
 import clienteAxios from "../config/axios";
+import Swal from 'sweetalert2';
+
 
 const user = JSON.parse(localStorage.getItem("userToken"));
 const data = {
@@ -40,7 +44,9 @@ export function loginUsuarioActions(email, password) {
       }
       //obtenerDatosUsuarioAction(loginUsuario.data.id);
       window.location = "/productos?busqueda=ultimos_productos&page=0";
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   };
 }
 
@@ -62,6 +68,7 @@ export function obtenerDatosUsuarioAction(id) {
       console.log(datosUsuario.data);
     } catch (error) {
       console.log(error.response);
+      
     }
   };
 }
@@ -88,15 +95,15 @@ const obtnerDatosUsuarioEditarExito = (usuario) => ({
 
 //EDITAR USUARIO
 
-export function editarDatosUsuarioAction(datosUsuario){
-  //const userEditId = datosUsuario.getAll('id')
-  console.log(datosUsuario)
+export function editarDatosUsuarioAction(datosUsuario, id){
+  
+  console.log(id)
   return async (dispatch) => {
     try{
-      const editarDatosUsuario = await clienteAxios.put(`/api/usuarios/editar/${datosUsuario._id}`, 
+      const editarDatosUsuario = await clienteAxios.put(`/api/usuarios/editar/${id}`, 
       datosUsuario, data
       )
-      dispatch(editarDatosUsuarioExito(editarDatosUsuario))      
+      dispatch(editarDatosUsuarioExito(editarDatosUsuario.data))      
     }catch(error){
       console.log(error.response); 
     }
@@ -109,22 +116,36 @@ const editarDatosUsuarioExito = (usuarioEditado) => ({
   payload: usuarioEditado
 })
 
-//OBTENER AVATAR
-// export function obtenerAvatarAction (id) {
-//   console.log(id)
-//   return async (dispatch) =>{
-//     const obtenerAvatar = await clienteAxios.get(`/api/usuarios/avatar/${id}`, data)
-//     console.log(obtenerAvatar.data.avatarId[0])
-//     dispatch(obtenerAvatarExito(obtenerAvatar.data.avatarId[0]))
 
-//   }
-// }
+//ELIMINAR USUARIO
+export function eliminarUsuarioAction (id){
+  console.log(id)
+return async (dispatch) => {
+  try {
+    const eliminarUsuario = await clienteAxios.delete(`/api/usuarios/${id}`, data)
+    dispatch(eliminarUsuarioExito)
+    console.log(eliminarUsuario)
+    //PONER AQUÍ LA ALERTA DE QUE SE ELIMINÓ BIEN EL PRODUCTO
+    Swal.fire("Correcto", "USUARIO ELIMINADO CON EXITO", "success").then(
+      (result) => {
+        if (result.isConfirmed) {
+          console.log('usuario Borrado')
+          // window.location = "/productos?busqueda=ultimos_productos&page=0";
 
-// const obtenerAvatarExito = (avatar) => ({
-//   type: OBTENER_AVATAR_EXITO,
-//   payload: avatar
-// })
+        }
+      }
+    );
 
+  }catch(error){
+    console.log(error)
+  }
+}
+
+} 
+
+const eliminarUsuarioExito = ()=> ({
+  type: USUARIO_ELIMINADO_EXITO
+})
 
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
@@ -133,4 +154,5 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
   });
+  
 };

@@ -1,9 +1,10 @@
-import { Fragment } from "react";
+import { Fragment, } from "react";
 import {Link} from 'react-router-dom'
-import { useSelector, useDispatch } from "react-redux";
-import {obtenerDatosUsuarioEditarAction} from '../actions/loginActions';
-import './Usuario.css'
+import { useSelector, useDispatch,  } from "react-redux";
+import {eliminarUsuarioAction, obtenerDatosUsuarioEditarAction, logout} from '../actions/loginActions';
 
+import './Usuario.css'
+import Swal from 'sweetalert2'
 const Usuario = () => {
 
   const dispatch = useDispatch();
@@ -14,6 +15,29 @@ const Usuario = () => {
   if (!datosUsuario) return null;
   console.log(datosUsuario);
 
+  const logOut = () => {
+    dispatch(logout());
+    window.location = "/productos?busqueda=ultimos_productos&page=0";
+  };
+
+  const confirmarBorrarUsuario = (_id) => {
+    Swal.fire({
+      title: "Seguro quieres eliminar ?",
+      text: "Esta acción no se puede revertir!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Borrar Usuario!",
+    }).then((result) => {
+      if (result.isConfirmed) {        
+        dispatch(eliminarUsuarioAction(_id));
+        logOut()
+        
+      }
+    });
+    //history.push('/productos')
+  };
  
   return (
     <Fragment>
@@ -79,14 +103,38 @@ const Usuario = () => {
                   {datosUsuario.avatar}
                 </div>
               </div> */}
+              <div className='text-center'>
+              {datosUsuario.imagesAvatar[0].url === undefined  ? (
+              <img
+                src="/Avatar_Default2.png"
+                className="card-img-topAvatar ms-4 mt-3"
+                alt="avatar para User"
+              ></img>
+            ) : (
+              <img
+                src={datosUsuario.imagesAvatar[0].url}
+                className="card-img-topAvatar mt-3 mb-3"
+                alt="avatar for User"
+              ></img>
+            )}
+              </div>              
               <div className="text-center">
               <Link
                     to={`/usuarios/editar/${userId}`}
                     className='nav-link typeHeader'
-                    onClick={()=>{dispatch(obtenerDatosUsuarioEditarAction({datosUsuario}))}}
+                    onClick={()=>dispatch(obtenerDatosUsuarioEditarAction({datosUsuario}))}
                     >
                     Editar
                     </Link>
+              </div>
+              <div className="text-center">
+              <button
+                   // to={`/usuarios/editar/${userId}`}
+                    className='nav-link typeHeader'
+                    onClick={()=>confirmarBorrarUsuario(datosUsuario._id)}
+                    >
+                    Eliminar Usuario
+                    </button>
               </div>
             </div>
           </div>

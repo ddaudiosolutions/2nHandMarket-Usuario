@@ -9,18 +9,15 @@ import { obtenerProductoIdAction } from "../actions/productoActions";
 //import { obtenerProductoVisionar } from "../actions/productoActions";
 
 const ProductoAuthor = ({ producto }) => {
-  //LOD PRODUCTOS LLEGAN POR PROPS DE PRODUCTOS.JS
-  //const { user: currentUser } = useSelector((state) => state.auth);
-  //console.log(producto._id)
+
+  //LOS PRODUCTOS LLEGAN POR PROPS DE PRODUCTOS.JS
+  
   const { title, price, images, description} = producto;
   const dispatch = useDispatch();
   const history = useHistory();
 
-  console.log(producto)
+  
 
-  
-  
-  
    const verProductoId = (producto) => {
     dispatch(obtenerProductoIdAction(producto));
     console.log(producto);

@@ -4,15 +4,14 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { registroActions } from "../actions/registroActions";
 
+//REGISTRO DE USUARIO EN LA BASE DE DATOS DE MONGO
 const CrearUsuario = () => {
-  // const errorRegistro = useSelector((state) => state.auth.message)
-  // console.log(errorRegistro)
+  
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
 
-  // const { message } = useSelector(state => state.message);
   const dispatch = useDispatch();
 
   const onChangeUsername = (e) => {

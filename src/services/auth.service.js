@@ -28,6 +28,7 @@ const logout = () => {
   localStorage.removeItem("userToken");
   localStorage.removeItem("userName");
   localStorage.removeItem("userId")
+  
 };
 
 export default {

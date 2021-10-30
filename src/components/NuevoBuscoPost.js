@@ -1,15 +1,15 @@
 //* AQUI ESTARÁ EL FORMULARIO PARA EL PRODUCTO
 import styled from "styled-components";
-import "./NuevoProducto.css";
-import { useState, useEffect } from "react";
+import "./NuevoBuscoPost.css";
+import { useState, } from "react";
 //import Select from "react-select";
-import FormData from "form-data";
+// import FormData from "form-data";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 
 //ACTIONS DE REDUX
-import { crearNuevoProductoAction } from "../actions/productoActions";
+import { crearNuevoBuscoPostActions } from "../actions/buscoPostActions";
 
 const Label = styled.label`
   font-family: Saira;
@@ -19,76 +19,32 @@ const TextArea = styled.textarea`
   font-family: Saira;
 `;
 
-const NuevoProducto = () => {
+const NuevoBuscoPost = () => {
+
+  const datosContacto = useSelector((state) => state.auth)
+  console.log(datosContacto);
 
   //UTILIZAR USEDISPATCH Y TE CREA UNA FUNCION
   const dispatch = useDispatch();
-
-  //MANEJO DE STATES LOCALES
-  const [categoria, setCategoria] = useState("");
-
-  const handleProduct = (e) => {
-    setCategoria(e.target.value);
-  };
-
-  const [subCategoria, setSubCategoria] = useState("");
-
-  const handleSubProduct = (e) => {
-    setSubCategoria(e.target.value);
-  };
-
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [images, setImage] = useState('');
-  const [contacto, setContacto] = useState("");
-
-  //VERIFICACION DE PESO DE IMAGENES
   
 
-  let muchoPeso = false
-  for (let image of images){
-    if(image.size > 1000000)
-    {
-      console.log('demasiado peso')
-      muchoPeso = true
-    }
-  }
+  const [title, setTitle] = useState("");  
+  const [description, setDescription] = useState("");  
+  const [contacto, setContacto] = useState(datosContacto);
 
-  const [imgVerif, setImagVerif] = useState(false);
-
-  useEffect(()=>{
-    setImagVerif(muchoPeso)
-  }, [muchoPeso])
   
 
-  //MANEJO DEL REDUX EN EL FORMULARIO
-  //ACCDER AL STATE DEL STORE 
-  //manda llamar al action de productoAction
+  //MANEJO DEL REDUX EN EL FORMULARIO  
 
-  const agregarProducto = (producto) =>
-    dispatch(crearNuevoProductoAction(producto));
+  const agregarBuscoPost = (title, description, contacto) =>
+    dispatch(crearNuevoBuscoPostActions(title, description, contacto));
 
   //Validar Formulario
 
   //AL HACER SUBMIT EN EL FORMULARIO
-  const submitNuevoProducto = () => {
+  const submitNuevoBuscoPost = () => {
     //e.preventDefault();
-
-    let formData = new FormData();
-    for (var i = 0; i<images.length; i++){
-      formData.append("images", images[i]);
-    }
-    
-    formData.set("title", title);
-    formData.set("categoria", categoria);
-    formData.set("subCategoria", subCategoria);
-    formData.set("price", price);
-    formData.set("description", description);
-    formData.set("contacto", contacto);
-
-    agregarProducto(formData);
-    console.log(formData.getAll('images'))
+    agregarBuscoPost(title, description, contacto);    
     //history.push('/productos')
   };
 
@@ -98,8 +54,6 @@ const NuevoProducto = () => {
     formState: { errors },
     handleSubmit,
   } = useForm({ mode: "onBlur" });
-  
-
  
   return (
     <div className="container-fluid  rounded my-4 p-2">
@@ -108,11 +62,11 @@ const NuevoProducto = () => {
           {/* <div className="card"> */}
             {/* <div className="card-body"> */}
               <h2 className="text-center mx-auto font-wight-bold mb-5">
-                Agregar Nuevo Producto
+                Agregar Nuevo Post de Busqueda
               </h2>
 
-              <form onSubmit={handleSubmit(submitNuevoProducto)}>
-                <div className="mb-3">
+              <form onSubmit={handleSubmit(submitNuevoBuscoPost)}>
+                {/* <div className="mb-3">
                   <Label className="mb-2">Selecciona el tipo de producto</Label>
                   <select
                     className="custom-select form-control pproducto"
@@ -134,8 +88,8 @@ const NuevoProducto = () => {
                       Selecciona una Categoria
                     </h6>
                   )}
-                </div>
-                <div className="mb-3">
+                </div> */}
+                {/* <div className="mb-3">
                   <Label className="mb-2">Selecciona la SubCategoria</Label>
                   <select
                     className="custom-select form-control pproducto"
@@ -168,11 +122,11 @@ const NuevoProducto = () => {
                       Selecciona una SubCategoria
                     </h6>
                   )}
-                </div>
+                </div> */}
                 
                 <div className="mb-3">
                   <Label htmlFor="tituloProducto" className="form-label">
-                    Producto
+                    Título
                   </Label>
                   <input
                     type="text"
@@ -184,7 +138,7 @@ const NuevoProducto = () => {
                   ></input>
 
                   {errors.title && errors.title.type === 'required' && <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
-                      Pon un título al anuncio
+                      Pon un título a la Busqueda
                     </h6> }
                     {errors.title && errors.title.type === 'maxLength' && <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
                       Demasiados Caracteres máx 20!!
@@ -192,7 +146,7 @@ const NuevoProducto = () => {
                     
                  
                 </div>
-                <div className="mb-3">
+                {/* <div className="mb-3">
                   <Label htmlFor="precioProducto" className="form-label">
                     Precio
                   </Label>
@@ -210,11 +164,11 @@ const NuevoProducto = () => {
                       Pon un precio al producto
                     </h6>
                   )}
-                </div>
+                </div> */}
 
                 <div className="mb-3">
                   <Label htmlFor="descripcionProducto" className="form-label">
-                    Descripción del Producto
+                    Descripción de la Busqueda
                   </Label>
                   <TextArea
                     className="form-control"
@@ -225,7 +179,7 @@ const NuevoProducto = () => {
                   ></TextArea>
                   {errors.description?.type === "required" && (
                   <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
-                    Describe el producto
+                    Describe lo que Buscas
                   </h6>
                 )}
                 </div>
@@ -239,7 +193,8 @@ const NuevoProducto = () => {
                     className="form-control"
                     id="contacto"
                     rows="3"
-                    placeholder='Se utilizaran los datos de contacto guardados en el perfil'
+                    defaultValue={datosContacto}
+                    //placeholder='Por Defecto se utilizarán los datos de contacto guardados en el perfil'
                     {...register("contacto", { required: false })}
                     onChange={(e) => setContacto(e.target.value)}
                   ></TextArea>
@@ -249,7 +204,7 @@ const NuevoProducto = () => {
                     </h6>
                   )}
                 </div>
-                <div>
+                {/* <div>
                   <div>
                   <Label className=''/ >Sube Tus Fotos:<Label/>
                   <text className='text-danger'> Las Imagenes no pueden pesar más de 1MB cada Una </text>
@@ -269,20 +224,20 @@ const NuevoProducto = () => {
                       Sube una imagen
                     </h6>
                   )}
-                </div>
+                </div> */}
                 
                 <div className="mb-3 mt-3 text-center">
                   <button
                     className="btn btn-outline-warning"
                     type="submit"
-                    disabled={images.length > 4 || imgVerif === true}
+                    //disabled={images.length > 4 || imgVerif === true}
                     //disabled={imgVerif === true}
                   >
-                    Agregar Producto
+                    Agregar Post de Busqueda
                   </button>
                 </div>
               </form>
-              {imgVerif ? (
+              {/* {imgVerif ? (
                 <h6 className="alert alert-warning col-6 text-center mx-auto mt-2">
                   Las Imágenes no pueden ser mayores de 1MB
                 </h6>
@@ -291,7 +246,7 @@ const NuevoProducto = () => {
                 <h6 className="alert alert-warning col-6 text-center mx-auto mt-2">
                   Solo puedes subir un maximo de 4 fotos
                 </h6>
-              ) : null}
+              ) : null} */}
               {/* {error ? <alert>HAY UN ERROR</alert> : null} */}
             </div>
           </div>
@@ -301,4 +256,4 @@ const NuevoProducto = () => {
   );
 };
 
-export default NuevoProducto;
+export default NuevoBuscoPost;

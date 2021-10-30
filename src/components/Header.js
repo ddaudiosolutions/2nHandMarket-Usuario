@@ -4,7 +4,11 @@ import { logout } from "../actions/loginActions";
 import { useDispatch } from "react-redux";
 import { obtenerDatosUsuarioAction } from "../actions/loginActions";
 //import { history } from "../helpers/history";
+
 import "./Bienvenida.css";
+import jwtDecode from "jwt-decode";
+
+
 const Header = () => {
   //const { user: currentUser } = useSelector((state) => state.auth);
   //const { user } = useSelector((state) => state.auth);
@@ -13,19 +17,30 @@ const Header = () => {
   const nombreUser = localStorage.getItem("userName");
   const userId = localStorage.getItem("userId");
   const userTokenCheck = localStorage.getItem('userToken')
-  //console.log(user.user)
-  // const avatarGet = useSelector((state) => state.auth.avatar);
-  //console.log(avatarGet.imagesAvatar);
+  const date = Date.now()
+  //console.log (Fecha)
 
-  //const [avatarUrl, setAvatarUrl] = useState('')
-
-  //const avatar = (userId) => dispatch(obtenerAvatarAction(userId));
-
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if(!userTokenCheck) {
+      console.log('NO HAY TOKEN') 
+      return null
+    } else {
+      const {exp} = jwtDecode(userTokenCheck)
+      const expiredToken = (exp * 1000) - 60000
+      //console.log(expiredToken)
+      if(expiredToken < date){
+        logOut()
+      }
+    }
+    // eslint-disable-next-line
+  }, [ ]);
 
   const logOut = () => {
     dispatch(logout());
+    window.location = "/productos?busqueda=ultimos_productos&page=0";
   };
+
+  
   //
   return (
     <nav className="bg-nav  d-flex align-items-end ">
@@ -55,14 +70,14 @@ const Header = () => {
             </div>
             <div className="d-flex">
               <Link to={"/nuevousuario"} className="nav-link typeHeader ">
-                Registrase
+                Registrarse
               </Link>
             </div>
           </Fragment>
         ) : (
           <Fragment>
             <div className="">
-              <div className=" d-flex">
+              <div className="container text-center">
                 {/* <img
                  src={avatarUrl}
                  className="me-3"
@@ -95,6 +110,14 @@ const Header = () => {
                     </li>
                     <li>
                       <Link
+                        to={"/buscoposts/nuevo"}
+                        className="nav-link typeHeader"
+                      >
+                        Publicar Busqueda
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
                         to={"/productos/user"}
                         className="nav-link  typeHeader"
                       >
@@ -123,7 +146,7 @@ const Header = () => {
                     <li>
                       <Link
                         to={"/productos?busqueda=ultimos_productos&page=0"}
-                        href="/login"
+                        //href="/login"
                         className="nav-link typeHeader"
                         onClick={logOut}
                       >

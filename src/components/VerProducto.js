@@ -10,14 +10,7 @@ import {
 import { toDate, format } from "date-fns";
 
 const VerProducto = () => {
-  // eslint-disable-next-line
-  // const [title, setTitle] = useState(""); // eslint-disable-next-line
-  // const [price, setPrice] = useState(""); // eslint-disable-next-line
-  // const [description, setDescription] = useState(""); // eslint-disable-next-line
-  // const [imagesUrl, setImagesUrl] = useState(""); // eslint-disable-next-line
-  // const [contacto, setContacto] = useState(""); // eslint-disable-next-line
-  // const [creado, setCreado] = useState(""); // eslint-disable-next-line
-  // const [author, setAuthor] = useState(""); // eslint-disable-next-line
+ 
 
   const producto = useSelector((state) => state.productos.productoIdApi);
   console.log(producto);
@@ -43,29 +36,19 @@ const VerProducto = () => {
     // eslint-disable-next-line
   }, []);
 
-  if (producto === null) return null;
-
-  // const { title, price, description, images, contacto, author, creado } = productoApi;
-  // console.log(productoApi);
+  if (producto === null) return null;;
 
   ///CONVERTIMOS LA FECHA A UN FORMATO COMUN
   const date = new Date(producto.creado);
   const clonedDate = toDate(date);
   const clonedDateFormat = format(clonedDate, "dd-MM-yyyy");
-  console.log(clonedDateFormat);
+  
 
   let authorName = producto.author.nombre;
-  //let authorDireccion = author.direccion;
-  console.log(authorName);
-
-  // let string = busqueda;
-  // if(!busqueda) {
-  //   string = 'hola'
-  // }
 
   const cargarProductosAuthor = (producto) => {
     dispatch(obtenerProductosActionAuthor(producto.author._id));
-    console.log(producto.author._id);
+   
     history.push(`/productos/auth/${producto.author._id}`);
   };
 
@@ -78,12 +61,20 @@ const VerProducto = () => {
             type="button"
             onClick={() => cargarProductosAuthor(producto)}
           >
-            {/* <img
-              src={avatarUrl}
-              className="card-img-topAvatar ms-4 mt-3"
-              alt="avatarUser"
-            ></img> */}
-            <h5 className="h5Avatar ms-3 mt-4">{authorName}</h5>
+            {producto.author.imagesAvatar[0].url === undefined ? (
+              <img
+                src="/Avatar_Default2.png"
+                className="card-img-topAvatar ms-4 mt-3"
+                alt="avatar for User"
+              ></img>
+            ) : (
+              <img
+                src={producto.author.imagesAvatar[0].url}
+                className="card-img-topAvatar ms-4 mt-3"
+                alt="avatarUser"
+              ></img>
+            )}
+            <h5 className="h2Author ms-2 mt-4">{authorName}</h5>
           </div>
           <div>
             <div
@@ -112,25 +103,22 @@ const VerProducto = () => {
                 {producto.images.slice(1).map((image) => (
                   <div className="carousel-item">
                     <a
-                    className=" "
-                    href={image.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <img
-                      src={image.url}
-                      style={{ height: "25rem" }}
-                      key={image._id}
-                      className="card-img-top mt-3"
-                      alt="..."
-                    ></img>
+                      className=" "
+                      href={image.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <img
+                        src={image.url}
+                        style={{ height: "25rem" }}
+                        key={image._id}
+                        className="card-img-top mt-3"
+                        alt="..."
+                      ></img>
                     </a>
                   </div>
                 ))}
-
-                {/* <div className="carousel-item">
-                  <img src={producto.images[1].url} style={{ height: "25rem" }} className="card-img-top mt-3" alt="..."></img>
-                </div> */}
+             
               </div>
               <button
                 className="carousel-control-prev"
@@ -180,9 +168,9 @@ const VerProducto = () => {
               <p className="card-title pproductoTitle ">
                 {producto.author.email}
               </p>
-              {/* <p className="card-title pproductoTitle ">
-                {producto.author.telefono}
-              </p> */}
+              {/* <a className="card-title pproductoTitle" href={`https://api.whatsapp.com/send?phone=34${producto.author.telefono}&text=Hola Estoy interesado en tus productos`}>
+                Mi Telefono
+              </a> */}
               <p className="card-title pproductoTitle ">
                 {producto.author.direccion}
               </p>

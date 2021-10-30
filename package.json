@@ -10,6 +10,7 @@
     "bootstrap": "^5.1.0",
     "date-fns": "^2.25.0",
     "form-data": "^4.0.0",
+    "jwt-decode": "^3.1.2",
     "mongo-image-converter": "^1.0.2",
     "npm-check": "^5.9.2",
     "react": "^17.0.2",

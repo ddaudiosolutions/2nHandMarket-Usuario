@@ -21,7 +21,7 @@ import {
     user: user
     ? { isLoggedIn: true, user}
     : { isLoggedIn: false, user: null },
-    datosUsuario: null,
+    //datosUsuario: null,
     datosUsuarioEditar: null,
     avatar: null
   
@@ -75,7 +75,7 @@ import {
         return{
           ...state,
           datosUsuario: action.payload,
-          datosUsuarioEditar: null
+          //datosUsuarioEditar: null
         }
         case OBTENER_USUARIO_EDITAR:
         console.log(action.payload)
@@ -89,7 +89,7 @@ import {
           return{
             ...state,
             datosUsuarioEditar: null,
-            datosUsuario: action.payload
+           // datosUsuario: action.payload
 
           }
           case  OBTENER_AVATAR_EXITO:
