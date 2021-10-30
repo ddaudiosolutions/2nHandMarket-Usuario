@@ -1,7 +1,22 @@
 
-body.bienvenida {
-    background-image: url('https://res.cloudinary.com/dhe1gcno9/image/upload/bo_56px_solid_rgb:000,o_24/v1631097345/ProductosMarketV2/FondoPantalla/wallpaperflare.com_wallpaper_ra2ao1.jpg') ;   
-  background-repeat: no-repeat;
-  background-attachment: fixed;  
-  background-size: cover;
+
+
+.bg-nav{
+  background-color:rgb(245, 245, 245);
+}
+
+.typeHeader{
+  font-family: Saira Stencil One;
+  font-size: 1.1rem;
+  letter-spacing: 0.01rem;
+  color: rgb(56, 217, 223);
+  font-weight: 400;
+}
+
+.typeHeader:hover{
+  font-family: Saira Stencil One;
+  font-size: 1.1rem;
+  letter-spacing: 0.01rem;
+  color: #e02b20;
+  font-weight: 400;
 }

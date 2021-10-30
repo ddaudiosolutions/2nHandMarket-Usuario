@@ -1,74 +1,51 @@
 import { Fragment } from "react";
-import './Producto.css'
+import "./Producto.css";
+//import parse from 'date-fns/parse'
+//import {toDate, format} from 'date-fns'
+//import './ProductoUser.css'
 import { useHistory } from "react-router-dom";
 //import { useSelector } from "react-redux";
 //REDUX
 import { useDispatch } from "react-redux";
-import { obtenerProductoIdAction } from "../actions/productoActions";
+import {  obtenerProductoIdApiAction } from "../actions/productoActions";
 //import { obtenerProductoVisionar } from "../actions/productoActions";
 
-const Producto = ({ producto }) => {//LOD PRODUCTOS LLEGAN POR PROPS DE PRODUCTOS.JS
- // const { user: currentUser } = useSelector((state) => state.auth);
-  //console.log(producto._id)
-  const { title, price, images } = producto;
+const Producto = ({ producto }) => {
+  const { title, price, images, description } = producto;
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // console.log(currentUser)
-
   const verProductoId = (producto) => {
-    dispatch(obtenerProductoIdAction(producto));
-    console.log(producto)
+    dispatch(obtenerProductoIdApiAction(producto._id));
+    console.log(producto._id)
     history.push(`/productos/${producto._id}`);
   };
 
   return (
     <Fragment>
       <div className="col">
-        <div className="card shadow-sm">
-          <img
-            src={images[0].url}
-            className="card-img-top mt-3"
-            alt={images[0].filename}
-          ></img>
-          <div className="card-body">
-            <div className="clearfix mb-3">
-              <span className="price-hp">Precio: {price} €</span>
-            </div>
-            <h5 className="card-title text-center">{title}</h5>
-            <div className="text-center ">             
-              <button
-                className="btn btn-primary "
-                onClick={() => verProductoId(producto)}
-              >
-                Ver Producto
-              </button>
+        <div
+          className="card shadow-sm me-1 ms-1 "
+          type="button"
+          onClick={() => verProductoId(producto)}
+        >
+          <div className="">
+            <img
+              src={images[0].url}
+              className="card-img-top"
+              alt={images[0].filename}
+            ></img>
+          </div>
+          <div className="card-body ">
+            <h5 className="excerpt titleH5 card-title m-1">{title}</h5>
+            <h5 className="price-hp m-1 mb-3">{price}€</h5>
+
+            <div className="excerpt pproductoTitle m-1 mb-4" rows="1">
+              {description}
             </div>
           </div>
         </div>
       </div>
-      {/* <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2">
-      <div className="card mb-2 ">
-        <div className="card-header text-center">
-          <h5 className='display-7'>{title}</h5>
-        </div>        
-        <img
-            className="image-fluid m-3"
-            style={{ height: '100px', objectFit: 'cover'}}
-            src={images[0].url}
-            alt="imagen nula"
-          ></img>
-        <div className="card-body text-center bg-light">
-          <p style={{ color: "red" }}>Precio: {price}€</p>
-          <button
-            className="btn btn-primary"
-            onClick={() => verProductoId(producto)}
-          >
-            Ver Producto
-          </button>
-        </div>
-        </div>
-      </div> */}
     </Fragment>
   );
 };

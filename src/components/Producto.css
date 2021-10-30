@@ -1,68 +1,93 @@
-@import url("https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
 
 
 body {
   
-  background-image: url("https://res.cloudinary.com/dhe1gcno9/image/upload/o_30/v1631097345/ProductosMarketV2/FondoPantalla/wallpaperflare.com_wallpaper_ra2ao1.jpg");
+  /* background-image: url("https://res.cloudinary.com/dhe1gcno9/image/upload/o_30/v1631097345/ProductosMarketV2/FondoPantalla/wallpaperflare.com_wallpaper_ra2ao1.jpg"); */
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
+  background-color: #f9f9f9;
+}
+h2{
+  font-family: Saira;
 }
 
-h2 {
-  font-weight: 900;
+.h2Author{
+  font-family: Saira Stencil One;;
+  color: rgb(56, 217, 223);
 }
 
-
-
-/* .card {
-  background: rgb(255, 255, 255);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
-  transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
-    0.3s box-shadow,
-    0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
-  border: 0;
-  border-radius: 1rem;
-} */
-
-.card-img,
-.card-img-top {
-  border-top-left-radius: calc(1rem - 1px);
-  border-top-right-radius: calc(1rem - 1px);
+.bg-form{
+  background-color: rgb(255, 255, 255);
 }
 
- .card h5 {
+.loginLabel{
+  font-family: Saira;
+}
+
+.loginH3 {
+  font-family: Saira;
+  color: rgb(124, 124, 124);
+  border: 1px solid ;
+  border-radius: 3px;
+}
+
+.me-0 {
+  margin-left: 0.05rem !important;
+}
+
+.card {
+  border-radius: 15px;;
+  max-height: 300px;
+  background-color: rgb(255, 255, 255);
+}
+
+.form-select{
+  font-size: 1.3rem;
+  font-family: Saira;
+  
+}
+.excerpt {
+  height: 20px;
+  /* width: 300px; */
+  white-space: nowrap;
+  text-overflow:ellipsis;
   overflow: hidden;
-  height: 56px;
+  
+}
+ .titleH5 {
+  overflow: hidden;  
   font-weight: 500;
-  font-size: 0.8rem;
-  text-transform: uppercase;
+  font-size: 1.1rem;
+  /* font-size: 0.5vw; */
+  text-transform:capitalize;
+  font-family: Saira;
 } 
 
 .card-img-top {
   width: 100%;
-  max-height: 150px;
-  object-fit: contain;
-  /* objectFit: 'cover' */
-  padding: 5px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+   /* objectFit: 'cover' ; */
+  /* padding: 1px; */
+}
+
+.card-body {
+  padding: 0.2rem;
 }
 
 .card h2 {
-  font-size: 0.7rem;
+  font-size: 1rem;
+  font-weight: lighter;
 }
 
 .card:hover {
-  transform: scale(1.01);
+  /* transform: scale(1.01); */
+  transition: 0.05s;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
 }
-
-/* @media (max-width: 768px) {
-    .card-img-top {
-        max-height: 150px
-    }
-} */
 
 .over-bg {
   background: rgba(53, 53, 53, 0.85);
@@ -72,80 +97,148 @@ h2 {
   border-radius: 10px;
 }
 
-/* .btn {
-    font-size: 1rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    padding: 5px 50px 5px 50px
-} */
-
-/* .box .btn {
-    font-size: 1.5rem
-} */
-
-/* @media (max-width: 1025px) {
-    .btn {
-        padding: 5px 40px 5px 40px
-    }
-} */
-
-/* @media (max-width: 250px) {
-  .btn {
-    padding: 5px 30px 5px 30px;
-  }
-} */
-
-.btn-warning {
-  background: none #f7810a;
-  color: #ffffff;
-  fill: #ffffff;
-  border: none;
-  text-decoration: none;
-  outline: 0;
-  box-shadow: -1px 6px 19px rgba(247, 129, 10, 0.25);
-  /* border-radius: 100px; */
+.col {
+  padding: 0px;
 }
 
-/* .btn-warning:hover {
-  background: none #ff962b;
-  color: #ffffff;
-  box-shadow: -1px 6px 13px rgba(255, 150, 43, 0.35);
-} */
-
-.btn-success {
-  color: #ffffff;
-  fill: #ffffff;
-  border: none;
+.btn-outline-warning {
+  color: #e02b20;
+  background: transparent;
+  border: 1px solid;
   text-decoration: none;
   outline: 0;
-  box-shadow: -1px 6px 19px rgba(247, 129, 10, 0.25);
-  /* border-radius: 100px; */
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
 }
 
-.bg-danger {
-  font-size: 1rem;
+.btn-outline-warning:hover {
+  color: rgb(255, 255, 255);
+  background: #e02b20;
+  border: 1px solid;
+  text-decoration: none;
+  outline: 0;
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
+}
+
+.btn-outline-info{
+  color: rgb(4, 93, 226);
+  background: transparent;
+  border: 1px solid;
+  text-decoration: none;
+  outline: 0;
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
+}
+
+.btn-outline-info:hover{
+  background-color: rgb(4, 93, 226);
+  color: white;
+  /* background: transparent; */
+  border: 1px solid;
+  text-decoration: none;
+  outline: 0;
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
+}
+
+.btn-outline-success {
+  background-color: transparent;
+  color: #237a00;
+  /* fill: #ffffff; */
+  border: 1px solid;
+  text-decoration: none;
+  outline: 0;
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
+}
+
+.btn-outline-primary{
+  background-color: transparent;
+  color: #e02b20;
+  /* fill: #ffffff; */
+  border: 1px solid;
+  text-decoration: none;
+  outline: 0;
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
+  
+}
+
+.btn-outline-primary:hover{
+  background-color: #e02b20;
+  color: #ffffff;
+  /* transition: 1000ms;   */
+  border: 1px solid;
+    outline: 0;
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
+}
+
+.btn-outline-primary:link{
+  background-color: #e02b20;
+  color: #ffffff;
+  /* transition: 1000ms;   */
+  border: 1px solid;
+    outline: 0;
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
+}
+
+
+.btn-outline-info {
+  background-color: transparent;
+  /* color: #0058ca;   */
+  border: 1px solid;
+  text-decoration: none;
+  outline: 0;
+  font-size: 0.7rem;
+  font-family: Saira;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
 }
 
 .price-hp { 
-  text-align: center;
-   font-size: 0.8rem;
-  font-weight: 600;
-  color: rgb(87, 79, 79); 
+  font-family: Saira;
+  font-weight: 400;
+  /* text-align: center; */
+   font-size: 1.1rem;
+   letter-spacing: 0.04rem;
+  
+  color: #e02b20; 
  }
 
-/* .amz-hp {
-    font-size: .7rem;
-    font-weight: 600;
-    color: darkgray
+.btn-select {
+  background-color: rgb(168, 168, 168);
+  text-align: center;
+  font-family:  Saira Stencil One;
+  letter-spacing: 0.04rem;
+  color: rgb(248, 248, 248);
 }
 
-.fa-question-circle:before {
-    color: darkgray
+.btn-select:hover {
+  background-color: #e02b20;
+  text-align: center;
+  font-family:  Saira Stencil One;
+  letter-spacing: 0.04rem;
+  color: rgb(248, 248, 248);
 }
-
-.fa-plus:before {
-    color: darkgray
-} */
 
 .box {
   border-radius: 1rem;
@@ -164,37 +257,10 @@ h2 {
   max-width: 300px;
 }
 
-/* @media (max-width: 576px) {
-  .box-img {
-    max-width: 150px;
-  }
+.btn-info{
+  text-align: center;
+  font-family:  Saira Stencil One;
+  color: rgb(248, 248, 248);
+  background-color: rgb(112, 112, 112);
+}
 
-  .thumb-sec {
-    max-width: 200px;
-  }
-} */
-
-/* @media (max-width: 370px) {
-    .box-img {
-        max-width: 150px;
-      }
-  .box .btn {
-    padding: 5px 40px 5px 40px;
-    font-size: 0.7rem;
-  }
-} */
-
-/* .disclaimer {
-    font-size: .9rem;
-    color: darkgray
-} */
-
-/* .related h3 {
-    font-weight: 900
-} */
-
-/* footer {
-    background: #212529;
-    height: 80px;
-    color: #fff
-} */

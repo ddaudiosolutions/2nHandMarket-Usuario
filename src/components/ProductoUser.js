@@ -45,27 +45,28 @@ const ProductoUser = ({ producto }) => {
   return (
     <Fragment>
       <div className="col">
-        <div className="card shadow-sm">
+        <div className="card shadow-sm me-1 ms-1 mt-4">
           <img
             src={images[0].url}
             className="card-img-top mt-3"
             alt={images[0].filename}
           ></img>
+          
           <div className="card-body">
-            <div className="clearfix mb-3">
-              <span className="float-end price-hp">Precio: {price} €</span>
+            <div className="card-body text-center">
+              <span className="price-hp">{price} €</span>
             </div>
-            <h5 className="card-title text-center">{title}</h5>
-            <div className="container-fluid text-center">
+            <h5 className="titleH5 card-title text-center">{title}</h5>
+            <div className="container-fluid text-center mt-3 mb-3 gap-2">
               <button
-                className="btn btn-success mb-2"
+                className="btn btn-outline-success me-2"
                 onClick={() => sendtoEdicion(producto)}
               >
                 Editar Producto
               </button>
 
               <button
-                className="btn btn-danger ml-2"
+                className="btn btn-outline-warning "
                 onClick={() => confirmarBorrarProducto(_id)}
               >
                 Eliminar Producto

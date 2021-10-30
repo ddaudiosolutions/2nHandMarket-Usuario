@@ -3,27 +3,40 @@ import {
   AGREGAR_PRODUCTO_EXITO,
   AGREGAR_PRODUCTO_ERROR,
   //COMENZAR_DESCARGA_PRODUCTOS,
-  DESCARGA_PRODUCTOS_ERROR,
+ // DESCARGA_PRODUCTOS_ERROR,
   DESCARGA_PRODUCTOS_EXITO,
  // VER_PRODUCTO_ID,
   VER_PRODUCTO_EXITO_ID,
+  VER_PRODUCTO_EXITO_API_ID,
+  VER_PRODUCTO_ERROR_API_ID,
   // VER_PRODUCTO_ERROR_ID,
   COMENZAR_DESCARGA_PRODUCTOS_USER,
   DESCARGA_PRODUCTOS_USER_EXITO,
-  //DESCARGA_PRODUCTOS_USER_ERROR,
+  DESCARGA_PRODUCTOS_USER_ERROR,
   OBTENER_PRODUCTO_ELIMINAR,
   PRODUCTO_ELIMINADO_ERROR,
   PRODUCTO_ELIMINADO_EXITO,
   OBTENER_PRODUCTO_EDITAR,
-  COMENZAR_EDICION_PRODUCTO,
+  //COMENZAR_EDICION_PRODUCTO,
   PRODUCTO_EDITADO_EXITO,
   PRODUCTO_EDITADO_ERROR,
+  DESCARGA_PAGINAS_EXITO,
+  DESCARGA_PAGINAS_USER_EXITO,
+  OBTENER_CATEGORIA_EXITO,
+  OBTENER_PAGINA_ACTUAL,
+  DESCARGA_PRODUCTOS_AUTHOR_EXITO
 } from "../types";
+
+import {  
+  LOGIN_FAIL,
+  
+} from '../actions/types'
 
 import clienteAxios from "../config/axios";
 import Swal from "sweetalert2";
 
-const user = JSON.parse(localStorage.getItem("user"));
+
+const user = JSON.parse(localStorage.getItem("userToken"));
 const data = {
   headers: {
     "x-auth-token": user,
@@ -35,10 +48,8 @@ const data = {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //CREAR NUEVOS PRODUCTOS
 export function crearNuevoProductoAction(producto, history) {
-  //console.log(producto)
-  // for(let value of producto){
-  //   console.log(value)
-  // }
+  //const images = producto.getAll('images')
+  //console.log(images)
   return async (dispatch) => {
     //dispatch(agregarProducto());
     try {
@@ -54,11 +65,13 @@ export function crearNuevoProductoAction(producto, history) {
         "El Producto se subió Correctamente",
         "success"
       ).then(function() {
-        window.location = "/productos"});
+       // history.push('/productos?busqueda=ultimos_productos&page=0');
+        window.location = "/productos?busqueda=ultimos_productos&page=0"
+      });
 
       //console.log(producto)
     } catch (error) {
-      console.log(error.response.data.errors);
+      //console.log(error.response.data.errors);
       dispatch(agregarProductoError(true));
       await Swal.fire({
         icon: "error",
@@ -66,7 +79,7 @@ export function crearNuevoProductoAction(producto, history) {
         text: "Algo ha fallado! Vuelve a intentarlo en unos minutos",
       }).then((result) => {
         if (result.isConfirmed) {
-          history.push("/productos");
+          history.push('/productos?busqueda=ultimos_productos&page=0');
         }
       });
     }
@@ -87,50 +100,71 @@ const agregarProductoError = (estado) => ({
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
 //FUNCION QUE DESCARGA LOS PRODUCTOS DE LA BBDD
-export function obtenerProductosAction(busqueda) {
-  console.log(busqueda)
+export function obtenerProductosAction(busqueda, pageNumber) {
+  //console.log(pageNumber)
+  // pageNumber = 1
+  
   return async (dispatch) => {
     //dispatch(descargarProductos());
-    try {
-      
-      const productosAll = await clienteAxios.get(`/api/productos/${busqueda}`,  data);
+    try {      
+      const productosAll = await clienteAxios.get(`/api/productos?busqueda=${busqueda}&page=${pageNumber}`);
+
       dispatch(descargarProductosExito(productosAll.data.prodAll));
-      console.log(productosAll.data.prodAll);
+      dispatch(descargarPaginasProductosExito(productosAll.data.totalPages))
+
+      //console.log(productosAll.data);
+      //console.log(productosAll.data.totalPages)
     } catch (error) {
-      console.log(error);
-      dispatch(descargarProductosError());
-    }
+      //console.log(error.response);
+      if(error.response.status === 401){
+        console.log('estamos sin TOKEN');
+        console.log('hemos cerrado'); 
+        dispatch(descargarProductosError401(error.response.data))  
+      }                  
+    } 
   };
 }
 
-// const descargarProductos = () => ({
-//   type: COMENZAR_DESCARGA_PRODUCTOS,
-//   payload: true,
-// });
 
 const descargarProductosExito = (prodAll) => ({
   type: DESCARGA_PRODUCTOS_EXITO,
   payload: prodAll,
 });
 
-const descargarProductosError = (error) => ({
-  type: DESCARGA_PRODUCTOS_ERROR,
-  payload: error,
+const descargarProductosError401 = () => ({
+  type: LOGIN_FAIL,  
 });
 
+// const descargarProductosError = () => ({
+//   type: LOGIN_FAIL,
+  
+// });
+
+const descargarPaginasProductosExito = (paginas) => ({
+  type: DESCARGA_PAGINAS_EXITO,
+  payload: paginas,
+});
+
+/////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 //DESCARGAR PRODUCTOS USUARIO
-export function obtenerProductosActionUser() {
+export function obtenerProductosActionUser(pageNuser) {
+  //console.log(pageNuser)
   return async (dispatch) => {
     dispatch(descargarProductosUser());
     try {
-      const respuestaUser = await clienteAxios.get("/api/productos/user", data);
+      const respuestaUser = await clienteAxios.get(`/api/productos/user?=${pageNuser}`, data);
       const productosUser = respuestaUser.data.prodUser;
+      const paginasUser = respuestaUser.data.totalPagesUs;
+      //console.log(paginasUser)
       dispatch(descargarProductosUserExito(productosUser));
-      console.log(productosUser);
+      dispatch(descargarPaginasUserExito(paginasUser))
+      //console.log(productosUser);
     } catch (error) {
       console.log(error);
-      dispatch(descargarProductosError());
+      dispatch(descargarProductosUserError(error));
     }
   };
 }
@@ -145,30 +179,52 @@ const descargarProductosUserExito = (prodUser) => ({
   payload: prodUser,
 });
 
+const descargarPaginasUserExito = (paginas) => ({
+  type: DESCARGA_PAGINAS_USER_EXITO,
+  payload: paginas,
+});
+
+const descargarProductosUserError = (error) => ({
+  type: DESCARGA_PRODUCTOS_USER_ERROR,
+  payload: error
+})
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//VER UN SOLO PRODUCTO
-export function obtenerProductoIdAction(producto) {
-  return async (dispatch) => {
-    dispatch(obtenerProductoIdExito(producto));
-    try {
-      // const respuestaprodId = await clienteAxios.get(
-      //   `/api/productos/${producto._id}`,
-      //   data
-      // );
-      // console.log(respuestaprodId.data.productoId)
-      // await dispatch(obtenerProductoIdExito(respuestaprodId.data.productoId));
-      //console.log(respuestaprodId.data.productoId);
-    } catch (error) {
-      console.log(error);
-      dispatch(descargarProductosError());
+
+export function obtenerProductoIdApiAction(productoid) {
+  console.log(productoid)
+  return  async (dispatch) => {
+    try{
+      const productoIdApi =  await clienteAxios.get(`/api/productos/${productoid}`)
+      console.log(productoIdApi.data.productoId)
+      dispatch(obtenerProductoIdApiExito(productoIdApi.data.productoId));
     }
+    catch(error){
+      console.log(error)
+      dispatch(obtenerProductoIdeApiError(error))
+    }
+        
   };
 }
-// const obtenerProductoId = (producto) => ({
-//   type: VER_PRODUCTO_ID,
-//   payload: producto,
-// });
+
+const obtenerProductoIdApiExito = (productoApi) => ({
+  type: VER_PRODUCTO_EXITO_API_ID,
+  payload: productoApi,
+});
+
+const obtenerProductoIdeApiError =(error)=> ({
+  type: VER_PRODUCTO_ERROR_API_ID
+
+})
+
+//VER UN SOLO PRODUCTO
+//NO USAMOS TRY CATCH, EL PRODUCTO YA ESTÁ EN MEMORIA, NO LLAMAMOS A LA API
+export function obtenerProductoIdAction(producto) {
+  return (dispatch) => {
+    dispatch(obtenerProductoIdExito(producto));    
+  };
+}
+
 
 const obtenerProductoIdExito = (producto) => ({
   type: VER_PRODUCTO_EXITO_ID,
@@ -225,20 +281,21 @@ const eliminarProductoError = () => ({
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //COLOCAR PRODUCTO EN EDICIÓN
+//NO USAMOS TRY CATCH, EL PRODUCTO YA ESTÁ EN MEMORIA, NO LLAMAMOS A LA API
 export function obtenerProductoEditarActionUser(producto) {
-  return async (dispatch) => {
+  return  (dispatch) => {
     dispatch(obtenerProductoEditar(producto));
-    try {
-      const respuesta = await clienteAxios.get(
-        `/api/productos/user/editar/${producto._id}`,
-        data
-      );
-      dispatch(obtenerProductoEditar(respuesta.data.producto));
-      console.log(respuesta.data.producto)
-    } catch (error) {
-      console.log(error);
-      dispatch(descargarProductosError());
-    }
+    // try {
+    //   const respuesta = await clienteAxios.get(
+    //     `/api/productos/user/editar/${producto._id}`,
+    //     data
+    //   );
+    //   dispatch(obtenerProductoEditar(respuesta.data.producto));
+    //   console.log(respuesta.data.producto)
+    // } catch (error) {
+    //   console.log(error);
+    //   dispatch(descargarProductosError());
+    // }
     console.log(producto);
   };
 }
@@ -249,14 +306,19 @@ const obtenerProductoEditar = (producto) => ({
 
 //////////////////////////////////////////////////
 //EDITAR EL PRODUCTO /////
-export function editarProductoAction(producto) {
-  const productoId = producto.getAll("id");
-  console.log(productoId);
+export function editarProductoAction(producto, id) {
+  const productoImages = producto.getAll('images');
+  console.log(productoImages);
+ // console.log(producto)
+
+  const images = producto.getAll('images');
+  console.log(images);
+
   return async (dispatch) => {
-    dispatch(editarProducto());
+   // dispatch(editarProducto());
     try {
       const editarRespuesta = await clienteAxios.put(
-        `/api/productos/user/editar/${productoId}`,
+        `/api/productos/user/editar/${id}`,
         producto,
         data
       );
@@ -268,7 +330,8 @@ export function editarProductoAction(producto) {
         "El Producto se editó Correctamente",
         "success"
       ).then(function() {
-        window.location = "/productos"})
+        //window.location.reload()})
+        window.location = "/productos?busqueda=ultimos_productos&page=0"})
       //console.log(producto);
     } catch (error) {
       console.log(error);
@@ -277,9 +340,9 @@ export function editarProductoAction(producto) {
   };
 }
 
-const editarProducto = () => ({
-  type: COMENZAR_EDICION_PRODUCTO,
-});
+// const editarProducto = () => ({
+//   type: COMENZAR_EDICION_PRODUCTO,
+// });
 
 const editarProductoUserExito = (producto) => ({
   type: PRODUCTO_EDITADO_EXITO,
@@ -290,3 +353,69 @@ const editarProductoUserError = (estado) => ({
   type: PRODUCTO_EDITADO_ERROR,
   payload: estado,
 });
+
+export function obtenerCategoriaActions (categoria) {
+  return (dispatch) => {
+    dispatch(obtenerCategoriaExito(categoria));
+  };
+
+}
+
+const obtenerCategoriaExito = (categoria) => ({
+  type: OBTENER_CATEGORIA_EXITO,
+  payload: categoria
+})
+
+export function obtenerPaginaAction (pagina){
+  //console.log(pagina)
+  return (dispatch) => {
+    dispatch(obtenerPaginaActual(pagina))
+  }
+}
+
+const obtenerPaginaActual = (pagina) => ({
+  type: OBTENER_PAGINA_ACTUAL,
+  payload: pagina
+
+} )
+
+/////////
+///////////////////////
+// DESCARGAR TODOS LOS PRODUCTOS DE UN USUARIO
+/////////
+///////////////////////
+/////////
+///////////////////////
+export function obtenerProductosActionAuthor(authId) {
+  //console.log(authId) 
+  return async (dispatch) => {    
+    try { 
+      console.log('llamo a la api')         
+      const productosAuthor = await clienteAxios.get(`/api/productos/auth/${authId}`);
+   //   console.log(productosAuthor.data)
+      dispatch(descargarProductosAuthorExito(productosAuthor.data.prodAuth));
+   
+    } catch (error) {
+      //console.log(error.response);
+      if(error.response.status === 401){
+        console.log('estamos sin TOKEN');
+        console.log('hemos cerrado'); 
+        dispatch(descargarProductosAuthorError(error.response.data))  
+      }                  
+    } 
+  };
+}
+
+
+const descargarProductosAuthorExito = (prodAuth) => ({
+  type: DESCARGA_PRODUCTOS_AUTHOR_EXITO,
+  payload: prodAuth,
+});
+// const descargarProductosAuthorError401 = () => ({
+//   type: LOGIN_FAIL,  
+// });
+
+const descargarProductosAuthorError = () => ({
+  type: LOGIN_FAIL,  
+});
+

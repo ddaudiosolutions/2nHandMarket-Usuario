@@ -1,57 +1,29 @@
 //* AQUI ESTARÁ EL FORMULARIO PARA EL PRODUCTO
 import styled from "styled-components";
-import { useState } from "react";
-import Select from "react-select";
+import "./NuevoProducto.css";
+import { useState, useEffect } from "react";
+//import Select from "react-select";
 import FormData from "form-data";
-import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 
 //ACTIONS DE REDUX
 import { crearNuevoProductoAction } from "../actions/productoActions";
 
-
 const Label = styled.label`
-  font-family: Anton;
+  font-family: Saira;
 `;
 
 const TextArea = styled.textarea`
-  font-family: Lato;
+  font-family: Saira;
 `;
 
-const tablas = [
-  { value: "slalom", label: "Slalom" },
-  { value: "freeride", label: "Free-Ride" },
-  { value: "freerace", label: "Free-Race" },
-  { value: "freestyle", label: "Free-Style" },
-  { value: "waves", label: "Waves" },
-];
+const NuevoProducto = () => {
 
-const velas = [
-  { value: "slalom", label: "Slalom_V" },
-  { value: "freeride", label: "Free-Ride" },
-  { value: "freerace", label: "Free-Race" },
-  { value: "freestyle", label: "Free-Style" },
-  { value: "waves", label: "Waves" },
-];
+  //UTILIZAR USEDISPATCH Y TE CREA UNA FUNCION
+  const dispatch = useDispatch();
 
-const botavaras = [
-  { value: "carbono", label: "Carbono" },
-  { value: "aluminio", label: "Aluminio" },
-  { value: "mixtas", label: "Mixtas" },
-];
-
-const mastiles = [
-  { value: "rdm", label: "RDM" },
-  { value: "sdm", label: "SDM" },
-];
-
-const accesorios = [
-  { value: "arnes", label: "Arnes" },
-  { value: "alargador", label: "Alargador" },
-  { value: "aleta", label: "Aleta" },
-];
-
-const NuevoProducto = ({ history }) => {
   //MANEJO DE STATES LOCALES
   const [categoria, setCategoria] = useState("");
 
@@ -62,73 +34,52 @@ const NuevoProducto = ({ history }) => {
   const [subCategoria, setSubCategoria] = useState("");
 
   const handleSubProduct = (e) => {
-    setSubCategoria(e.value);
+    setSubCategoria(e.target.value);
   };
 
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [images, setImage] = useState("");
+  const [images, setImage] = useState('');
   const [contacto, setContacto] = useState("");
 
-  //console.log(images)
+  //VERIFICACION DE PESO DE IMAGENES
+  
 
-  let subopcion;
-
-  switch (categoria) {
-    case "tabla":
-      subopcion = tablas;
-      break;
-
-    case "vela":
-      subopcion = velas;
-      break;
-
-    case "botavara":
-      subopcion = botavaras;
-      break;
-
-    case "mastil":
-      subopcion = mastiles;
-      break;
-
-    case "accesorio":
-      subopcion = accesorios;
-      break;
-
-    default:
-      subopcion = tablas;
-      break;
+  let muchoPeso = false
+  for (let image of images){
+    if(image.size > 1000000)
+    {
+      console.log('demasiado peso')
+      muchoPeso = true
+    }
   }
 
+  const [imgVerif, setImagVerif] = useState(false);
+
+  useEffect(()=>{
+    setImagVerif(muchoPeso)
+  }, [muchoPeso])
+  
+
   //MANEJO DEL REDUX EN EL FORMULARIO
-
-  //UTILIZAR USEDISPATCH Y TE CREA UNA FUNCION
-  const dispatch = useDispatch();
-
-  //ACCDER AL STATE DEL STORE
-  const alerta = useSelector((state) => state.alerta.alerta);
-
+  //ACCDER AL STATE DEL STORE 
   //manda llamar al action de productoAction
 
-  const agregarProducto = (producto, history) =>
-    dispatch(crearNuevoProductoAction(producto, history));
+  const agregarProducto = (producto) =>
+    dispatch(crearNuevoProductoAction(producto));
 
- 
   //Validar Formulario
-  
-  
+
   //AL HACER SUBMIT EN EL FORMULARIO
-  const submitNuevoProducto = (e) => {
-    e.preventDefault();
-
-    //VALIDAR FORMULARIO
-
-    
-     
+  const submitNuevoProducto = () => {
+    //e.preventDefault();
 
     let formData = new FormData();
-    formData.set("images", images);
+    for (var i = 0; i<images.length; i++){
+      formData.append("images", images[i]);
+    }
+    
     formData.set("title", title);
     formData.set("categoria", categoria);
     formData.set("subCategoria", subCategoria);
@@ -136,51 +87,89 @@ const NuevoProducto = ({ history }) => {
     formData.set("description", description);
     formData.set("contacto", contacto);
 
-    agregarProducto(formData, history);
-
+    agregarProducto(formData);
+    console.log(formData.getAll('images'))
     //history.push('/productos')
   };
 
+  //VALIDACION DE FORMULARIO
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({ mode: "onBlur" });
+  
+
+ 
   return (
-    <div className="container-fluid bg-transparent rounded my-4 p-3">
-      <div className="row justify-content-center">
-        <div className="col-md-8">
-          <div className="card1">
-            <div className="card-body">
+    <div className="container-fluid  rounded my-4 p-2">
+      <div className="d-flex justify-content-center">
+        <div className="rounded col-12 col-sm-12 shadow-lg p-3 bg-trasparent">
+          {/* <div className="card"> */}
+            {/* <div className="card-body"> */}
               <h2 className="text-center mx-auto font-wight-bold mb-5">
                 Agregar Nuevo Producto
               </h2>
 
-              {alerta ? <p className={alerta.classes}> {alerta.msg} </p> : null }
-
-              <form onSubmit={submitNuevoProducto}>
+              <form onSubmit={handleSubmit(submitNuevoProducto)}>
                 <div className="mb-3">
                   <Label className="mb-2">Selecciona el tipo de producto</Label>
                   <select
-                    className="custom-select form-control"
+                    className="custom-select form-control pproducto"
                     defaultValue=""
-                    name="categoria"
+                    {...register("categoria", { required: true })}
                     onChange={handleProduct}
                   >
-                    <option value="" selected>
+                    <option value="" disabled>
                       Selecciona el tipo de producto
                     </option>
-                    <option value="tabla">Tabla</option>
-                    <option value="vela">Vela</option>
-                    <option value="botavara">Botavara</option>
-                    <option value="mastil">Mastil</option>
-                    <option value="accesorio">Accesorio</option>
+                    <option value="tablas">Tabla</option>
+                    <option value="velas">Vela</option>
+                    <option value="botavaras">Botavara</option>
+                    <option value="mastiles">Mastil</option>
+                    <option value="accesorios">Accesorio</option>
                   </select>
+                  {errors.categoria?.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                      Selecciona una Categoria
+                    </h6>
+                  )}
                 </div>
                 <div className="mb-3">
-                  <Label className="mb-2">Selecciona el tipo de producto</Label>
-                  <Select
-                    defaultValue=""
-                    name="subCategoria"
+                  <Label className="mb-2">Selecciona la SubCategoria</Label>
+                  <select
+                    className="custom-select form-control pproducto"
+                    defaultValue={subCategoria}
+                    {...register("subCategoria", { required: true })}
+                    //value={subCategoria} 
                     onChange={handleSubProduct}
-                    options={subopcion}
-                  />
+                    // onChange={onChangeFormularioEditado}
+                  > 
+                   <option value="" disabled>
+                      Selecciona el tipo de producto
+                    </option>    
+                    <option value="slalom">Slalom</option>
+                    <option value="freeride">Free-Ride</option>
+                    <option value="freerace">Free-Race</option>
+                    <option value="freestyle">Free-Style</option>
+                    <option value="foil">Foil</option>
+                    <option value="waves">Waves</option>
+                    <option value="carbono">Carbono</option>
+                    <option value="aluminio">Aluminio</option>
+                    <option value="mixta">Mixta</option>
+                    <option value="rdm">RDM</option>
+                    <option value="sdm">SDM</option>
+                    <option value="aleta">ALETA</option>
+                    <option value="arnes">ARNES</option>
+                    <option value="alargador">ALARGADOR</option>
+                  </select>
+                  {errors.subCategoria?.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                      Selecciona una SubCategoria
+                    </h6>
+                  )}
                 </div>
+                
                 <div className="mb-3">
                   <Label htmlFor="tituloProducto" className="form-label">
                     Producto
@@ -188,11 +177,20 @@ const NuevoProducto = ({ history }) => {
                   <input
                     type="text"
                     className="form-control"
-                    name="title"
+                    {...register("title", { required: true, maxLength: { value: 20}})}
                     id="title"
-                    placeholder="Tabla Slalom ...."
+                    placeholder="...."
                     onChange={(e) => setTitle(e.target.value)}
                   ></input>
+
+                  {errors.title && errors.title.type === 'required' && <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                      Pon un título al anuncio
+                    </h6> }
+                    {errors.title && errors.title.type === 'maxLength' && <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                      Demasiados Caracteres máx 20!!
+                    </h6> }
+                    
+                 
                 </div>
                 <div className="mb-3">
                   <Label htmlFor="precioProducto" className="form-label">
@@ -203,9 +201,15 @@ const NuevoProducto = ({ history }) => {
                     className="form-control"
                     id="precioProducto"
                     placeholder="450"
-                    name="price"
+                    {...register("price", { required: true, message: 'Ponle un precio' })}
                     onChange={(e) => setPrice(Number(e.target.value))}
-                  ></input>
+                  >                    
+                  </input>                                  
+                  {errors.price && errors.price.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                      Pon un precio al producto
+                    </h6>
+                  )}
                 </div>
 
                 <div className="mb-3">
@@ -216,9 +220,17 @@ const NuevoProducto = ({ history }) => {
                     className="form-control"
                     id="descripcionProducto"
                     rows="3"
+                    {...register("description", { required: true })}
                     onChange={(e) => setDescription(e.target.value)}
                   ></TextArea>
+                  {errors.description?.type === "required" && (
+                  <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                    Describe el producto
+                  </h6>
+                )}
                 </div>
+                
+
                 <div className="mb-3">
                   <Label htmlFor="contacto" className="form-label">
                     Contacto
@@ -227,30 +239,64 @@ const NuevoProducto = ({ history }) => {
                     className="form-control"
                     id="contacto"
                     rows="3"
+                    placeholder='Se utilizaran los datos de contacto guardados en el perfil'
+                    {...register("contacto", { required: false })}
                     onChange={(e) => setContacto(e.target.value)}
                   ></TextArea>
+                  {errors.contacto?.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                      Facilita un Contacto
+                    </h6>
+                  )}
                 </div>
                 <div>
+                  <div>
+                  <Label className=''/ >Sube Tus Fotos:<Label/>
+                  <text className='text-danger'> Las Imagenes no pueden pesar más de 1MB cada Una </text>
+                  </div>
+                  
                   <input
-                    className="form-input"
+                    className="form-input btn-file-upload"
                     id="images"
                     type="file"
-                    name="images"
-                    onChange={(e) => setImage(e.target.files[0])}
+                    multiple
+                    //name="images"
+                    {...register("images", { required: true })}
+                    onChange={(e) => setImage(e.target.files)}
                   ></input>
+                  {errors.images?.type === "required" && (
+                    <h6 className="alert alert-warning col-6 text-center mx-auto mt-4">
+                      Sube una imagen
+                    </h6>
+                  )}
                 </div>
+                
                 <div className="mb-3 mt-3 text-center">
-                  <button className="btn btn-success" type="submit">
+                  <button
+                    className="btn btn-outline-warning"
+                    type="submit"
+                    disabled={images.length > 4 || imgVerif === true}
+                    //disabled={imgVerif === true}
+                  >
                     Agregar Producto
                   </button>
                 </div>
               </form>
-              {/* {cargando ? <p>Cargando.....</p> : null} */}
+              {imgVerif ? (
+                <h6 className="alert alert-warning col-6 text-center mx-auto mt-2">
+                  Las Imágenes no pueden ser mayores de 1MB
+                </h6>
+              ) : null}
+              {images.length > 4 ? (
+                <h6 className="alert alert-warning col-6 text-center mx-auto mt-2">
+                  Solo puedes subir un maximo de 4 fotos
+                </h6>
+              ) : null}
               {/* {error ? <alert>HAY UN ERROR</alert> : null} */}
             </div>
           </div>
-        </div>
-      </div>
+        {/* </div> */}
+      {/* </div> */}
     </div>
   );
 };
