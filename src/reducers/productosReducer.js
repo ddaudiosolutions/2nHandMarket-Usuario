@@ -71,7 +71,7 @@ export default function productosReducer(state = initialState, action) {
     //     loading: action.payload,
     //   };
     case DESCARGA_PRODUCTOS_EXITO:
-      console.log(action.payload);
+      //console.log(action.payload);
       return {
         ...state,
         loading: false,
@@ -99,7 +99,7 @@ export default function productosReducer(state = initialState, action) {
         error: action.payload,
       };
     case DESCARGA_PRODUCTOS_USER_EXITO:
-      console.log(action.payload);
+     // console.log(action.payload);
       return {
         ...state,
         loading: false,
@@ -122,13 +122,13 @@ export default function productosReducer(state = initialState, action) {
     //     productovisionar: action.payload,
     //   };
     case VER_PRODUCTO_EXITO_API_ID:
-      console.log(action.payload);
+     // console.log(action.payload);
       return {
         ...state,
         productoIdApi: action.payload,
       };
     case VER_PRODUCTO_EXITO_ID:
-      console.log(action.payload);
+     // console.log(action.payload);
       return {
         ...state,
         productoId: action.payload,
@@ -147,7 +147,7 @@ export default function productosReducer(state = initialState, action) {
         productoeliminiar: null,
       };
     case OBTENER_PRODUCTO_EDITAR:
-      console.log(action.payload);
+     // console.log(action.payload);
       return {
         ...state,
         productoeditar: action.payload,
@@ -165,7 +165,7 @@ export default function productosReducer(state = initialState, action) {
 
     //LLAMADO DE ESTADO DE PAGINAS PARA BUSQUEDA Y PARA USUARIO
     case DESCARGA_PAGINAS_EXITO:
-      console.log(action.payload);
+     // console.log(action.payload);
       return {
         ...state,
         paginas: action.payload,
@@ -173,14 +173,14 @@ export default function productosReducer(state = initialState, action) {
       
       //GUARDAMOS Y MANTENEMOS EL NUM DE PAGINA EN EL QUE NOS ENCONTRAMOS
       case OBTENER_PAGINA_ACTUAL:
-      console.log(action.payload);
+     // console.log(action.payload);
       return {
         ...state,
         paginaActual: action.payload,
       };
 
     case DESCARGA_PAGINAS_USER_EXITO:
-      console.log(action.payload);
+     // console.log(action.payload);
       return {
         ...state,
         paginasUser: action.payload,
@@ -188,7 +188,7 @@ export default function productosReducer(state = initialState, action) {
 
     //PARA CONTROLAR DE FORMA GLOBAL LA CATEGORIA.
     case OBTENER_CATEGORIA_EXITO:
-      console.log(action.payload);
+     // console.log(action.payload);
       return {
         ...state,
         productoIdApi: null,
@@ -196,7 +196,7 @@ export default function productosReducer(state = initialState, action) {
       };
 
       case DESCARGA_PRODUCTOS_AUTHOR_EXITO:
-        console.log(action.payload);
+      //  console.log(action.payload);
         return {
           ...state,
           productosAuth: action.payload,

@@ -20,7 +20,7 @@ const initialState ={
 export default function buscoPostReducer(state=initialState, action){
     switch(action.type){
         case NUEVOBUSCOPOST_EXITO:
-            console.log(action.payload);
+           // console.log(action.payload);
             return{
                 ...state,
                 buscoPosts: [...state.buscoPosts, action.payload]
@@ -28,7 +28,7 @@ export default function buscoPostReducer(state=initialState, action){
             }
 
             case OBTENER_BUSCOPOSTS_EXITO:
-                console.log(action.payload)
+               // console.log(action.payload)
                 return{
                     ...state,
                     buscoPosts: action.payload,
@@ -36,7 +36,7 @@ export default function buscoPostReducer(state=initialState, action){
 
                 }
         case VER_BUSCOPOST_EXITO_API_ID:
-            console.log(action.payload);
+           // console.log(action.payload);
             return{
                 ...state,
                 buscoPostIdApi: action.payload
@@ -55,7 +55,7 @@ export default function buscoPostReducer(state=initialState, action){
                 }
 
             case BORRAR_BUSCOPOST_USER_EXITO:
-                console.log(action.payload)
+               // console.log(action.payload)
                 return{
                     ...state,                    
                     buscoPosts: state.buscoPosts.filter(
@@ -65,7 +65,7 @@ export default function buscoPostReducer(state=initialState, action){
 
                 }
                 case OBTENER_BUSCOPOST_EDITAR_EXITO:
-                    console.log(action.payload)
+                 //   console.log(action.payload)
                     return {
                         ...state,
                         buscoPostEditar: action.payload

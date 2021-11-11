@@ -6,13 +6,11 @@ const VerImagesEdit = ({ imagenEdit, sendDataToParent }) => {
   const [checked, setChecked] = useState(false);
   return (
     <Fragment>
-      <div className="container col-2  mb-3">
-    
+      <div className="container col-2  mb-3">    
           <input type='checkbox' className='btn ' id={imagenEdit._id} 
             checked={checked}
             onChange={()=> setChecked(!checked)}
-          value='true'
-          //onChange={setCheckStatus(true)}
+          value='true'         
           onClick={(e)=>sendDataToParent(imagenEdit.filename, {checked})} /> 
           <label className="btn btn-outline-secondary" htmlFor={imagenEdit._id}>
             <img              

@@ -9,10 +9,6 @@ import BuscoPostUser from "./BuscoPostUser";
 const Productos = () => {
   const productos = useSelector((state) => state.productos.prodUser);
   const buscoPostsUser = useSelector((state)=> state.buscoposts.buscoPostsUser)
-  console.log(buscoPostsUser)
-  //const paginasUserTotal = useSelector((state) => state.productos.paginasUser);
-
-  //const paginasUser = new Array(paginasUserTotal).fill(null).map((v, i) => i);
 
   const [pageNuser, setPageNuser] = useState("0")
 

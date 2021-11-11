@@ -9,14 +9,13 @@ import {
 
 import { toDate, format } from "date-fns";
 
-const VerProducto = () => {
- 
+const VerProducto = () => { 
 
   const producto = useSelector((state) => state.productos.productoIdApi);
   console.log(producto);
 
   const productoIdurl = window.location.pathname.split("/")[2];
-  console.log(productoIdurl);
+  //console.log(productoIdurl);
 
   let paginaActual = useSelector((state) => state.productos.paginaActual);
   if (paginaActual === undefined) {
@@ -31,7 +30,7 @@ const VerProducto = () => {
     dispatch(obtenerProductoIdApiAction(url));
 
   useEffect(() => {
-    console.log("useeffect");
+    //console.log("useeffect");
     enviarproductoid(productoIdurl);
     // eslint-disable-next-line
   }, []);

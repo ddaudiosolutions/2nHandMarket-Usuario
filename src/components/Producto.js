@@ -17,7 +17,7 @@ const Producto = ({ producto }) => {
 
   const verProductoId = (producto) => {
     dispatch(obtenerProductoIdApiAction(producto._id));
-    console.log(producto._id)
+   // console.log(producto._id)
     history.push(`/productos/${producto._id}`);
   };
 

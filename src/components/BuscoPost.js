@@ -1,18 +1,14 @@
 import { Fragment } from "react";
 import "./BuscoPost.css";
-//import parse from 'date-fns/parse'
-//import {toDate, format} from 'date-fns'
-//import './ProductoUser.css'
 import { useHistory } from "react-router-dom";
-//import { useSelector } from "react-redux";
+
 //REDUX
 import { useDispatch } from "react-redux";
 import {  obtenerBuscoPostIdApiAction } from "../actions/buscoPostActions";
-//import { obtenerProductoVisionar } from "../actions/productoActions";
+
 
 const BuscoPost = ({ buscoPost }) => {
-  console.log(buscoPost.author.nombre)
- // const {nombre} = buscoPost.author
+
  const { title } = buscoPost;
   const titulo = title.toUpperCase()
   const dispatch = useDispatch();

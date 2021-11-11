@@ -33,8 +33,7 @@ function App() {
   return (
   
       <Router history={history}>
-        <Provider store={store}>          
-          
+        <Provider store={store}> 
           <Header />
           <div className="container">
             <Switch>

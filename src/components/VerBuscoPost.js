@@ -1,11 +1,7 @@
 import { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-//import {  useHistory } from "react-router-dom";
 import "./VerBuscoPost.css";
-// import {
-//   obtenerProductosActionAuthor,
-//   //obtenerProductoIdApiAction,
-// } from "../actions/productoActions";
+
 import { obtenerBuscoPostIdApiAction } from "../actions/buscoPostActions";
 
 import { toDate, format } from "date-fns";
@@ -17,16 +13,9 @@ const VerBuscoPost = () => {
   const buscoPostIdUrl = window.location.pathname.split("/")[2];
   console.log(buscoPostIdUrl);
 
-  // let paginaActual = useSelector((state) => state.productos.paginaActual);
-  // if (paginaActual === undefined) {
-  //   paginaActual = 0;
-  // }
-
   const dispatch = useDispatch();
-  //const history = useHistory();
 
-  const enviarBuscoPostId = (url) =>
-    //console.log("fetching axios"),
+  const enviarBuscoPostId = (url) =>   
     dispatch(obtenerBuscoPostIdApiAction(url));
 
   useEffect(() => {
@@ -98,7 +87,7 @@ const VerBuscoPost = () => {
             <div className="card-header">
               {/* <span className="card-title  pproductoTitle text-center">Contacto:</span> */}
 
-              <p className="card-title pproductoTitle ">{post.author.email}</p>
+              <p className="card-title pproductoTitle ">{post.contacto === '' ? post.author.email : post.contacto}</p>
               {/* <a className="card-title pproductoTitle" href={`https://api.whatsapp.com/send?phone=34${producto.author.telefono}&text=Hola Estoy interesado en tus productos`}>
                 Mi Telefono
               </a> */}
@@ -107,14 +96,6 @@ const VerBuscoPost = () => {
               </p>
             </div>
 
-            {/* <div className="text-center my-4">
-              <Link
-                to={`/productos?busqueda=${producto.categoria}&page=${paginaActual}`}
-                className="btn btn-outline-success"
-              >
-                Volver a Categoria: {producto.categoria.toUpperCase()}
-              </Link>
-            </div> */}
           </div>
         </div>
       </div>

@@ -52,7 +52,7 @@ const nuevoBuscoPostExito = (dataPost) => ({
 export function obtenerBuscoPostsActions() {
   return async (dispatch) => {
     const getPosts = await clienteAxios.get("/api/buscoposts");
-    console.log(getPosts.data.obtenerBuscoPost);
+   // console.log(getPosts.data.obtenerBuscoPost);
     dispatch(obtenerBusocPostsExito(getPosts.data.obtenerBuscoPost));
   };
 }
@@ -63,7 +63,7 @@ const obtenerBusocPostsExito = (getDataPosts) => ({
 });
 
 export function obtenerBuscoPostIdApiAction(buscoPost_id) {
-  console.log(buscoPost_id);
+  //console.log(buscoPost_id);
   return async (dispatch) => {
     const getPostId = await clienteAxios.get(`/api/buscoposts/${buscoPost_id}`);
     console.log(getPostId.data.buscoPostId);
@@ -79,7 +79,7 @@ const obtenerBuscoPostIdApiExito = (getPostId) => ({
 export function obtenerBuscoPostsUserAction() {
   return async (dispatch) => {
     const getPostsUser = await clienteAxios.get(`/api/buscoposts/user`, data);
-    console.log(getPostsUser.data.obtenerBuscoPostUser);
+    //console.log(getPostsUser.data.obtenerBuscoPostUser);
     dispatch(
       obtenerBuscoPostsUserExito(getPostsUser.data.obtenerBuscoPostUser)
     );
@@ -92,16 +92,16 @@ const obtenerBuscoPostsUserExito = (getPostsUser) => ({
 });
 
 export function borrarBuscoPostsUserAction(id) {
-  console.log(id);
+  //console.log(id);
   return async (dispatch) => {
     dispatch(obtenerBuscoPostEliminar(id))
     try {
-      const deleteBuscoPostUser = await clienteAxios.delete(
+      await clienteAxios.delete(
         `/api/buscoposts/user/${id}`,
         data
       );
       
-      console.log(deleteBuscoPostUser.data);
+     // console.log(deleteBuscoPostUser.data);
       dispatch(borrarBuscoPostsUserExito(id));
 
       //PONER AQUÍ LA ALERTA DE QUE SE ELIMINÓ BIEN EL PRODUCTO
@@ -112,7 +112,7 @@ export function borrarBuscoPostsUserAction(id) {
           }
         }
       );
-      console.log(deleteBuscoPostUser);
+      //console.log(deleteBuscoPostUser);
     }catch(error){
       console.log(error)
     }
@@ -130,7 +130,7 @@ const borrarBuscoPostsUserExito = (id) => ({
 });
 
 export function obtenerBuscoPostEditarAction(postUser){
-  console.log(postUser);
+ // console.log(postUser);
   return async (dispatch) => {
     try{
       //const obtenerBuscoPostEditar = await clienteAxios.get(`api/buscoposts/user/editar/${postUser._id}`, data)
@@ -150,7 +150,7 @@ const obtenerBuscoPostEditarExito = (postUser) => ({
 
 
 export function editarBuscoPostAction (title, description, contacto, id) {
-console.log({title, description, contacto})
+//console.log({title, description, contacto})
   return async (dispatch) => {
     try {
       const editarBuscoPost = await clienteAxios.put(`api/buscoposts/user/editar/${id}`, {title, description, contacto}, data)
