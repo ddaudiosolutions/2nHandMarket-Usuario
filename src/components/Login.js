@@ -76,7 +76,7 @@ const Login = () => {
                   className="form-control"
                   {...register("email", {
                     required: true,
-                    pattern: /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/,
+                    pattern: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g,
                   })} //eslint-disable-line
                   id="email"
                   //value={email}
