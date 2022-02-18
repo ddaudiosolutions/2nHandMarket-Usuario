@@ -23,13 +23,10 @@ const Productos = () => {
 
   //TRAEMOS LAS SOLICITUDES DE BUSQUEDA
   const buscoPosts = useSelector((state) => state.buscoposts.buscoPosts);
-
   const paginas = new Array(paginasTotales).fill(null).map((v, i) => i);
   
   
-  //TRAEMOS LAS SOLICITUDES DE BUSQUEDA
-  const buscoPosts = useSelector((state) => state.buscoposts.buscoPosts); 
-  
+  //TRAEMOS LAS SOLICITUDES DE BUSQUEDA    
   const params = new URL(document.location).searchParams;
   let busquedaquery = params.get("busqueda");
   let pagequery = params.get("page");
