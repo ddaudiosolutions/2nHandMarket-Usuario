@@ -10,9 +10,7 @@ import { useDispatch } from "react-redux";
 import {  obtenerBuscoPostIdApiAction } from "../actions/buscoPostActions";
 //import { obtenerProductoVisionar } from "../actions/productoActions";
 
-const BuscoPost = ({ buscoPost }) => {
-  console.log(buscoPost.author.nombre)
- // const {nombre} = buscoPost.author
+const BuscoPost = ({ buscoPost }) => {  
  const { title } = buscoPost;
   const titulo = title.toUpperCase()
   const dispatch = useDispatch();
@@ -32,10 +30,7 @@ const BuscoPost = ({ buscoPost }) => {
           className="card shadow-sm me-1 ms-1 "
           type="button"
           onClick={() => verBuscoPostId(buscoPost)}
-        >
-          {/* <div>
-          <h2 className='h2Author text-center'>BUSCO</h2>
-        </div> */}
+        >        
           <div className="">
             <img
               src='/SE_BUSCA_LOGO.png'
@@ -44,12 +39,7 @@ const BuscoPost = ({ buscoPost }) => {
             ></img>
           </div>
           <div className="card-body ">
-            <h5 className="excerpt titleH5-post card-title m-1 text-center mb-5">{titulo}</h5>
-            {/* <h5 className="price-hp m-1 mb-3">{nombre}</h5> */}
-
-            {/* <div className="excerpt pproductoTitle m-1 mb-4" rows="1">
-              {description}
-            </div> */}
+            <h5 className="excerpt titleH5-post card-title m-1 text-center mb-5">{titulo}</h5>          
           </div>
         </div>
       </div>

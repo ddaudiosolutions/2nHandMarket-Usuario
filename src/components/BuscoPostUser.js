@@ -10,13 +10,10 @@ import {borrarBuscoPostsUserAction, obtenerBuscoPostEditarAction} from '../actio
 // import { borrarProductoAction } from "../actions/productoActions";
 
 const ProductoUser = ({ postUser }) => {
-  //const { user: currentUser } = useSelector((state) => state.auth);
-  const { title, _id } = postUser;
-  //console.log(_id)
+  
+  const { title, _id } = postUser;  
   const dispatch = useDispatch();
   const history = useHistory();
-
- // console.log(currentUser);
 
   //Confirmar si desea Eliminar el Producto
   const confirmarBorrarBuscoPosts = (_id) => {
@@ -39,8 +36,7 @@ const ProductoUser = ({ postUser }) => {
   };
 
   const sendtoEdicion = () => {
-    dispatch(obtenerBuscoPostEditarAction(postUser));
-    console.log(postUser)
+    dispatch(obtenerBuscoPostEditarAction(postUser)); 
     history.push(`/buscoposts/user/editar/${postUser._id}`);
   };
   return (

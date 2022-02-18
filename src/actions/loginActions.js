@@ -26,8 +26,7 @@ const data = {
   //body: {imagenData},
 };
 
-export function loginUsuarioActions(email, password) {
-  console.log(email, password);
+export function loginUsuarioActions(email, password) { 
   return async (dispatch) => {
     try {
       const loginUsuario = await clienteAxios.post("/api/auth", {
@@ -35,14 +34,12 @@ export function loginUsuarioActions(email, password) {
         password,
       });
 
-      dispatch(loginExito(loginUsuario.data));
-      console.log(loginUsuario.data);
+      dispatch(loginExito(loginUsuario.data));      
       if (loginUsuario.data) {
         localStorage.setItem("userName", JSON.stringify(loginUsuario.data.nombre));
         localStorage.setItem("userToken", JSON.stringify(loginUsuario.data.accessToken));
         localStorage.setItem("userId", loginUsuario.data.id);
-      }
-      //obtenerDatosUsuarioAction(loginUsuario.data.id);
+      }      
       window.location = "/productos?busqueda=ultimos_productos&page=0";
     } catch (error) {
       console.log(error)
@@ -56,19 +53,16 @@ const loginExito = (data) => ({
 });
 
 //CARGAR DATOS DE USUARIO DESDE LA BB DE DATOS
-export function obtenerDatosUsuarioAction(id) {
-  console.log(id.userId);
+export function obtenerDatosUsuarioAction(id) { 
   return async (dispatch) => {
     try {
       const datosUsuario = await clienteAxios.get(
         `/api/usuarios/${id.userId}`,
         data
       );
-      dispatch(obtenerDatosUsuarioExito(datosUsuario.data));
-      console.log(datosUsuario.data);
+      dispatch(obtenerDatosUsuarioExito(datosUsuario.data));      
     } catch (error) {
-      console.log(error.response);
-      
+      console.log(error.response);      
     }
   };
 }
@@ -81,8 +75,7 @@ const obtenerDatosUsuarioExito = (datosUsuario) => ({
 //COLOCAR DATOS DE USUARIO EN EDICION
 export function obtenerDatosUsuarioEditarAction(usuario){ 
   return (dispatch) => {
-    dispatch(obtnerDatosUsuarioEditarExito(usuario))
-    console.log(usuario.datosUsuario)
+    dispatch(obtnerDatosUsuarioEditarExito(usuario))   
   }
 }
 
@@ -92,12 +85,10 @@ const obtnerDatosUsuarioEditarExito = (usuario) => ({
 })
 
 
-
 //EDITAR USUARIO
 
-export function editarDatosUsuarioAction(datosUsuario, id){
-  
-  console.log(id)
+export function editarDatosUsuarioAction(datosUsuario, id){  
+ 
   return async (dispatch) => {
     try{
       const editarDatosUsuario = await clienteAxios.put(`/api/usuarios/editar/${id}`, 
@@ -122,16 +113,12 @@ export function eliminarUsuarioAction (id){
   console.log(id)
 return async (dispatch) => {
   try {
-    const eliminarUsuario = await clienteAxios.delete(`/api/usuarios/${id}`, data)
-    dispatch(eliminarUsuarioExito)
-    console.log(eliminarUsuario)
+    await clienteAxios.delete(`/api/usuarios/${id}`, data)
+    dispatch(eliminarUsuarioExito)    
     //PONER AQUÍ LA ALERTA DE QUE SE ELIMINÓ BIEN EL PRODUCTO
     Swal.fire("Correcto", "USUARIO ELIMINADO CON EXITO", "success").then(
       (result) => {
-        if (result.isConfirmed) {
-          console.log('usuario Borrado')
-          // window.location = "/productos?busqueda=ultimos_productos&page=0";
-
+        if (result.isConfirmed) {  
         }
       }
     );

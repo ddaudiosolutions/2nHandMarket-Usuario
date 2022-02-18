@@ -52,23 +52,14 @@ export const loginUsuarioActions = (email, password) => (dispatch) => {
   );
 };
 
-
-
-
-
-
-export function obtenerDatosUsuarioAction(id){
-  console.log(id.userId)
+export function obtenerDatosUsuarioAction(id){  
   return async (dispatch) => {
     try{
       const datosUsuario = await clienteAxios.get(`/api/usuarios/${id.userId}`, data)
-      dispatch(obtenerDatosUsuarioExito(datosUsuario.data))
-      //console.log(datosUsuario.data.email)
+      dispatch(obtenerDatosUsuarioExito(datosUsuario.data))      
     }catch(error){
-      console.log(error.response);                    
-
-    }
-    
+      console.log(error.response);  
+    }    
   }
 }
 
@@ -80,8 +71,7 @@ const obtenerDatosUsuarioExito = (datosUsuario)=>({
 })
 
 
-export function editarDatosUsuarioAction(datosUsuario){
-  //console.log(id.userId)
+export function editarDatosUsuarioAction(datosUsuario){ 
   return async (dispatch) => {
     try{
       const editarDatosUsuario = await clienteAxios.put(`/api/usuarios/${id.userId}`, 
@@ -99,9 +89,6 @@ const editarDatosUsuarioExito = (editarDatosUsuario)=>({
   type: EDITAR_DATOS_USUARIO_EXITO,
   payload: editarDatosUsuario
 })
-
-
-
   
   export const logout = () => (dispatch) => {
     AuthService.logout();  

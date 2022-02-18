@@ -34,7 +34,7 @@ const EditarBuscoPost = () => {
 //TOMAR LOS DATOS DEL BUSCOPOST
 
  const editPost = useSelector((state)=> state.buscoposts.buscoPostEditar);
-console.log(editPost)
+
   //MANEJO DEL REDUX EN EL FORMULARIO  
 
   useEffect(() => {

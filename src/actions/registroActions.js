@@ -21,9 +21,7 @@ export function registroActions(nombre, email, password) {
           email,
           password,
         });
-
-        dispatch(registroExito(registroUsuario.data))
-        console.log(registroUsuario.data)
+        dispatch(registroExito(registroUsuario.data))        
 
         Swal.fire(
           'Correcto',
@@ -32,7 +30,6 @@ export function registroActions(nombre, email, password) {
         ).then(function() {
           window.location = "/login"})      
     return Promise.resolve();
-
       } catch(error){
         console.log(error)
       }
