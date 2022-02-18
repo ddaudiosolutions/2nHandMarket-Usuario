@@ -21,9 +21,7 @@ const TextArea = styled.textarea`
 
 const NuevoBuscoPost = () => {
 
-  const datosContacto = useSelector((state) => state.auth)
-  console.log(datosContacto);
-
+  const datosContacto = useSelector((state) => state.auth); 
   //UTILIZAR USEDISPATCH Y TE CREA UNA FUNCION
   const dispatch = useDispatch();
   

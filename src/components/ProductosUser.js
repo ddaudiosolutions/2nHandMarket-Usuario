@@ -8,16 +8,13 @@ import BuscoPostUser from "./BuscoPostUser";
 
 const Productos = () => {
   const productos = useSelector((state) => state.productos.prodUser);
-  const buscoPostsUser = useSelector((state)=> state.buscoposts.buscoPostsUser)
-
+  const buscoPostsUser = useSelector((state)=> state.buscoposts.buscoPostsUser);
   const [pageNuser, setPageNuser] = useState("0")
-
    const envioPagina = (pagina) => {
      setPageNuser(pagina)
    }
 
   const dispatch = useDispatch();
-
   const cargarProductosUser = (pageNuser) => dispatch(obtenerProductosActionUser(pageNuser));
   const cargarPostsUser = ()=> dispatch(obtenerBuscoPostsUserAction())
 

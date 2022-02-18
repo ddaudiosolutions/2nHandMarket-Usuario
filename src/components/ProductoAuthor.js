@@ -20,7 +20,7 @@ const ProductoAuthor = ({ producto }) => {
 
    const verProductoId = (producto) => {
     dispatch(obtenerProductoIdAction(producto));
-    console.log(producto);
+    
     history.push(`/productos/${producto._id}`);
   };
 

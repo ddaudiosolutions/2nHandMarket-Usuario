@@ -17,9 +17,13 @@ import "./Producto.css";
 const Productos = () => {
   //const history = useHistory();
 
-  const productos = useSelector((state) => state.productos.productos);
-  //console.log(productos);
+
+  const productos = useSelector((state) => state.productos.productos);   
   const paginasTotales = useSelector((state) => state.productos.paginas);
+
+  //TRAEMOS LAS SOLICITUDES DE BUSQUEDA
+  const buscoPosts = useSelector((state) => state.buscoposts.buscoPosts);
+
   const paginas = new Array(paginasTotales).fill(null).map((v, i) => i);
   
   
@@ -41,7 +45,7 @@ const Productos = () => {
   const cargarBuscoPosts = () => dispatch(obtenerBuscoPostsActions());
 
   useEffect(() => {
-    //setBusqueda()
+    
     cargarBuscoPosts();
     //cargarCategoria(busquedaquery);
     cargarProductos(busquedaquery, pagequery);

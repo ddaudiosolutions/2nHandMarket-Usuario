@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import {borrarBuscoPostsUserAction, obtenerBuscoPostEditarAction} from '../actions/buscoPostActions'
 
 
+
 const BuscoPostUser = ({ postUser }) => {  
   const { title, _id } = postUser; 
   const dispatch = useDispatch();
@@ -35,8 +36,7 @@ const BuscoPostUser = ({ postUser }) => {
   };
 
   const sendtoEdicion = () => {
-    dispatch(obtenerBuscoPostEditarAction(postUser));
-    console.log(postUser)
+    dispatch(obtenerBuscoPostEditarAction(postUser)); 
     history.push(`/buscoposts/user/editar/${postUser._id}`);
   };
   return (

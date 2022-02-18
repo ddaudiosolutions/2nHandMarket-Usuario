@@ -5,8 +5,8 @@ import { useSelector, } from "react-redux";
 
 
 const Avatar = () => {
-    const idUser = localStorage.getItem('userId')
-    console.log(idUser)    
+    localStorage.getItem('userId');
+         
     
 
     const avatarGet = useSelector((state) => state.auth.avatar);    

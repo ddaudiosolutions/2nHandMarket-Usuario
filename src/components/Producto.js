@@ -11,16 +11,22 @@ import {  obtenerProductoIdApiAction } from "../actions/productoActions";
 //import { obtenerProductoVisionar } from "../actions/productoActions";
 
 const Producto = ({ producto }) => {
-  const { title, price, images, description } = producto;
+  const { 
+    title, 
+    price, 
+    images, 
+    description,
+  } = producto;
   const dispatch = useDispatch();
   const history = useHistory();
-
+  
   const verProductoId = (producto) => {
-    dispatch(obtenerProductoIdApiAction(producto._id));
-   // console.log(producto._id)
+    dispatch(obtenerProductoIdApiAction(producto._id)); 
     history.push(`/productos/${producto._id}`);
   };
-
+  const firsImage = images[0].url ? images[0].url : 'https://res.cloudinary.com/dhe1gcno9/image/upload/v1645218203/ProductosMarketV2/AvataresUsuarios/LOGO_CIRCULAR_FONDO_BLANCO_cvhmuo.png';
+  const firsFilename = images[0].filename ? images[0].filename : 'WindyMarket';
+  
   return (
     <Fragment>
       <div className="col">
@@ -29,12 +35,14 @@ const Producto = ({ producto }) => {
           type="button"
           onClick={() => verProductoId(producto)}
         >
+          
           <div className="">
             <img
-              src={images[0].url}
+              src={firsImage}
               className="card-img-top"
-              alt={images[0].filename}
-            ></img>
+              alt={firsFilename}
+            ></img>           
+
           </div>
           <div className="card-body ">
             <h5 className="excerpt titleH5 card-title m-1">{title}</h5>
