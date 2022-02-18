@@ -8,15 +8,15 @@ import {
 } from "../actions/productoActions";
 
 import { toDate, format } from "date-fns";
+import {Helmet} from 'react-helmet';
 
-const VerProducto = () => {
- 
+const VerProducto = () => { 
 
   const producto = useSelector((state) => state.productos.productoIdApi);
   console.log(producto);
 
   const productoIdurl = window.location.pathname.split("/")[2];
-  console.log(productoIdurl);
+  //console.log(productoIdurl);
 
   let paginaActual = useSelector((state) => state.productos.paginaActual);
   if (paginaActual === undefined) {
@@ -31,7 +31,7 @@ const VerProducto = () => {
     dispatch(obtenerProductoIdApiAction(url));
 
   useEffect(() => {
-    console.log("useeffect");
+    //console.log("useeffect");
     enviarproductoid(productoIdurl);
     // eslint-disable-next-line
   }, []);
@@ -54,6 +54,15 @@ const VerProducto = () => {
 
   return (
     <Fragment>
+      <div>
+        <Helmet>
+          {/* <title>Hola Productos</title> */}
+        <meta property="og:type" content="Product" />
+        <meta property="og:title" name="title" content={producto.title} />
+        <meta property="og:image"  name="image"  content={producto.images[0].url} />
+        <meta property="og:description" name="description" content={producto.description} />
+        </Helmet>
+        </div>
       <div className="container col-sm-9 col-md-9 col-lg-7 col-xl-7">
         <div className="cardVerProducto mt-3 ">
           <div

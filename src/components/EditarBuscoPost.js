@@ -64,7 +64,7 @@ const EditarBuscoPost = () => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm({ mode: "onBlur" });
+  } = useForm({ mode: 'onSubmit' });
  
   return (
     <div className="container-fluid  rounded my-4 p-2">

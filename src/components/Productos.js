@@ -1,27 +1,35 @@
 import { Fragment, useEffect } from "react";
-
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   obtenerProductosAction,
-  obtenerCategoriaActions,
+  //obtenerCategoriaActions,
   obtenerPaginaAction,
 } from "../actions/productoActions";
 import { obtenerBuscoPostsActions } from "../actions/buscoPostActions";
-import Producto from "./Producto";
-import BuscoPost from "./BuscoPost";
+
+import FormBusqueda from './FormBusqueda'
+import ListaProductos from "./ListaProductos";
+import ListadoPosts from "./ListadoPosts";
+
 import "./Producto.css";
 
 const Productos = () => {
-  const history = useHistory();
+  //const history = useHistory();
+
 
   const productos = useSelector((state) => state.productos.productos);   
   const paginasTotales = useSelector((state) => state.productos.paginas);
 
   //TRAEMOS LAS SOLICITUDES DE BUSQUEDA
   const buscoPosts = useSelector((state) => state.buscoposts.buscoPosts);
-  const paginas = new Array(paginasTotales).fill(null).map((v, i) => i);
 
+  const paginas = new Array(paginasTotales).fill(null).map((v, i) => i);
+  
+  
+  //TRAEMOS LAS SOLICITUDES DE BUSQUEDA
+  const buscoPosts = useSelector((state) => state.buscoposts.buscoPosts); 
+  
   const params = new URL(document.location).searchParams;
   let busquedaquery = params.get("busqueda");
   let pagequery = params.get("page");
@@ -31,15 +39,15 @@ const Productos = () => {
   const cargarProductos = () =>
     dispatch(obtenerProductosAction(busquedaquery, pagequery));
 
-  const cargarCategoria = () =>
-    dispatch(obtenerCategoriaActions(busquedaquery));
+  // const cargarCategoria = () =>
+  //   dispatch(obtenerCategoriaActions(busquedaquery));
 
   const cargarBuscoPosts = () => dispatch(obtenerBuscoPostsActions());
 
   useEffect(() => {
     
     cargarBuscoPosts();
-    cargarCategoria(busquedaquery);
+    //cargarCategoria(busquedaquery);
     cargarProductos(busquedaquery, pagequery);
     dispatch(obtenerPaginaAction(pagequery));
 
@@ -60,7 +68,8 @@ const Productos = () => {
               </div>
 
               <div className="col col-md-9 col-lg-9 mx-auto bg-form mt-5 ">
-                <form>
+                <FormBusqueda busquedaquery={busquedaquery}/>
+                {/* <form>
                   <div className="container">
                     <select
                       className="form-select col-6"
@@ -83,13 +92,15 @@ const Productos = () => {
                       <option value="accesorios">Accesorios</option>
                     </select>
                   </div>
-                </form>
+                </form> */}
               </div>
             </div>
           </div>
           <div className="col mx-auto">
-            <div className="row row-cols-2 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-5 g-2 justify-content-center ">
-              {!productos
+            {/* <div className="row row-cols-2 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-5 g-2 justify-content-center "> */}
+              <ListaProductos productos={productos} />
+
+              {/* {!productos
                 ? null
                 : productos.map((producto, busqueda) => (
                     <Producto
@@ -97,12 +108,15 @@ const Productos = () => {
                       producto={producto}
                       busqueda={busqueda}
                     />
-                  ))}
-            </div>
+                  ))} */}
+            {/* </div> */}
           </div>
+          
           <div className="d-flex justify-content-center mt-4 ">
             {busquedaquery !== "ultimos_productos"
-              ? paginas.map((pagina) => (
+              ? 
+              // <button className="btn btn-primary" onclick={masProductos}>Mostrar más Productos</button> 
+              paginas.map((pagina) => (
                   <Link
                     type="submit"
                     key={pagina}
@@ -127,16 +141,17 @@ const Productos = () => {
                 </div>
 
                 <div className="col-12 mx-auto">
-                  <div className="row row-cols-2 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-5 g-2 justify-content-center ">
-                    {!buscoPosts
+                  <ListadoPosts buscoPosts={buscoPosts} />
+                  {/* <div className="row row-cols-2 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-5 g-2 justify-content-center "> */}
+                    {/* {!buscoPosts
                       ? null
                       : buscoPosts.map((buscoPost) => (
                           <BuscoPost
                             key={buscoPost._id}
                             buscoPost={buscoPost}
                           />
-                        ))}
-                  </div>
+                        ))} */}
+                  {/* </div> */}
                 </div>
               </Fragment>
             ) : null}

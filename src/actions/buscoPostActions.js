@@ -11,7 +11,6 @@ import {
 
 import clienteAxios from "../config/axios";
 import Swal from "sweetalert2";
-
 const user = JSON.parse(localStorage.getItem("userToken"));
 const data = {
   headers: {
@@ -52,6 +51,7 @@ const nuevoBuscoPostExito = (dataPost) => ({
 export function obtenerBuscoPostsActions() {
   return async (dispatch) => {
     const getPosts = await clienteAxios.get("/api/buscoposts");    
+
     dispatch(obtenerBusocPostsExito(getPosts.data.obtenerBuscoPost));
   };
 }
@@ -61,7 +61,9 @@ const obtenerBusocPostsExito = (getDataPosts) => ({
   payload: getDataPosts,
 });
 
+
 export function obtenerBuscoPostIdApiAction(buscoPost_id) {  
+
   return async (dispatch) => {
     const getPostId = await clienteAxios.get(`/api/buscoposts/${buscoPost_id}`);    
     dispatch(obtenerBuscoPostIdApiExito(getPostId.data.buscoPostId));
@@ -75,7 +77,7 @@ const obtenerBuscoPostIdApiExito = (getPostId) => ({
 
 export function obtenerBuscoPostsUserAction() {
   return async (dispatch) => {
-    const getPostsUser = await clienteAxios.get(`/api/buscoposts/user`, data);    
+    const getPostsUser = await clienteAxios.get(`/api/buscoposts/user`, data);   
     dispatch(
       obtenerBuscoPostsUserExito(getPostsUser.data.obtenerBuscoPostUser)
     );
@@ -88,13 +90,15 @@ const obtenerBuscoPostsUserExito = (getPostsUser) => ({
 });
 
 export function borrarBuscoPostsUserAction(id) {
+
   return async (dispatch) => {
     dispatch(obtenerBuscoPostEliminar(id))
     try {
       await clienteAxios.delete(
         `/api/buscoposts/user/${id}`,
         data
-      ); 
+      );      
+
       dispatch(borrarBuscoPostsUserExito(id));
 
       //PONER AQUÍ LA ALERTA DE QUE SE ELIMINÓ BIEN EL PRODUCTO
@@ -104,7 +108,10 @@ export function borrarBuscoPostsUserAction(id) {
             window.location.reload();
           }
         }
+
       );      
+
+     
     }catch(error){
       console.log(error)
     }
@@ -121,7 +128,9 @@ const borrarBuscoPostsUserExito = (id) => ({
   
 });
 
-export function obtenerBuscoPostEditarAction(postUser){  
+export function obtenerBuscoPostEditarAction(postUser){
+
+
   return async (dispatch) => {
     try{      
       dispatch(obtenerBuscoPostEditarExito(postUser))   
@@ -136,8 +145,8 @@ const obtenerBuscoPostEditarExito = (postUser) => ({
   payload: postUser
 })
 
-
 export function editarBuscoPostAction (title, description, contacto, id) {
+
   return async (dispatch) => {
     try {
       const editarBuscoPost = await clienteAxios.put(`api/buscoposts/user/editar/${id}`, {title, description, contacto}, data)

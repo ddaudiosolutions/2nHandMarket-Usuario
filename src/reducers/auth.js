@@ -45,14 +45,15 @@ import {
           message: action.payload
         };
       case LOGIN_SUCCESS:
-        console.log(action.payload)
+       // console.log(action.payload)
         return {
           ...state,
           isLoggedIn: true,
-          user: action.payload
+          user: action.payload,
+          nombreUser: action.payload
         };
       case LOGIN_USER_SUCCESS:
-        console.log(action.payload)
+       // console.log(action.payload)
         return {
           ...state,
           nombreUser: action.payload
@@ -71,7 +72,7 @@ import {
           user: null,
         };
       case DESCARGA_DATOS_USUARIO_EXITO:
-        console.log(action.payload)
+        //console.log(action.payload)
         return{
           ...state,
           datosUsuario: action.payload,

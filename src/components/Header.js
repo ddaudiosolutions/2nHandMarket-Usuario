@@ -1,5 +1,5 @@
 import { Link,  } from "react-router-dom";
-import { Fragment, useEffect,  } from "react";
+import { Fragment, useEffect, useState  } from "react";
 import { logout } from "../actions/loginActions";
 import { useDispatch } from "react-redux";
 import { obtenerDatosUsuarioAction } from "../actions/loginActions";
@@ -9,44 +9,46 @@ import "./Bienvenida.css";
 import jwtDecode from "jwt-decode";
 
 
-const Header = () => {
-  //const { user: currentUser } = useSelector((state) => state.auth);
-  //const { user } = useSelector((state) => state.auth);
+const Header = () => {  
   const dispatch = useDispatch();
-
   const nombreUser = localStorage.getItem("userName");
   const userId = localStorage.getItem("userId");
   const userTokenCheck = localStorage.getItem('userToken')
   const date = Date.now()
   //console.log (Fecha)
-
+  const [nombreUsuario, setNombreUsuario] = useState('')
+  
   useEffect(() => {
     if(!userTokenCheck) {
       console.log('NO HAY TOKEN') 
       return null
     } else {
       const {exp} = jwtDecode(userTokenCheck)
-      const expiredToken = (exp * 1000) - 60000
-      //console.log(expiredToken)
+      const expiredToken = (exp * 1000) - 60000      
       if(expiredToken < date){
         logOut()
       }
+      setNombreUsuario(nombreUser)
     }
     // eslint-disable-next-line
-  }, [ ]);
+  }, [ nombreUsuario]);
 
   const logOut = () => {
     dispatch(logout());
-    window.location = "/productos?busqueda=ultimos_productos&page=0";
+    reload();
   };
 
+  const reload = ()=> {    
+    window.location = "/productos?busqueda=ultimos_productos&page=0";
+  }
   
   //
   return (
     <nav className="bg-nav  d-flex align-items-end ">
       <div className="container-fluid col ">
         <Link
-          to={"/productos?busqueda=ultimos_productos&page=0"}
+          //to={"/productos?busqueda=ultimos_productos&page=0"}
+          onClick={()=>{reload()}}
           className="nav-link typeHeader  "
         >
           <img
@@ -59,10 +61,7 @@ const Header = () => {
       </div>
       <div className=" me-4 mb-3">
         {userTokenCheck === null ? (
-          <Fragment>
-            {/* <Link to={"/productos?busqueda=ultimos_productos&page=0"} className="nav-link typeHeader">
-              Home
-            </Link>  */}
+          <Fragment>       
             <div className="d-flex ">
               <Link to={"/login"} className="nav-link typeHeader ">
                 Login
@@ -77,16 +76,10 @@ const Header = () => {
         ) : (
           <Fragment>
             <div className="">
-              <div className="container text-center">
-                {/* <img
-                 src={avatarUrl}
-                 className="me-3"
-                 style={{ width: "3rem" }}
-                 alt={'foto Avatar'}
-               ></img>  */}
+              <div className="container text-center">               
                 <div className="d-flex justify-content-center">
                   <h5 className="typeHeader mt-3 ">
-                    Bienvenid@ {nombreUser}
+                    Bienvenid@ {nombreUsuario}
                   </h5>
                 </div>
 
@@ -134,15 +127,7 @@ const Header = () => {
                       >
                         Mi perfil
                       </Link>
-                    </li>
-                    {/* <li>
-                      <Link
-                        to={`/usuarios/avatar/${userId}`}
-                        className="nav-link typeHeader"
-                      >
-                        Avatar
-                      </Link>
-                    </li> */}
+                    </li>                   
                     <li>
                       <Link
                         to={"/productos?busqueda=ultimos_productos&page=0"}

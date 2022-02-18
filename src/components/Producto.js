@@ -21,7 +21,7 @@ const Producto = ({ producto }) => {
   const history = useHistory();
   
   const verProductoId = (producto) => {
-    dispatch(obtenerProductoIdApiAction(producto._id));    
+    dispatch(obtenerProductoIdApiAction(producto._id)); 
     history.push(`/productos/${producto._id}`);
   };
   const firsImage = images[0].url ? images[0].url : 'https://res.cloudinary.com/dhe1gcno9/image/upload/v1645218203/ProductosMarketV2/AvataresUsuarios/LOGO_CIRCULAR_FONDO_BLANCO_cvhmuo.png';

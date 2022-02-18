@@ -1,19 +1,19 @@
 import { Fragment } from "react";
 import "./Producto.css";
 import { useHistory } from "react-router-dom";
-//import { useSelector } from "react-redux";
+
 import Swal from "sweetalert2";
 //REDUX
 import { useDispatch } from "react-redux";
 import {borrarBuscoPostsUserAction, obtenerBuscoPostEditarAction} from '../actions/buscoPostActions'
-// import { obtenerProductoEditarActionUser } from "../actions/productoActions";
-// import { borrarProductoAction } from "../actions/productoActions";
 
-const ProductoUser = ({ postUser }) => {
-  
-  const { title, _id } = postUser;  
+
+
+const BuscoPostUser = ({ postUser }) => {  
+  const { title, _id } = postUser; 
   const dispatch = useDispatch();
   const history = useHistory();
+
 
   //Confirmar si desea Eliminar el Producto
   const confirmarBorrarBuscoPosts = (_id) => {
@@ -32,7 +32,7 @@ const ProductoUser = ({ postUser }) => {
         // la confirmación de esto se pasa al productoAction correspondiente
       }
     });
-    //history.push('/productos')
+   
   };
 
   const sendtoEdicion = () => {
@@ -75,4 +75,4 @@ const ProductoUser = ({ postUser }) => {
   );
 };
 
-export default ProductoUser;
+export default BuscoPostUser;

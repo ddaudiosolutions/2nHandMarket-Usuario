@@ -55,7 +55,9 @@ export function crearNuevoProductoAction(producto, history) {
       //INSERTAR EN LA API
       await clienteAxios.post("/api/productos", producto, data);
       //SI TODO VA BIEN, SE ACTUALIZA EL STATE
+
       dispatch(agregarProductoExito(producto));      
+
       //PONER AQUÍ LA ALERTA DE QUE SE CREO BIEN EL PRODUCTO
 
       await Swal.fire(
@@ -171,10 +173,10 @@ const descargarProductosUserError = (error) => ({
 
 
 export function obtenerProductoIdApiAction(productoid) {
- 
   return  async (dispatch) => {
     try{
       const productoIdApi =  await clienteAxios.get(`/api/productos/${productoid}`)     
+
       dispatch(obtenerProductoIdApiExito(productoIdApi.data.productoId));
     }
     catch(error){
@@ -348,6 +350,8 @@ export function obtenerProductosActionAuthor(authId) {
     try { 
              
       const productosAuthor = await clienteAxios.get(`/api/productos/auth/${authId}`);   
+
+
       dispatch(descargarProductosAuthorExito(productosAuthor.data.prodAuth));
    
     } catch (error) {      

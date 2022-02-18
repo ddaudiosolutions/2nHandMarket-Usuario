@@ -53,7 +53,10 @@ const loginExito = (data) => ({
 });
 
 //CARGAR DATOS DE USUARIO DESDE LA BB DE DATOS
+
 export function obtenerDatosUsuarioAction(id) { 
+
+
   return async (dispatch) => {
     try {
       const datosUsuario = await clienteAxios.get(

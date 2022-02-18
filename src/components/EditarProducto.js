@@ -30,27 +30,24 @@ const EditarProducto = () => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [images, setImage] = useState(""); //imagenes de estado inical
+  const [images, setImage] = useState(""); //IMAGENES DEL STATE INICIAL
   //const [newimages, setNewImages] = useState('');
   const [contacto, setContacto] = useState("");
   const [id, setId] = useState("");
 
   //TOMAMOS LOS DATOS DEL PRODUCTO LLAMADO A EDICIÓN.
   const productoEditar = useSelector((state) => state.productos.productoeditar);
-  console.log(productoEditar.categoria);
+  //console.log(productoEditar.categoria);
 
   // TOMAMOS DEL STATE DEL PROUDUCTO EL ID PARA PODER PASARLO A LA NUEVA FUNCION DEL DISPATCH Y ASÍ
   // PODER PASAR LOS DATOS AL SERVIDOR Y NO TENER EL ERROR 'UNDEFINED'
   let productoId = productoEditar._id;
 
-  const [imagesTotales, setImagesTotales] = useState("");//NUM TOTA DE IMGS (SUBIDAS Y POR SUBIR)
-  console.log('imagenes Totales:  ' + imagesTotales)
-  const [imagesT, setImages] = useState("");
-  //console.log(imagesT)
-  let imagesState = parseInt(productoEditar.images.length); //NUM IMAGENES YA SUBIDAS
-  //console.log(imagesState)
+  const [imagesTotales, setImagesTotales] = useState("");//NUM TOTA DE IMGS (SUBIDAS Y POR SUBIR)  
+  const [imagesT, setImages] = useState("");  //NUEVAS IMAGENES PARA SUBIR
+  let imagesState = parseInt(productoEditar.images.length); //NUM IMAGENES YA SUBIDAS  
   let imagesSelect = parseInt(imagesT.length);//NUMERO DE IMAGENES A SUBIR
-  //console.log(imagesSelect)
+  
 
   //STATE DE IMAGENES A BORRAR
   const [imageSel, setImageSel] = useState(''); // creamos el state que llenamos desde el hijo  
@@ -70,7 +67,8 @@ const EditarProducto = () => {
       addImagesSel(filename)
     }else{
       deleteImage(filename)
-    }};
+      }};
+
     const addImagesSel = (filename)=> {
       setImageSel([...imageSel, filename])
     }
@@ -93,10 +91,10 @@ const EditarProducto = () => {
 
   useEffect(() => {  
     setImageDif(imagesTotales - imageSel.length)
-    console.log('La diferencia es de:  ' + imageDif)
-    console.log(imageSel)
-    console.log(imagesSize) 
-    console.log(verifySize)  
+    // console.log('La diferencia es de:  ' + imageDif)
+    // console.log(imageSel)
+    // console.log(imagesSize) 
+    // console.log(verifySize)  
     setVerifySize(muchoPeso)
     setImagesSize(total)  
     setId(productoId);
