@@ -49,7 +49,7 @@ const CrearUsuario = () => {
         setSuccessful(false);
       });
   };
-
+// eslint-disable-next-line
   const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
   return (
