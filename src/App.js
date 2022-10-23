@@ -29,7 +29,7 @@ import store from "./store";
 
 import { Helmet } from "react-helmet";
 
-const Tracking_ID = '338632609'
+const Tracking_ID = 'G-LN814BQ9FL'
 ReactGA.initialize(Tracking_ID)
 
 function App() {
