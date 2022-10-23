@@ -131,7 +131,7 @@ const Header = () => {
                     </li>                   
                     <li>
                       <Link
-                        //to={"/productos?busqueda=ultimos_productos&page=0"}                        
+                        to={"/productos?busqueda=ultimos_productos&page=0"}                        
                         className="nav-link typeHeader"
                         onClick={logOut}
                       >
