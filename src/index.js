@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import 'bootstrap/dist/js/bootstrap.js';//PARA QUE FUNCIONEN LOS DROPDOWN MENUS
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
