@@ -1,4 +1,4 @@
-//import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import ReactGA from 'react-ga';
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import Header from "./components/Header";
@@ -28,9 +28,15 @@ import store from "./store";
 //import Bienvenida from "./components/Bienvenida";
 
 import { Helmet } from "react-helmet";
+
+const Tracking_ID = '338632609'
+ReactGA.initialize(Tracking_ID)
+
 function App() {
-  const Tracking_ID = '338632609'
-  ReactGA.initialize(Tracking_ID)
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
+
   return (
     <Router history={history}>
       <Provider store={store}>
