@@ -36,7 +36,6 @@ const Header = () => {
 
   const logOut = () => {
     dispatch(logout());
-    reload();
   };
 
   const reload = ()=> {    
@@ -132,8 +131,7 @@ const Header = () => {
                     </li>                   
                     <li>
                       <Link
-                        to={"/productos?busqueda=ultimos_productos&page=0"}
-                        //href="/login"
+                        //to={"/productos?busqueda=ultimos_productos&page=0"}                        
                         className="nav-link typeHeader"
                         onClick={logOut}
                       >

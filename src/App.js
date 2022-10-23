@@ -39,7 +39,7 @@ function App() {
             <meta property="og:title" name="title" content="WindyMarket" />
             <meta
               property="”og:url”"
-              content="https://windymarket.netlify.app/"
+              content="https://windymarket.es/"
             />
             <meta
               property="og:description"
