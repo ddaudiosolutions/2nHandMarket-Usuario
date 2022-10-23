@@ -4,6 +4,7 @@ import { logout } from "../actions/loginActions";
 import { useDispatch } from "react-redux";
 import { obtenerDatosUsuarioAction } from "../actions/loginActions";
 //import { history } from "../helpers/history";
+import { obtenerProductosAction } from "../actions/productoActions";
 
 import "./Bienvenida.css";
 import jwtDecode from "jwt-decode";
@@ -39,7 +40,8 @@ const Header = () => {
   };
 
   const reload = ()=> {    
-    window.location = "/productos?busqueda=ultimos_productos&page=0";
+    dispatch(obtenerProductosAction ('ultimos_productos', 0));
+    //window.location = "/productos?busqueda=ultimos_productos&page=0";
   }
   
   //
@@ -47,7 +49,7 @@ const Header = () => {
     <nav className="bg-nav  d-flex align-items-end ">
       <div className="container-fluid col ">
         <Link
-          //to={"/productos?busqueda=ultimos_productos&page=0"}
+          to={"/productos?busqueda=ultimos_productos&page=0"}
           onClick={()=>{reload()}}
           className="nav-link typeHeader  "
         >
