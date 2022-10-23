@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {  Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { loginUsuarioActions } from "../actions/loginActions";
@@ -9,8 +9,6 @@ const Login = () => {
   const [email, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const { isLoggedIn } = useSelector((state) => state.auth.user);
 
   const dispatch = useDispatch();
 
@@ -29,15 +27,16 @@ const Login = () => {
     setLoading(true);
     //window.location.reload();
     dispatch(loginUsuarioActions(email, password))
-      //  .then(() => {
-      //   isLoggedIn === && window.location.reload()
-      //  })
-      // .catch(() => {
-      //   setLoading(false);
-      // });
-      if (isLoggedIn) {
-        window.location = "/productos?busqueda=ultimos_productos&page=0";
-      }
+       .then((res) => {
+        if(res.status === 200){
+          window.location = "/";
+        }
+
+       })
+      .catch(() => {
+        setLoading(false);
+      });
+      
   };
 
 //MANEJO DE MENSAJES DE ERROR
