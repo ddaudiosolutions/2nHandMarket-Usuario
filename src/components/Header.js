@@ -3,7 +3,6 @@ import { Fragment, useEffect, useState  } from "react";
 import { logout } from "../actions/loginActions";
 import { useDispatch } from "react-redux";
 import { obtenerDatosUsuarioAction } from "../actions/loginActions";
-//import { history } from "../helpers/history";
 import { obtenerProductosAction } from "../actions/productoActions";
 
 import "./Bienvenida.css";
@@ -16,7 +15,7 @@ const Header = () => {
   const userId = localStorage.getItem("userId");
   const userTokenCheck = localStorage.getItem('userToken')
   const date = Date.now()
-  //console.log (Fecha)
+  
   const [nombreUsuario, setNombreUsuario] = useState('')
   
   useEffect(() => {

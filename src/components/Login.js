@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {  Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { loginUsuarioActions } from "../actions/loginActions";
@@ -10,7 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  //const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn } = useSelector((state) => state.auth.user);
 
   const dispatch = useDispatch();
 
@@ -29,12 +29,15 @@ const Login = () => {
     setLoading(true);
     //window.location.reload();
     dispatch(loginUsuarioActions(email, password))
-      // .then(() => {
-       
-      // })
-      .catch(() => {
-        setLoading(false);
-      });
+      //  .then(() => {
+      //   isLoggedIn === && window.location.reload()
+      //  })
+      // .catch(() => {
+      //   setLoading(false);
+      // });
+      if (isLoggedIn) {
+        window.location = "/productos?busqueda=ultimos_productos&page=0";
+      }
   };
 
 //MANEJO DE MENSAJES DE ERROR
@@ -44,9 +47,6 @@ const Login = () => {
     handleSubmit,
   } = useForm({ mode: "onBlur" });
 
-  // if (isLoggedIn) {
-  //   return <Redirect to={"/productos?busqueda=ultimos_productos&page=0"}></Redirect>;
-  // }
 
   return (
     <div className="">
