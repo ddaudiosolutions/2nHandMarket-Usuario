@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
+import ReactGA from 'react-ga';
 import 'bootstrap/dist/js/bootstrap.js';//PARA QUE FUNCIONEN LOS DROPDOWN MENUS
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
@@ -8,6 +8,8 @@ import App from "./App";
 //import { Provider } from 'react-redux';
 import reportWebVitals from "./reportWebVitals";
 //import store from './store';
+const Tracking_ID = 'G-LN814BQ9FL'
+ReactGA.initialize(Tracking_ID)
 
 ReactDOM.render(
   <App />,
