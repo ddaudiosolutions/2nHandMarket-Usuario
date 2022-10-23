@@ -5,7 +5,7 @@ const logout = () => {
   localStorage.removeItem("userToken");
   localStorage.removeItem("userName");
   localStorage.removeItem("userId")
-  window.location = "/productos?busqueda=ultimos_productos&page=0";
+  window.location = "/";
   
 };
 

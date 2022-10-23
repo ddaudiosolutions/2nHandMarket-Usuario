@@ -40,7 +40,7 @@ export function loginUsuarioActions(email, password) {
         localStorage.setItem("userToken", JSON.stringify(loginUsuario.data.accessToken));
         localStorage.setItem("userId", loginUsuario.data.id);
       }      
-      //window.location = "/productos?busqueda=ultimos_productos&page=0";      
+         
       return loginUsuario
     } catch (error) {
       console.log(error)
