@@ -9,15 +9,13 @@ import {
 
 import { toDate, format } from "date-fns";
 import {Helmet} from 'react-helmet';
+import { getNewChatRoom } from "../slices/roomsSlice";
+//import { setName } from "../slices/chatSlice";
 
 const VerProducto = () => { 
 
   const producto = useSelector((state) => state.productos.productoIdApi);
-  console.log(producto);
-
   const productoIdurl = window.location.pathname.split("/")[2];
-  //console.log(productoIdurl);
-
   let paginaActual = useSelector((state) => state.productos.paginaActual);
   if (paginaActual === undefined) {
     paginaActual = 0;
@@ -26,17 +24,15 @@ const VerProducto = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const enviarproductoid = (url) =>
-    //console.log("fetching axios"),
+  const enviarproductoid = (url) =>   
     dispatch(obtenerProductoIdApiAction(url));
 
-  useEffect(() => {
-    //console.log("useeffect");
+  useEffect(() => {   
     enviarproductoid(productoIdurl);
     // eslint-disable-next-line
   }, []);
 
-  if (producto === null) return null;;
+  if (producto === null) return null;
 
   ///CONVERTIMOS LA FECHA A UN FORMATO COMUN
   const date = new Date(producto.creado);
@@ -47,16 +43,22 @@ const VerProducto = () => {
   let authorName = producto.author.nombre;
 
   const cargarProductosAuthor = (producto) => {
-    dispatch(obtenerProductosActionAuthor(producto.author._id));
-   
+    dispatch(obtenerProductosActionAuthor(producto.author._id));   
     history.push(`/productos/auth/${producto.author._id}`);
   };
 
+  const openRoom = () => {
+    dispatch (getNewChatRoom({
+      user1: sessionStorage.getItem('userId'),
+      user2: producto.author._id,
+      product: producto._id
+    }))      
+  }
+  
   return (
     <Fragment>
       <div>
-        <Helmet>
-          {/* <title>Hola Productos</title> */}
+        <Helmet>          
         <meta property="og:type" content="Product" />
         <meta property="og:title" name="title" content={producto.title} />
         <meta property="og:image"  name="image"  content={producto.images[0].url} />
@@ -64,6 +66,10 @@ const VerProducto = () => {
         </Helmet>
         </div>
       <div className="container col-sm-9 col-md-9 col-lg-7 col-xl-7">
+        { sessionStorage.getItem('userId') !== null && <Link to={ {pathname: '/chat', state: {authorName}}}> 
+          <btn className="btn btn-outline-danger h2Author ms-auto me-4 mt-3" onClick={() => openRoom()}> Chat </btn>
+        </Link>
+        } 
         <div className="cardVerProducto mt-3 ">
           <div
             className="d-flex justify-content-start  mt-3"
@@ -84,6 +90,7 @@ const VerProducto = () => {
               ></img>
             )}
             <h5 className="h2Author ms-2 mt-4">{authorName}</h5>
+            
           </div>
           <div>
             <div

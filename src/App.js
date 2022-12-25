@@ -15,6 +15,8 @@ import Avatar from "./components/Avatar";
 import NuevoBuscoPost from "./components/NuevoBuscoPost";
 import VerBuscoPost from "./components/VerBuscoPost";
 import EditarBuscoPost from "./components/EditarBuscoPost";
+//import ChatPage from "./components/chat/ChatPage";
+import ChatPage from './components/roomChats/ChatRooms';
 //import Inicio from './components/Inicio'
 //import { logout } from "./actions/loginActions";
 import { history } from "./helpers/history";
@@ -26,10 +28,10 @@ import store from "./store";
 //import Bienvenida from "./components/Bienvenida";
 
 import { Helmet } from "react-helmet";
+import Buzon from './components/Buzon';
 
-
-
-function App() { 
+function App() {   
+ 
   return (
     <Router history={history}>
       <Provider store={store}>
@@ -85,6 +87,8 @@ function App() {
               component={EditarBuscoPost}
             />
             <Route exact path="/buscoposts/:id" component={VerBuscoPost} />
+            <Route exact path='/chat' component={ChatPage } />
+            <Route exact path='/buzon' component={Buzon } />
           </Switch>
         </div>
       </Provider>

@@ -240,6 +240,30 @@ h2{
   color: rgb(248, 248, 248);
 }
 
+.btn-outline-danger {
+  background-color: transparent;
+  /* color: #0058ca;   */
+  border: 1px solid;
+  text-decoration: none;
+  outline: 0;
+  font-size: 1rem;
+  font-family: Saira Stencil One;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
+}
+
+.btn-outline-danger:hover {
+  background-color: #4BD9DF;
+  color: white; 
+  border: 1px solid;
+  text-decoration: none;
+  outline: 0;
+  font-size: 1rem;
+  font-family: Saira Stencil One;
+  font-weight: 400;
+  letter-spacing: 0.04rem;
+}
+
 .box {
   border-radius: 1rem;
   background: #fff;

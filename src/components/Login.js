@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {  Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { loginUsuarioActions } from "../actions/loginActions";
+//import { loginUsuarioActions } from "../actions/loginActions";
+import { loginUsuario } from '../slices/authSlice'
 
 
 const Login = () => {
@@ -21,17 +22,19 @@ const Login = () => {
     const password = e.target.value;
     setPassword(password);
   };
-
+  const userData = {
+    email, password
+  }
   const handleLogin = () => {
     //e.preventDefault()
     setLoading(true);
     //window.location.reload();
-    dispatch(loginUsuarioActions(email, password))
+    dispatch(loginUsuario(userData))
        .then((res) => {
-        if(res.status === 200){
+         console.log(res)
+        if(res.payload.status === 200){  
           window.location = "/";
         }
-
        })
       .catch(() => {
         setLoading(false);

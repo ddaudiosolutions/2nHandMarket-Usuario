@@ -15,16 +15,16 @@ import {
 
   } from '../actions/types'
   
-  const user = JSON.parse(localStorage.getItem("userToken"));
+  const user = JSON.parse(sessionStorage.getItem("userToken"));
   
   const initialState =  {
     user: user
-    ? { isLoggedIn: true, user}
-    : { isLoggedIn: false, user: null },
+    ? { isLoggedIn: true, user, }
+    : { isLoggedIn: false, user: null},
     //datosUsuario: null,
     datosUsuarioEditar: null,
-    avatar: null
-  
+    avatar: null,  
+    nombreUser: {}
   }
   
   export default function autor (state = initialState, action) {
@@ -45,7 +45,7 @@ import {
           message: action.payload
         };
       case LOGIN_SUCCESS:
-       // console.log(action.payload)
+        console.log(action.payload)
         return {
           ...state,
           isLoggedIn: true,
@@ -53,9 +53,9 @@ import {
           nombreUser: action.payload
         };
       case LOGIN_USER_SUCCESS:
-       // console.log(action.payload)
-        return {
-          ...state,
+        console.log(action.payload)
+        return {   
+          ...state,       
           nombreUser: action.payload
         }
       case LOGIN_FAIL:

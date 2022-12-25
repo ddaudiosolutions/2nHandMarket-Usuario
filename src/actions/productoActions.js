@@ -36,7 +36,7 @@ import clienteAxios from "../config/axios";
 import Swal from "sweetalert2";
 
 
-const user = JSON.parse(localStorage.getItem("userToken"));
+const user = JSON.parse(sessionStorage.getItem("userToken"));
 const data = {
   headers: {
     "x-auth-token": user,
@@ -173,6 +173,7 @@ const descargarProductosUserError = (error) => ({
 
 
 export function obtenerProductoIdApiAction(productoid) {
+  console.log(productoid);
   return  async (dispatch) => {
     try{
       const productoIdApi =  await clienteAxios.get(`/api/productos/${productoid}`)     

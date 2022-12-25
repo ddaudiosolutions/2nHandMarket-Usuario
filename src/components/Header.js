@@ -7,13 +7,14 @@ import { obtenerProductosAction } from "../actions/productoActions";
 
 import "./Bienvenida.css";
 import jwtDecode from "jwt-decode";
+import { getChatRoomsByUser } from "../slices/roomsSlice";
 
 
 const Header = () => {  
   const dispatch = useDispatch();
-  const nombreUser = localStorage.getItem("userName");
-  const userId = localStorage.getItem("userId");
-  const userTokenCheck = localStorage.getItem('userToken')
+  const nombreUser = sessionStorage.getItem("userName");
+  const userId = sessionStorage.getItem("userId");
+  const userTokenCheck = sessionStorage.getItem('userToken')
   const date = Date.now()
   
   const [nombreUsuario, setNombreUsuario] = useState('')
@@ -128,6 +129,17 @@ const Header = () => {
                         Mi perfil
                       </Link>
                     </li>                   
+                    <li>
+                      <Link
+                        to={"/buzon"}
+                        onClick={() => {
+                          dispatch(getChatRoomsByUser({ userId }));
+                        }}
+                        className="nav-link typeHeader"
+                      >
+                        Mi Buzon
+                      </Link>
+                    </li>
                     <li>
                       <Link
                         to={"/productos?busqueda=ultimos_productos&page=0"}                        

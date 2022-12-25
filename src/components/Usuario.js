@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 const Usuario = () => {
 
   const dispatch = useDispatch();
-  const userId = localStorage.getItem('userId')
+  const userId = sessionStorage.getItem('userId')
   console.log(userId)
 
   const datosUsuario = useSelector((state) => state.auth.datosUsuario);

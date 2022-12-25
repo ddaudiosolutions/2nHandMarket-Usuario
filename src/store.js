@@ -1,17 +1,27 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import reducer from "./reducers";
+import { configureStore } from "@reduxjs/toolkit";
+import chatSliceReducer from './slices/chatSlice';
+import productosReducer from './reducers/productosReducer'
+import buscopostsReducer from './reducers/buscoPostReducer'
+import authReducer from './reducers/auth'
+import alertaReducer from './reducers/alertaReducer'
+import messageReducer from './reducers/message'
+import loginReducer from './slices/authSlice'
+import roomsReducer from './slices/roomsSlice'
 
-const store = createStore(
-  reducer,
-  compose(
-    applyMiddleware(thunk),
 
-    typeof window === "object" &&
-      typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== "undefined"
-      ? window.__REDUX_DEVTOOLS_EXTENSION__()
-      : (f) => f
-  )
-);
+
+const store = configureStore({
+  reducer: { 
+    productos: productosReducer,
+    buscoposts: buscopostsReducer,
+    auth: authReducer,
+    alerta: alertaReducer,
+    message: messageReducer,
+    chatSlice: chatSliceReducer,
+    user: loginReducer,
+    rooms: roomsReducer
+  }
+  
+});
 
 export default store;

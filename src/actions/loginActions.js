@@ -1,7 +1,7 @@
 //import Swal from 'sweetalert2';
 import {
-  LOGIN_SUCCESS,
-  // LOGIN_USER_SUCCESS,
+  //LOGIN_SUCCESS,
+   LOGIN_USER_SUCCESS,
   //LOGIN_FAIL,
   LOGOUT,
   //SET_MESSAGE,
@@ -18,7 +18,7 @@ import clienteAxios from "../config/axios";
 import Swal from 'sweetalert2';
 
 
-const user = JSON.parse(localStorage.getItem("userToken"));
+const user = JSON.parse(sessionStorage.getItem("userToken"));
 const data = {
   headers: {
     "x-auth-token": user,
@@ -32,13 +32,12 @@ export function loginUsuarioActions(email, password) {
       const loginUsuario = await clienteAxios.post("/api/auth", {
         email,
         password,
-      });
-
+      });     
       dispatch(loginExito(loginUsuario.data));      
       if (loginUsuario.data) {
-        localStorage.setItem("userName", JSON.stringify(loginUsuario.data.nombre));
-        localStorage.setItem("userToken", JSON.stringify(loginUsuario.data.accessToken));
-        localStorage.setItem("userId", loginUsuario.data.id);
+        sessionStorage.setItem("userName", JSON.stringify(loginUsuario.data.nombre));
+        sessionStorage.setItem("userToken", JSON.stringify(loginUsuario.data.accessToken));
+        sessionStorage.setItem("userId", loginUsuario.data.id);
       }      
          
       return loginUsuario
@@ -48,8 +47,8 @@ export function loginUsuarioActions(email, password) {
   };
 }
 
-const loginExito = (data) => ({
-  type: LOGIN_SUCCESS,
+const loginExito = (data) => ({  
+  type: LOGIN_USER_SUCCESS,
   payload: data,
 });
 

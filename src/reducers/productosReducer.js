@@ -62,8 +62,6 @@ export default function productosReducer(state = initialState, action) {
       };
     
     case DESCARGA_PRODUCTOS_EXITO:
-
-
       return {
         ...state,
         loading: false,
