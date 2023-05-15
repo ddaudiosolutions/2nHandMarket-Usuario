@@ -26,6 +26,7 @@ import store from "./store";
 //import Bienvenida from "./components/Bienvenida";
 
 import { Helmet } from "react-helmet";
+import ForgotPassword from "./components/ForgotPassword";
 
 
 
@@ -63,6 +64,7 @@ function App() {
               to="productos?busqueda=ultimos_productos&page=0"
             />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/forgotpassword" component={ForgotPassword} />
             <Route exact path="/productos/nuevo" component={NuevoProducto} />
             <Route exact path="/productos" component={Productos} />
             <Route exact path="/productos/auth/:id" component={ProductosAuth} />

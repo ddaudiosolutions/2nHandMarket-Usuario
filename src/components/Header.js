@@ -1,19 +1,17 @@
 import { Link,  } from "react-router-dom";
 import { Fragment, useEffect, useState  } from "react";
-import { logout } from "../actions/loginActions";
 import { useDispatch } from "react-redux";
-import { obtenerDatosUsuarioAction } from "../actions/loginActions";
 import { obtenerProductosAction } from "../actions/productoActions";
-
 import "./Bienvenida.css";
 import jwtDecode from "jwt-decode";
+import { logOutUsuario, obtenerDatosUsuario } from "../slices/usersSlice";
 
 
 const Header = () => {  
   const dispatch = useDispatch();
-  const nombreUser = localStorage.getItem("userName");
-  const userId = localStorage.getItem("userId");
-  const userTokenCheck = localStorage.getItem('userToken')
+  const nombreUser = sessionStorage.getItem("userName");
+  const userId = sessionStorage.getItem("userId");
+  const userTokenCheck = sessionStorage.getItem('userToken')
   const date = Date.now()
   
   const [nombreUsuario, setNombreUsuario] = useState('')
@@ -33,8 +31,12 @@ const Header = () => {
     // eslint-disable-next-line
   }, [ nombreUsuario]);
 
-  const logOut = () => {
-    dispatch(logout());
+  const logOut = (nombreUser) => {
+    dispatch(logOutUsuario(nombreUser));
+    /* sessionStorage.removeItem("userName");
+      sessionStorage.removeItem("email");
+      sessionStorage.removeItem("userToken"); */
+      //window.location = "/productos?busqueda=ultimos_productos&page=0"
   };
 
   const reload = ()=> {    
@@ -122,20 +124,14 @@ const Header = () => {
                         to={`/usuarios/${userId}`}
                         className="nav-link typeHeader"
                         onClick={() => {
-                          dispatch(obtenerDatosUsuarioAction({ userId }));
+                          dispatch(obtenerDatosUsuario({ userId }));
                         }}
                       >
                         Mi perfil
                       </Link>
                     </li>                   
-                    <li>
-                      <Link
-                        to={"/productos?busqueda=ultimos_productos&page=0"}                        
-                        className="nav-link typeHeader"
-                        onClick={logOut}
-                      >
-                        LogOut
-                      </Link>
+                    <li  type='button' className="nav-link typeHeader" onClick={() => {logOut({nombreUser})}}>                      
+                        LogOut                      
                     </li>
                   </ul>
                 </div>

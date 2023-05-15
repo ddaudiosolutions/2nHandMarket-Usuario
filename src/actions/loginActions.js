@@ -26,7 +26,8 @@ const data = {
   //body: {imagenData},
 };
 
-export function loginUsuarioActions(email, password) { 
+export function loginUsuarioActions(email, password) {
+  console.log(email, password); 
   return async (dispatch) => {
     try {
       const loginUsuario = await clienteAxios.post("/api/auth", {

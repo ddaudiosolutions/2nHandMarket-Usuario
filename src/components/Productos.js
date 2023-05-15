@@ -1,25 +1,24 @@
 import { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  obtenerProductosAction,
+import { 
   //obtenerCategoriaActions,
   obtenerPaginaAction,
 } from "../actions/productoActions";
-import { obtenerBuscoPostsActions } from "../actions/buscoPostActions";
+
 
 import FormBusqueda from './FormBusqueda'
 import ListaProductos from "./ListaProductos";
 import ListadoPosts from "./ListadoPosts";
 
 import "./Producto.css";
+import { obtenerProductos } from "../slices/productSlice";
+import { obtenerBuscoPosts } from "../slices/buscoPostSlice";
 
 const Productos = () => {
   //const history = useHistory();
-
-
-  const productos = useSelector((state) => state.productos.productos);   
-  const paginasTotales = useSelector((state) => state.productos.paginas);
+  const productos = useSelector((state) => state.products.prodAll);     
+  const paginasTotales = useSelector((state) => state.products.totalPages);
 
   //TRAEMOS LAS SOLICITUDES DE BUSQUEDA
   const buscoPosts = useSelector((state) => state.buscoposts.buscoPosts);
@@ -33,21 +32,12 @@ const Productos = () => {
 
   const dispatch = useDispatch();
 
-  const cargarProductos = () =>
-    dispatch(obtenerProductosAction(busquedaquery, pagequery));
+  const cargarProductos = () => dispatch(obtenerProductos({busquedaquery, pagequery}));
+  const cargarBuscoPosts = () => dispatch(obtenerBuscoPosts());
 
-  // const cargarCategoria = () =>
-  //   dispatch(obtenerCategoriaActions(busquedaquery));
-
-  const cargarBuscoPosts = () => dispatch(obtenerBuscoPostsActions());
-
-  useEffect(() => {
-    
-    cargarBuscoPosts();
-    //cargarCategoria(busquedaquery);
-    cargarProductos(busquedaquery, pagequery);
-    dispatch(obtenerPaginaAction(pagequery));
-
+  useEffect(() => {    
+    cargarBuscoPosts();    
+    cargarProductos(busquedaquery, pagequery);  
     // eslint-disable-next-line
   }, [busquedaquery, pagequery]);
 
@@ -93,8 +83,7 @@ const Productos = () => {
               </div>
             </div>
           </div>
-          <div className="col mx-auto">
-            {/* <div className="row row-cols-2 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-5 g-2 justify-content-center "> */}
+          <div className="col mx-auto">           
               <ListaProductos productos={productos} />
 
               {/* {!productos
@@ -111,8 +100,7 @@ const Productos = () => {
           
           <div className="d-flex justify-content-center mt-4 ">
             {busquedaquery !== "ultimos_productos"
-              ? 
-              // <button className="btn btn-primary" onclick={masProductos}>Mostrar más Productos</button> 
+              ?               
               paginas.map((pagina) => (
                   <Link
                     type="submit"
@@ -138,17 +126,8 @@ const Productos = () => {
                 </div>
 
                 <div className="col-12 mx-auto">
-                  <ListadoPosts buscoPosts={buscoPosts} />
-                  {/* <div className="row row-cols-2 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-5 g-2 justify-content-center "> */}
-                    {/* {!buscoPosts
-                      ? null
-                      : buscoPosts.map((buscoPost) => (
-                          <BuscoPost
-                            key={buscoPost._id}
-                            buscoPost={buscoPost}
-                          />
-                        ))} */}
-                  {/* </div> */}
+                   <ListadoPosts buscoPosts={buscoPosts} /> 
+                  
                 </div>
               </Fragment>
             ) : null}

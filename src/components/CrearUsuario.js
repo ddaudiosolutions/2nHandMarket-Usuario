@@ -10,6 +10,7 @@ const CrearUsuario = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [doublepassword, setDoublePassword] = useState("");
   const [successful, setSuccessful] = useState(false);
 
   const dispatch = useDispatch();
@@ -29,6 +30,11 @@ const CrearUsuario = () => {
     const password = e.target.value;
     setPassword(password);
   };
+  
+  const onChangeDoublePassword = (e) => {
+    const doublePassword = e.target.value;
+    setDoublePassword(doublePassword);
+  };
 
   const {
     register,
@@ -36,11 +42,8 @@ const CrearUsuario = () => {
     handleSubmit,
   } = useForm({ mode: "onBlur" });
 
-  const handleRegister = (e) => {
-    //e.preventDefault();
-    setSuccessful(false);
-    // form.current.validateAll();
-
+  const handleRegister = (e) => {   
+    setSuccessful(false); 
     dispatch(registroActions(username, email, password))
       .then(() => {
         setSuccessful(true);
@@ -79,12 +82,9 @@ const CrearUsuario = () => {
                     <input
                       onInput='this.value'
                       type="text"
-                      className="form-control"
-                      //name="nombre"
-                      {...register("nombre", { required: true })}
-                      //value={username}
-                      onChange={onChangeUsername}
-                      //validations={[vusername]}
+                      className="form-control"                
+                      {...register("nombre", { required: true })}                 
+                      onChange={onChangeUsername}                  
                     />
                     {errors.nombre?.type === "required" && (
                       <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
@@ -98,12 +98,12 @@ const CrearUsuario = () => {
                       Email
                     </label>
                     <input
-                      type="email"
+                       onInput='this.value'
+                       type="email"
                       required
-                      className="form-control"
-                      //name="email"
+                      className="form-control"                 
                       {...register("email", {
-                        required: "Introduce un correo",
+                        required: true,
                         pattern: { re },
                       })} //eslint-disable-line
                       onChange={onChangeEmail}
@@ -123,10 +123,8 @@ const CrearUsuario = () => {
                       type="password"
                       className="form-control"
                       name="password"
-                      {...register("password", { required: true })}
-                      //value={password}
-                      onChange={onChangePassword}
-                      //validations={[vpassword]}
+                      {...register("password", { required: true })}                    
+                      onChange={onChangePassword}                     
                     />
                     {errors.password?.type === "required" && (
                       <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
@@ -134,6 +132,28 @@ const CrearUsuario = () => {
                       </h6>
                     )}
                     {errors.password?.type === "pattern" && (
+                      <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                        Debes introducir una contraseña entre 6 y 8 caracteres
+                      </h6>
+                    )}
+                  </div>
+                  <div className="form-group mb-3">
+                    <label htmlFor="doublePassword" className="loginLabel">
+                      Repetir Password
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      name="doublePassword"
+                      {...register("doublePassword", { required: true })}                      
+                      onChange={onChangeDoublePassword}                      
+                    />
+                    {errors.doublePassword?.type === "required" && (
+                      <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
+                        Debes introducir una contraseña
+                      </h6>
+                    )}
+                    {errors.doublePassword?.type === "pattern" && (
                       <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
                         Debes introducir una contraseña entre 6 y 8 caracteres
                       </h6>
@@ -148,7 +168,10 @@ const CrearUsuario = () => {
                 </div>
               )}
             </form>
-            <Link to={'/login'}>Inicia Sesion</Link>
+            <div className="row mt-4">
+            <Link to={'/login'} className='col-md-6'>Inicia Sesion</Link>
+            <Link to={'/forgotpassword'} className='col-md-6'>Olvidé mi Contraseña</Link>
+            </div>
           </div>
         </div>
       </div>

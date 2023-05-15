@@ -5,16 +5,18 @@ import 'bootstrap/dist/js/bootstrap.js';//PARA QUE FUNCIONEN LOS DROPDOWN MENUS
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
 import App from "./App";
-//import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
+import store from './app/store';
 import reportWebVitals from "./reportWebVitals";
 //import store from './store';
 const Tracking_ID = 'G-LN814BQ9FL'
 ReactGA.initialize(Tracking_ID)
 
-ReactDOM.render(
-  <App />,
-
-  document.getElementById("root")
+ReactDOM.render( 
+  <Provider store={store}>
+    <App />
+  </Provider>,  
+document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

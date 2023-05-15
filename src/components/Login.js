@@ -125,7 +125,10 @@ const Login = () => {
                 </button>
               </div>
             </form>
-            <Link to={'/nuevousuario'}>Registrate</Link>
+            <div className="row mt-4">
+            <Link to={'/nuevousuario'} className='col-md-6'>Registrate</Link>
+            <Link to={'/forgotpassword'} className='col-md-6'>Olvidé mi Contraseña</Link>
+            </div>           
           </div>
         </div>
       </div>
