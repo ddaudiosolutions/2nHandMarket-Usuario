@@ -1,4 +1,4 @@
-//import Swal from 'sweetalert2';
+/* //import Swal from 'sweetalert2';
 import {
   LOGIN_SUCCESS,
   // LOGIN_USER_SUCCESS,
@@ -141,10 +141,4 @@ const eliminarUsuarioExito = ()=> ({
 
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
-export const logout = () => (dispatch) => {
-  AuthService.logout();
-  dispatch({
-    type: LOGOUT,
-  });
-  
-};
+ */

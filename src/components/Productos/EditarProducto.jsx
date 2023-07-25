@@ -4,10 +4,12 @@ import { useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import FormData from "form-data";
-import { editarProductoAction } from "../actions/productoActions";
+import { editarProducto } from "../../slices/productSlice";
 import { useHistory } from "react-router-dom";
 import "./EditarProducto.css";
 import VerImagesEdit from "./VerImagesEdit";
+import Swal from "sweetalert2";
+import { cargarProductosAuthor } from "../../helpers/utils";
 //STYLED COMPONENTS
 const Label = styled.label`
   font-family: Saira;
@@ -35,69 +37,51 @@ const EditarProducto = () => {
   const [contacto, setContacto] = useState("");
   const [id, setId] = useState("");
 
-  //TOMAMOS LOS DATOS DEL PRODUCTO LLAMADO A EDICIÓN.
-  const productoEditar = useSelector((state) => state.productos.productoeditar);
-  //console.log(productoEditar.categoria);
-
-  // TOMAMOS DEL STATE DEL PROUDUCTO EL ID PARA PODER PASARLO A LA NUEVA FUNCION DEL DISPATCH Y ASÍ
-  // PODER PASAR LOS DATOS AL SERVIDOR Y NO TENER EL ERROR 'UNDEFINED'
-  let productoId = productoEditar._id;
-
-  const [imagesTotales, setImagesTotales] = useState("");//NUM TOTA DE IMGS (SUBIDAS Y POR SUBIR)  
-  const [imagesT, setImages] = useState("");  //NUEVAS IMAGENES PARA SUBIR
-  let imagesState = parseInt(productoEditar.images.length); //NUM IMAGENES YA SUBIDAS  
-  let imagesSelect = parseInt(imagesT.length);//NUMERO DE IMAGENES A SUBIR
-  
+  const productoEditar = useSelector((state) => state.products.productToEdit);
+  const [imagesTotales, setImagesTotales] = useState(""); //NUM TOTA DE IMGS (SUBIDAS Y POR SUBIR)
+  const [imagesT, setImages] = useState(""); //NUEVAS IMAGENES PARA SUBIR
+  let imagesState = parseInt(productoEditar.images.length); //NUM IMAGENES YA SUBIDAS
+  let imagesSelect = parseInt(imagesT.length); //NUMERO DE IMAGENES A SUBIR
 
   //STATE DE IMAGENES A BORRAR
-  const [imageSel, setImageSel] = useState(''); // creamos el state que llenamos desde el hijo  
+  const [imageSel, setImageSel] = useState(""); // creamos el state que llenamos desde el hijo
 
   //DIFERENCIA ENTRE ALMACENADAS Y CARGADAS PARA SUBIR
+  const [imageDif, setImageDif] = useState();
 
-  const [imageDif, setImageDif] = useState()
-  
-
-
-//STATE PESO IMAGENES
+  //STATE PESO IMAGENES
   const [imagesSize, setImagesSize] = useState(0);
   const [verifySize, setVerifySize] = useState(false);
 
-  const sendDataToParent = (filename, status) => {    
-    if(status.checked === false) {
-      addImagesSel(filename)
-    }else{
-      deleteImage(filename)
-      }};
-
-    const addImagesSel = (filename)=> {
-      setImageSel([...imageSel, filename])
+  const sendDataToParent = (filename, status) => {
+    if (status.checked === false) {
+      addImagesSel(filename);
+    } else {
+      deleteImage(filename);
     }
-    const deleteImage = (filename)=>{      
-      setImageSel(imageSel.filter(image=> image !== filename))
-      }
-      
-       let total = 0;
-       let muchoPeso = false;
-    for(let image of imagesT){
-      if(image.size > 1000000)
-      {
-        muchoPeso = true
-      }
-      console.log(image.size)
-      total += image.size;
-    }
-   
-    //console.log(imagesSize) 
+  };
 
-  useEffect(() => {  
-    setImageDif(imagesTotales - imageSel.length)
-    // console.log('La diferencia es de:  ' + imageDif)
-    // console.log(imageSel)
-    // console.log(imagesSize) 
-    // console.log(verifySize)  
-    setVerifySize(muchoPeso)
-    setImagesSize(total)  
-    setId(productoId);
+  const addImagesSel = (filename) => {
+    setImageSel([...imageSel, filename]);
+  };
+  const deleteImage = (filename) => {
+    setImageSel(imageSel.filter((image) => image !== filename));
+  };
+
+  let total = 0;
+  let muchoPeso = false;
+  for (let image of imagesT) {
+    if (image.size > 1000000) {
+      muchoPeso = true;
+    }
+    total += image.size;
+  }
+
+  useEffect(() => {
+    setImageDif(imagesTotales - imageSel.length);
+    setVerifySize(muchoPeso);
+    setImagesSize(total);
+    setId(productoEditar._id);
     setCategoria(productoEditar.categoria);
     setSubCategoria(productoEditar.subCategoria);
     setTitle(productoEditar.title);
@@ -107,24 +91,32 @@ const EditarProducto = () => {
     setImage(productoEditar.images); //IMAGENES DE ESTADO INICAL
     setImagesTotales(imagesState + imagesSelect);
     setContacto(productoEditar.author.nombre);
-    //setProductoEditado(productoEditar);
+    if (imageSel.length === productoEditar.images.length && imagesT.length === 0) {
+      Swal.fire({
+        icon: "error",
+        text: "No puedes borrar todas las imagenes, debes dejar al menos una, o cargar una imagen nueva",
+      });
+    }
   }, [imageSel, imagesT, imagesSize, imageDif, imagesSelect]); //eslint-disable-line react-hooks/exhaustive-deps
-    
-  
 
-  //console.log(images);
-  const editarProducto = (formData, id) =>
-    dispatch(editarProductoAction(formData, id));
+  const sendDataEditProduct = (formData, id) => {
+    dispatch(editarProducto(formData, id));
+    /* .then(res => {
+      console.log(res)
+      if (res.payload.status === 200) {
+        Swal.fire("Correcto", "POST EDITADO CON EXITO", "success")
+          .then(function () {
+            cargarProductosAuthor(dispatch, history, productoEditar)
+          })
+      }
+    }) */
+  };
 
   const submitEditarProducto = () => {
-    //e.preventDefault();
-
     let formData = new FormData();
-
     for (var j = 0; j < imagesT.length; j++) {
       formData.append("images", imagesT[j]);
     }
-    //formData.set("imagesfilename", imagesfilename);
     formData.set("title", title);
     formData.set("categoria", categoria);
     formData.set("subCategoria", subCategoria);
@@ -132,18 +124,12 @@ const EditarProducto = () => {
     formData.set("description", description);
     formData.set("contacto", contacto);
     formData.set("id", id); //PASAMOS EL ID COMO UN STATE MÁS CON EL PRODUCTO, PARA SABER QUE PRODUCTO ESTAMOS E
-    
-    for(var i = 0; i<imageSel.length; i++){
-      formData.append('imagesDelete', imageSel[i])
+
+    for (var i = 0; i < imageSel.length; i++) {
+      formData.append("imagesDelete", imageSel[i]);
     }
-    
-    setId(productoId);
-    console.log(formData.getAll("imagesDelete"));
-
-    editarProducto(formData, id, history);
-    // console.log(images);
-
-    history.push("/productos/user");
+    setId(productoEditar._id);
+    sendDataEditProduct({ formData, id, history });
   };
 
   //VALIDACION DE FORMULARIO
@@ -167,16 +153,13 @@ const EditarProducto = () => {
     <div className="container-fluid  rounded my-4 p-3">
       <div className="d-flex justify-content-center">
         <div className="rounded col-12 col-sm-12 shadow-lg p-3 bg-trasparent">
-          <h2 className="text-center mx-auto font-wight-bold mb-5">
-            Editar Producto
-          </h2>
+          <h2 className="text-center mx-auto font-wight-bold mb-5">Editar Producto</h2>
           <form onSubmit={handleSubmit(submitEditarProducto)}>
             <div className="mb-3">
               <Label className="mb-2">Selecciona el tipo de producto</Label>
               <select
                 className="custom-select form-control pproducto"
-               // defaultValue={categoria}
-                {...register("categoria", { required: true })}                
+                {...register("categoria", { required: true })}
                 onChange={(e) => setCategoria(e.target.value)}
               >
                 <option value="tablas">Tabla</option>
@@ -195,7 +178,6 @@ const EditarProducto = () => {
               <Label className="mb-2">Selecciona la Categoria</Label>
               <select
                 className="custom-select form-control pproducto"
-                //defaultValue={subCategoria}
                 {...register("subCategoria", { required: true })}
                 onChange={(e) => setSubCategoria(e.target.value)}
               >
@@ -222,17 +204,15 @@ const EditarProducto = () => {
             </div>
             <div className="mb-3">
               <Label htmlFor="tituloProducto" className="form-label">
-                Producto
+                Título
               </Label>
               <input
                 type="text"
                 className="form-control pproducto"
-                //defaultValue={title}
                 id="title"
-                //name={title}
                 {...register("title", {
                   required: true,
-                  maxLength: { value: 20 },
+                  maxLength: { value: 50 },
                 })}
                 placeholder="...."
                 onChange={(e) => setTitle(e.target.value)}
@@ -257,9 +237,7 @@ const EditarProducto = () => {
                 className="form-control pproducto"
                 id="precioProducto"
                 placeholder="....."
-                //name='price'
                 {...register("price", { required: true })}
-                // defaultValue={price}
                 onChange={(e) => setPrice(Number(e.target.value))}
               ></input>
               {errors.price?.type === "required" && (
@@ -289,15 +267,13 @@ const EditarProducto = () => {
               )}
             </div>
 
-            <div className="mb-3">
+            {/* <div className="mb-3">
               <Label htmlFor="contacto" className="form-label">
                 Contacto
               </Label>
               <TextArea
                 className="form-control"
                 id="contacto"
-                //name="contacto"
-                //defaultValue={contacto}
                 {...register("contacto", { required: true })}
                 rows="4"
                 onChange={(e) => setContacto(e.target.value)}
@@ -307,9 +283,12 @@ const EditarProducto = () => {
                   Facilita un Contacto
                 </h6>
               )}
-            </div>
+            </div> */}
             <div className="container">
               <div className="row d-flex">
+                <div>
+                  <h6>Selecciona las imagenes que quieres sutituir : </h6>
+                </div>
                 {!images
                   ? null
                   : images.map((imagenEdit) => (
@@ -317,36 +296,31 @@ const EditarProducto = () => {
                         className=""
                         imagenEdit={imagenEdit}
                         sendDataToParent={sendDataToParent}
+                        numImages={images.length}
                       />
                     ))}
               </div>
             </div>
 
             <div>
-              <div className='text-center'>
-              {/* <text className='text-danger'> El número máximo de fotos es 4 </text> */}
-              </div>
-             
+              <div className="text-center"></div>
               <input
                 className="form-input"
                 id="images"
                 type="file"
                 multiple
-                //name="images"
                 {...register("images", { required: false })}
                 onChange={(e) => setImages(e.target.files)}
-                //onChange ={imageHandle}
               ></input>
-              {/* <text className='text-danger'> Las Imagenes no pueden pesar más de 1MB cada Una </text> */}
-          
             </div>
 
             <div className="mb-3 mt-3 text-center">
               <button
                 className="btn btn-outline-warning"
                 type="submit"
-                disabled={verifySize === true || (imageDif < 4 && verifySize === true) || imageDif > 4}                
-              
+                disabled={
+                  verifySize === true || (imageDif < 4 && verifySize === true) || imageDif > 4
+                }
               >
                 Editar Producto
               </button>
@@ -359,15 +333,13 @@ const EditarProducto = () => {
           ) : null}
           {imageDif > 4 ? (
             <Fragment>
-              <h6 className="alert alert-warning col-6 text-center mx-auto">
-              El numero máximo de imágenes es 4.             
-            </h6>
-            <h5 className="alert alert-warning col-6 text-center mx-auto">
-              Selecciona {imagesSelect} imagen/es para ser borrada/s
-                         
-          </h5>
+              <h6 className="alert alert-success col-6 text-center mx-auto">
+                El numero máximo de imágenes es 4.
+              </h6>
+              <h5 className="alert alert-success col-6 text-center mx-auto">
+                Selecciona las imagenes que quieres sustituir
+              </h5>
             </Fragment>
-            
           ) : null}
         </div>
       </div>

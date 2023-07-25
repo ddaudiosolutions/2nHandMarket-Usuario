@@ -8,16 +8,17 @@ import App from "./App";
 import { Provider } from 'react-redux';
 import store from './app/store';
 import reportWebVitals from "./reportWebVitals";
-//import store from './store';
+
 const Tracking_ID = 'G-LN814BQ9FL'
 ReactGA.initialize(Tracking_ID)
 
-ReactDOM.render( 
+ReactDOM.render(
   <Provider store={store}>
     <App />
-  </Provider>,  
-document.getElementById('root')
+  </Provider>,
+  document.getElementById('root')
 );
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

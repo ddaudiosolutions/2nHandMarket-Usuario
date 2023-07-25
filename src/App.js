@@ -1,36 +1,32 @@
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import Header from "./components/Header";
 // import Bienvenida from "./components/Bienvenida";
-import Productos from "./components/Productos";
-import ProductosUser from "./components/ProductosUser";
-import NuevoProducto from "./components/NuevoProducto";
-import EditarProducto from "./components/EditarProducto";
-import CrearUsuario from "./components/CrearUsuario";
-import Login from "./components/Login";
-import VerProducto from "./components/VerProducto";
-import ProductosAuth from "./components/ProductosAuth";
-import Usuario from "./components/Usuario";
-import EditarUser from "./components/EditarUser";
+import Productos from "./components/Productos/Productos";
+import ProductosUser from "./components/Productos/ProductosUser";
+import NuevoProducto from "./components/Productos/NuevoProducto";
+import EditarProducto from "./components/Productos/EditarProducto";
+import CrearUsuario from "./components/Usuario/CrearUsuario";
+import Login from "./components/Usuario/Login";
+import VerProducto from "./components/Productos/VerProducto";
+import ProductosAuth from "./components/Productos/ProductosAuth";
+import Usuario from "./components/Usuario/Usuario";
+import SolicitarContraseña from "./components/Usuario/SolicitarContraseña";
+import EditarUser from "./components/Usuario/EditarUser";
 import Avatar from "./components/Avatar";
-import NuevoBuscoPost from "./components/NuevoBuscoPost";
-import VerBuscoPost from "./components/VerBuscoPost";
-import EditarBuscoPost from "./components/EditarBuscoPost";
-//import Inicio from './components/Inicio'
-//import { logout } from "./actions/loginActions";
+import NuevoBuscoPost from "./components/Productos/NuevoBuscoPost";
+import VerBuscoPost from "./components/Productos/VerBuscoPost";
+import EditarBuscoPost from "./components/Productos/EditarBuscoPost";
+import Inicio from './components/Inicio'
 import { history } from "./helpers/history";
-//import { clearMessage } from "./actions/message";
+
 
 //Redux
 import { Provider } from "react-redux";
-import store from "./store";
-//import Bienvenida from "./components/Bienvenida";
-
+import store from "./app/store";
 import { Helmet } from "react-helmet";
-import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/Usuario/ResetPassword";
 
-
-
-function App() { 
+function App() {
   return (
     <Router history={history}>
       <Provider store={store}>
@@ -57,14 +53,13 @@ function App() {
         <Header />
         <div className="container">
           <Switch>
-            {/* <Route exact path="/" component={Productos} /> */}
             <Redirect
               exact
               from="/"
               to="productos?busqueda=ultimos_productos&page=0"
             />
+            <Route exact path="/inicio" component={Inicio} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/forgotpassword" component={ForgotPassword} />
             <Route exact path="/productos/nuevo" component={NuevoProducto} />
             <Route exact path="/productos" component={Productos} />
             <Route exact path="/productos/auth/:id" component={ProductosAuth} />
@@ -72,6 +67,8 @@ function App() {
             <Route exact path="/usuarios/editar/:id" component={EditarUser} />
             <Route exact path="/productos/:id" component={VerProducto} />
             <Route exact path="/usuarios/:id" component={Usuario} />
+            <Route exact path="/forgotpassword" component={SolicitarContraseña} />
+            <Route exact path="/forgotpassword/:id" component={ResetPassword} />
             <Route exact path="/usuarios/avatar/:id" component={Avatar} />
             <Route
               exact

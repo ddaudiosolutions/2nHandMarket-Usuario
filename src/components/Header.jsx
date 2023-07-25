@@ -1,56 +1,59 @@
-import { Link,  } from "react-router-dom";
-import { Fragment, useEffect, useState  } from "react";
+import { Link, useHistory, } from "react-router-dom";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { obtenerProductosAction } from "../actions/productoActions";
 import "./Bienvenida.css";
 import jwtDecode from "jwt-decode";
 import { logOutUsuario, obtenerDatosUsuario } from "../slices/usersSlice";
+import { obtenerProductos, obtenerProductosAuthor } from "../slices/productSlice";
+import { obtenerBuscoPostsUserAction } from "../slices/buscoPostSlice";
 
 
-const Header = () => {  
+const Header = () => {
   const dispatch = useDispatch();
   const nombreUser = sessionStorage.getItem("userName");
   const userId = sessionStorage.getItem("userId");
   const userTokenCheck = sessionStorage.getItem('userToken')
   const date = Date.now()
-  
+
   const [nombreUsuario, setNombreUsuario] = useState('')
-  
+  const history = useHistory();
   useEffect(() => {
-    if(!userTokenCheck) {
-      console.log('NO HAY TOKEN') 
+    if (!userTokenCheck) {
+      console.log('NO HAY TOKEN')
       return null
     } else {
-      const {exp} = jwtDecode(userTokenCheck)
-      const expiredToken = (exp * 1000) - 60000      
-      if(expiredToken < date){
+      const { exp } = jwtDecode(userTokenCheck)
+      const expiredToken = (exp * 1000) - 60000
+      if (expiredToken < date) {
         logOut()
       }
       setNombreUsuario(nombreUser)
     }
     // eslint-disable-next-line
-  }, [ nombreUsuario]);
+  }, [nombreUser]);
 
   const logOut = (nombreUser) => {
     dispatch(logOutUsuario(nombreUser));
-    /* sessionStorage.removeItem("userName");
-      sessionStorage.removeItem("email");
-      sessionStorage.removeItem("userToken"); */
-      //window.location = "/productos?busqueda=ultimos_productos&page=0"
   };
 
-  const reload = ()=> {    
-    dispatch(obtenerProductosAction ('ultimos_productos', 0));
-    //window.location = "/productos?busqueda=ultimos_productos&page=0";
+  const reload = () => {
+    dispatch(obtenerProductos('ultimos_productos', 0));
+    window.location = "/productos?busqueda=ultimos_productos&page=0";
   }
-  
+
+  const cargarProductosAuthor = (id) => {
+    dispatch(obtenerProductosAuthor(id))
+    dispatch(obtenerBuscoPostsUserAction(id))
+    history.push(`/productos/auth/${id}`);
+  };
+
   //
   return (
     <nav className="bg-nav  d-flex align-items-end ">
       <div className="container-fluid col ">
         <Link
           to={"/productos?busqueda=ultimos_productos&page=0"}
-          onClick={()=>{reload()}}
+          onClick={reload}
           className="nav-link typeHeader  "
         >
           <img
@@ -63,7 +66,7 @@ const Header = () => {
       </div>
       <div className=" me-4 mb-3">
         {userTokenCheck === null ? (
-          <Fragment>       
+          <Fragment>
             <div className="d-flex ">
               <Link to={"/login"} className="nav-link typeHeader ">
                 Login
@@ -78,7 +81,7 @@ const Header = () => {
         ) : (
           <Fragment>
             <div className="">
-              <div className="container text-center">               
+              <div className="container text-center">
                 <div className="d-flex justify-content-center">
                   <h5 className="typeHeader mt-3 ">
                     Bienvenid@ {nombreUsuario}
@@ -113,8 +116,10 @@ const Header = () => {
                     </li>
                     <li>
                       <Link
-                        to={"/productos/user"}
+
+                        to={`/productos/auth/${userId}`}
                         className="nav-link  typeHeader"
+                        onClick={() => cargarProductosAuthor(userId)}
                       >
                         Mis Productos
                       </Link>
@@ -123,15 +128,15 @@ const Header = () => {
                       <Link
                         to={`/usuarios/${userId}`}
                         className="nav-link typeHeader"
-                        onClick={() => {
-                          dispatch(obtenerDatosUsuario({ userId }));
-                        }}
+                      /* onClick={() => {
+                        dispatch(obtenerDatosUsuario(userId));
+                      }} */
                       >
                         Mi perfil
                       </Link>
-                    </li>                   
-                    <li  type='button' className="nav-link typeHeader" onClick={() => {logOut({nombreUser})}}>                      
-                        LogOut                      
+                    </li>
+                    <li type='button' className="nav-link typeHeader" onClick={() => { logOut({ nombreUser }) }}>
+                      LogOut
                     </li>
                   </ul>
                 </div>

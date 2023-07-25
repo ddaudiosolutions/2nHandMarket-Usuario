@@ -9,3 +9,11 @@
     border: 1px solid ;
     border-radius: 3px;
   }
+
+  .error {
+    display: flex;
+    font-weight: bold;
+    color: rgb(223, 10, 10);
+    flex-flow: row nowrap;
+    justify-content: center;
+  }

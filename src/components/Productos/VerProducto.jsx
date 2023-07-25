@@ -1,74 +1,51 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import "./VerProducto.css";
-import {
-  obtenerProductosActionAuthor,
-  obtenerProductoIdApiAction,
-} from "../actions/productoActions";
-
 import { toDate, format } from "date-fns";
-import {Helmet} from 'react-helmet';
+import { Helmet } from "react-helmet";
+import { cargarProductosAuthor } from "../../helpers/utils";
+import CreatorLink from "../WhatsApp/layout/CreatorLink";
+import SendMessage from "../WhatsApp/SendMessage";
+import Footer from "../WhatsApp/layout/Footer";
 
-const VerProducto = () => { 
+const VerProducto = () => {
+  const producto = useSelector((state) => state.products.productoId);
+  // const productoIdurl = window.location.pathname.split("/")[2];
 
-  const producto = useSelector((state) => state.productos.productoIdApi);
-  console.log(producto);
-
-  const productoIdurl = window.location.pathname.split("/")[2];
-  //console.log(productoIdurl);
-
-  let paginaActual = useSelector((state) => state.productos.paginaActual);
+  let paginaActual = useSelector((state) => state.products.paginaActual);
   if (paginaActual === undefined) {
     paginaActual = 0;
   }
-
+  console.log(producto);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const enviarproductoid = (url) =>
-    //console.log("fetching axios"),
-    dispatch(obtenerProductoIdApiAction(url));
-
-  useEffect(() => {
-    //console.log("useeffect");
-    enviarproductoid(productoIdurl);
-    // eslint-disable-next-line
-  }, []);
-
-  if (producto === null) return null;;
+  if (producto === null) return null;
 
   ///CONVERTIMOS LA FECHA A UN FORMATO COMUN
   const date = new Date(producto.creado);
   const clonedDate = toDate(date);
   const clonedDateFormat = format(clonedDate, "dd-MM-yyyy");
-  
 
   let authorName = producto.author.nombre;
-
-  const cargarProductosAuthor = (producto) => {
-    dispatch(obtenerProductosActionAuthor(producto.author._id));
-   
-    history.push(`/productos/auth/${producto.author._id}`);
-  };
 
   return (
     <Fragment>
       <div>
         <Helmet>
-          {/* <title>Hola Productos</title> */}
-        <meta property="og:type" content="Product" />
-        <meta property="og:title" name="title" content={producto.title} />
-        <meta property="og:image"  name="image"  content={producto.images[0].url} />
-        <meta property="og:description" name="description" content={producto.description} />
+          <meta property="og:type" content="Product" />
+          <meta property="og:title" name="title" content={producto.title} />
+          <meta property="og:image" name="image" content={producto.images[0].url} />
+          <meta property="og:description" name="description" content={producto.description} />
         </Helmet>
-        </div>
+      </div>
       <div className="container col-sm-9 col-md-9 col-lg-7 col-xl-7">
         <div className="cardVerProducto mt-3 ">
           <div
             className="d-flex justify-content-start  mt-3"
             type="button"
-            onClick={() => cargarProductosAuthor(producto)}
+            onClick={() => cargarProductosAuthor(dispatch, history, producto)}
           >
             {producto.author.imagesAvatar[0].url === undefined ? (
               <img
@@ -94,12 +71,7 @@ const VerProducto = () => {
             >
               <div className="carousel-inner">
                 <div className="carousel-item active">
-                  <a
-                    className=" "
-                    href={producto.images[0].url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <a className=" " href={producto.images[0].url} target="_blank" rel="noreferrer">
                     <img
                       src={producto.images[0].url}
                       style={{ height: "25rem" }}
@@ -111,12 +83,7 @@ const VerProducto = () => {
                 </div>
                 {producto.images.slice(1).map((image) => (
                   <div className="carousel-item">
-                    <a
-                      className=" "
-                      href={image.url}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
+                    <a className=" " href={image.url} target="_blank" rel="noreferrer">
                       <img
                         src={image.url}
                         style={{ height: "25rem" }}
@@ -127,7 +94,6 @@ const VerProducto = () => {
                     </a>
                   </div>
                 ))}
-             
               </div>
               <button
                 className="carousel-control-prev"
@@ -135,10 +101,7 @@ const VerProducto = () => {
                 data-bs-target="#carouselExampleControlsNoTouching"
                 data-bs-slide="prev"
               >
-                <span
-                  className="carousel-control-prev-icon"
-                  aria-hidden="true"
-                ></span>
+                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span className="visually-hidden">Previous</span>
               </button>
               <button
@@ -147,42 +110,31 @@ const VerProducto = () => {
                 data-bs-target="#carouselExampleControlsNoTouching"
                 data-bs-slide="next"
               >
-                <span
-                  className="carousel-control-next-icon"
-                  aria-hidden="true"
-                ></span>
+                <span className="carousel-control-next-icon" aria-hidden="true"></span>
                 <span className="visually-hidden">Next</span>
               </button>
             </div>
           </div>
 
           <div className="card-body">
-            <h5 className="card-title titleH5V rounded text-center mt-4">
-              {producto.title}
-            </h5>
+            <h5 className="card-title titleH5V rounded text-center mt-4">{producto.title}</h5>
             <div className=" mb-3 text-center">
               <span className=" price-hp1">Precio: {producto.price} €</span>
             </div>
-            <h5 className="card-title pproductoTitleFecha me-3">
-              {clonedDateFormat}
-            </h5>
+            <h5 className="card-title pproductoTitleFecha me-3">{clonedDateFormat}</h5>
             <div className="card-header mb-2">
-              <p className="card-title pproductoTitle">
-                {producto.description}
-              </p>
+              <p className="card-title pproductoTitle">{producto.description}</p>
             </div>
             <div className="card-header">
-              {/* <span className="card-title  pproductoTitle text-center">Contacto:</span> */}
-
-              <p className="card-title pproductoTitle ">
-                {producto.author.email}
-              </p>
-              {/* <a className="card-title pproductoTitle" href={`https://api.whatsapp.com/send?phone=34${producto.author.telefono}&text=Hola Estoy interesado en tus productos`}>
-                Mi Telefono
-              </a> */}
-              <p className="card-title pproductoTitle ">
+              <p className="card-title pproductoTitle ">{producto.author.email}</p>
+              {/*  <p className="card-title pproductoTitle ">
                 {producto.author.direccion}
-              </p>
+              </p> */}
+
+              <div className="card-title pproductoTitle">
+                <SendMessage phoneNumber={producto.author.telefono} />
+                <Footer />
+              </div>
             </div>
 
             <div className="text-center my-4">

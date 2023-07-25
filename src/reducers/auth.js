@@ -1,4 +1,4 @@
-import {
+/* import {
     REGISTER_SUCCESS,
     REGISTER_FAIL,
     
@@ -13,7 +13,7 @@ import {
     OBTENER_USUARIO_EDITAR,
     OBTENER_AVATAR_EXITO
 
-  } from '../actions/types'
+  } from '../../actions/types'
   
   const user = JSON.parse(localStorage.getItem("userToken"));
   
@@ -103,4 +103,4 @@ import {
         return state;
     }
   }
-  
+   */
