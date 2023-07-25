@@ -48,13 +48,13 @@ const nuevoBuscoPostExito = (dataPost) => ({
   payload: dataPost,
 });
 
-export function obtenerBuscoPostsActions() {
+/* export function obtenerBuscoPostsActions() {
   return async (dispatch) => {
     const getPosts = await clienteAxios.get("/api/buscoposts");    
 
     dispatch(obtenerBusocPostsExito(getPosts.data.obtenerBuscoPost));
   };
-}
+} */
 
 const obtenerBusocPostsExito = (getDataPosts) => ({
   type: OBTENER_BUSCOPOSTS_EXITO,

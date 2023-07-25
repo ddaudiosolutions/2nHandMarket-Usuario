@@ -1,14 +1,25 @@
-/* eslint-disable import/no-anonymous-default-export */
+import clienteAxios from '../config/axios'
 
-//BORRAR LOGIN
-const logout = () => {
-  localStorage.removeItem("userToken");
-  localStorage.removeItem("userName");
-  localStorage.removeItem("userId")
-  window.location = "/";
-  
+const checkAuth = data => {
+  console.log(data)
+  return clienteAxios.post(`auth/`, data);
 };
 
-export default { 
-  logout,
+const resetPassword = email => {
+  console.log(email)
+  return clienteAxios.post('auth/resetPassword', email);
 };
+
+const changePasswordUser = data => {
+  console.log(data)
+  return clienteAxios.post('auth/changePasswordUser', data);
+};
+
+
+const AuthServices = {
+  checkAuth,
+  resetPassword,
+  changePasswordUser
+};
+
+export default AuthServices;

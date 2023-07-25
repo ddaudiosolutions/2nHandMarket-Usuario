@@ -1,4 +1,4 @@
-//import Swal from 'sweetalert2';
+/* //import Swal from 'sweetalert2';
 import {
   LOGIN_SUCCESS,
   // LOGIN_USER_SUCCESS,
@@ -26,7 +26,8 @@ const data = {
   //body: {imagenData},
 };
 
-export function loginUsuarioActions(email, password) { 
+export function loginUsuarioActions(email, password) {
+  console.log(email, password); 
   return async (dispatch) => {
     try {
       const loginUsuario = await clienteAxios.post("/api/auth", {
@@ -140,10 +141,4 @@ const eliminarUsuarioExito = ()=> ({
 
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
-export const logout = () => (dispatch) => {
-  AuthService.logout();
-  dispatch({
-    type: LOGOUT,
-  });
-  
-};
+ */

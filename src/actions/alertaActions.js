@@ -1,4 +1,4 @@
-import{
+/* import{
     MOSTRAR_ALERTA,
     OCULTAR_ALERTA
 } from '../types';
@@ -27,4 +27,4 @@ export function ocultarAlertaAction(){
 const ocultarAlerta = alerta => ( {
     type: OCULTAR_ALERTA,
     payload: alerta  
-  })
+  }) */

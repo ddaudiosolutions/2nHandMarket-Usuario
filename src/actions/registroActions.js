@@ -1,10 +1,10 @@
-import Swal from 'sweetalert2';
+/* import Swal from 'sweetalert2';
 import clienteAxios from '../config/axios'
 import {
     REGISTER_SUCCESS,
     //REGISTER_FAIL,
     
-}from '../types'
+}from '../types' */
 
 //import { SET_MESSAGE } from './types';
 
@@ -12,7 +12,7 @@ import {
 //import { response } from 'express';
 
 
-export function registroActions(nombre, email, password) {
+/* export function registroActions(nombre, email, password) {
   console.log(nombre, email, password)
   return  async (dispatch) => {
     try {
@@ -39,7 +39,7 @@ export function registroActions(nombre, email, password) {
   const registroExito = (registroUsuario) => ({
     type: REGISTER_SUCCESS,
     payload: registroUsuario
-  })
+  }) */
 
 // export const registroActions = (nombre, email, password) => 
 //   (dispatch) =>{

@@ -46,7 +46,7 @@ const initialState = {
 };
 
 export default function productosReducer(state = initialState, action) {
-  switch (action.type) {    
+  /* switch (action.type) {    
     case AGREGAR_PRODUCTO_EXITO:
       return {
         ...state,
@@ -185,5 +185,5 @@ export default function productosReducer(state = initialState, action) {
 
     default:
       return state;
-  }
+  } */
 }

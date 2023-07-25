@@ -1,4 +1,4 @@
-//import Swal from 'sweetalert2';
+/* //import Swal from 'sweetalert2';
 import {    
     LOGIN_SUCCESS,
    // LOGIN_USER_SUCCESS,
@@ -95,4 +95,4 @@ const editarDatosUsuarioExito = (editarDatosUsuario)=>({
     dispatch({
       type: LOGOUT,
     });
-  };
+  }; */
