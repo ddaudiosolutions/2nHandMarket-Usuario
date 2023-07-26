@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import ProductService from "../services/product.service";
-import Swal from "sweetalert2";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import ProductService from '../services/product.service';
+import Swal from 'sweetalert2';
 
 const initialState = {
   productos: [],
@@ -11,7 +11,7 @@ const initialState = {
 };
 
 export const obtenerProductos = createAsyncThunk(
-  "getProducts / GET",
+  'getProducts / GET',
   async (pageAndData, { rejectedWithValue }) => {
     try {
       const products = await ProductService.obtenerCategoriaActions(pageAndData);
@@ -23,7 +23,7 @@ export const obtenerProductos = createAsyncThunk(
 );
 
 export const crearNuevoProducto = createAsyncThunk(
-  "newProduct / POST",
+  'newProduct / POST',
   async (productData, { rejectedWithValue }) => {
     try {
       const products = await ProductService.crearNuevoProductoAction(productData);
@@ -35,7 +35,7 @@ export const crearNuevoProducto = createAsyncThunk(
 );
 
 export const obtenerProductosUser = createAsyncThunk(
-  "getProductsUser / GET",
+  'getProductsUser / GET',
   async (pageNuser, { rejectedWithValue }) => {
     try {
       const products = await ProductService.obtenerProductosUser(pageNuser);
@@ -47,7 +47,7 @@ export const obtenerProductosUser = createAsyncThunk(
 );
 
 export const obtenerProductoIdApi = createAsyncThunk(
-  "getProductsId / GET",
+  'getProductsId / GET',
   async (productoid, { rejectedWithValue }) => {
     console.log(productoid);
     try {
@@ -61,7 +61,7 @@ export const obtenerProductoIdApi = createAsyncThunk(
 );
 
 export const obtenerProductosAuthor = createAsyncThunk(
-  "getAuthorProducts / GET",
+  'getAuthorProducts / GET',
   async (authorId, { rejectedWithValue }) => {
     console.log(authorId);
     try {
@@ -75,7 +75,7 @@ export const obtenerProductosAuthor = createAsyncThunk(
 );
 
 export const editarProducto = createAsyncThunk(
-  "editProduct / PUT",
+  'editProduct / PUT',
   async (productData, { rejectedWithValue }) => {
     console.log(productData);
     try {
@@ -89,7 +89,7 @@ export const editarProducto = createAsyncThunk(
 );
 
 export const borrarProducto = createAsyncThunk(
-  "deleteProduct / DELETE",
+  'deleteProduct / DELETE',
   async (id, { rejectedWithValue }) => {
     try {
       const products = await ProductService.borrarProducto(id);
@@ -101,7 +101,7 @@ export const borrarProducto = createAsyncThunk(
 );
 
 const productsSlices = createSlice({
-  name: "products",
+  name: 'products',
   initialState,
   reducers: {
     setProductId: (state, action) => {
@@ -116,12 +116,12 @@ const productsSlices = createSlice({
       return action.payload.data;
     });
     builder.addCase(crearNuevoProducto.pending, (state, action) => {
-      Swal.fire("Subiendo Producto");
+      Swal.fire('Subiendo Producto');
       Swal.showLoading();
     });
     builder.addCase(crearNuevoProducto.fulfilled, (state, action) => {
-      Swal.fire("Correcto", "PRODUCTO CREADO CON EXITO", "success").then(function () {
-        window.location = "/";
+      Swal.fire('Correcto', 'PRODUCTO CREADO CON EXITO', 'success').then(function () {
+        window.location = '/';
       });
     });
     builder.addCase(obtenerProductosUser.fulfilled, (state, action) => {
@@ -131,15 +131,15 @@ const productsSlices = createSlice({
       state.productsAuth = action.payload.data.prodAuth;
     });
     builder.addCase(borrarProducto.fulfilled, (state, action) => {
-      Swal.fire("Correcto", "PRODUCTO ELIMINADO CON EXITO", "success");
+      Swal.fire('Correcto', 'PRODUCTO ELIMINADO CON EXITO', 'success');
     });
     builder.addCase(editarProducto.pending, (state, action) => {
-      Swal.fire("Subiendo Producto Editado");
+      Swal.fire('Subiendo Producto Editado');
       Swal.showLoading();
     });
     builder.addCase(editarProducto.fulfilled, (state, action) => {
       if (action.payload.status === 200) {
-        Swal.fire("Correcto", "Producto Editado con Exito", "success").then(function () {
+        Swal.fire('Correcto', 'Producto Editado con Exito', 'success').then(function () {
           window.location = `/`;
         });
       }

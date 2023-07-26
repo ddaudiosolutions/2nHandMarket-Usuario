@@ -8,11 +8,11 @@ const reducer = {
   users: userReducer,
   products: productsReducer,
   buscoPosts: buscoPostsReducer,
-  auth: authReducer
-}
+  auth: authReducer,
+};
 
 const store = configureStore({
-  reducer: reducer,
+  reducer,
   devTools: true,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -20,4 +20,4 @@ const store = configureStore({
     }),
 });
 
-export default store
+export default store;

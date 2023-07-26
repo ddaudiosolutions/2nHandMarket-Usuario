@@ -1,64 +1,54 @@
-import clienteAxios from "../config/axios";
+import clienteAxios from '../config/axios';
 
-
-const user = sessionStorage.getItem("userToken");
+const user = sessionStorage.getItem('userToken');
 const data = {
   headers: {
-    "x-auth-token": user,
+    'x-auth-token': user,
   },
-  //body: {imagenData},
+  // body: {imagenData},
 };
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//CREAR NUEVOS PRODUCTOS
+/// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CREAR NUEVOS PRODUCTOS
 const crearNuevoProductoAction = (producto, history) => {
-  return clienteAxios.post("productos/newproduct", producto, data);
-}
+  return clienteAxios.post('productos/newproduct', producto, data);
+};
 
-
-//FUNCION QUE DESCARGA LOS PRODUCTOS DE LA BBDD
+// FUNCION QUE DESCARGA LOS PRODUCTOS DE LA BBDD
 const obtenerCategoriaActions = (pageAndData) => {
-  console.log(pageAndData)
+  console.log(pageAndData);
   const { busquedaquery, pagequery } = pageAndData;
-  return clienteAxios.get(`productos?busqueda=${busquedaquery}&page=${pagequery}`, data)
-}
+  return clienteAxios.get(`productos?busqueda=${busquedaquery}&page=${pagequery}`, data);
+};
 
-
-//DESCARGAR PRODUCTOS USUARIO
+// DESCARGAR PRODUCTOS USUARIO
 
 const obtenerProductosUser = (pageNuser) => {
-  return clienteAxios.get(`productos/user?=${pageNuser}`, data)
-}
+  return clienteAxios.get(`productos/user?=${pageNuser}`, data);
+};
 
 const obtenerProductoIdApi = (productoid) => {
-  return clienteAxios.get(`productos/${productoid}`)
-}
+  return clienteAxios.get(`productos/${productoid}`);
+};
 
-
-//SELECCIONAR Y ELIMINAR PRODUCTO
+// SELECCIONAR Y ELIMINAR PRODUCTO
 const borrarProducto = (id) => {
-  return clienteAxios.delete(`productos/user/${id}`, data)
-}
+  return clienteAxios.delete(`productos/user/${id}`, data);
+};
 
-
-//////////////////////////////////////////////////
-//EDITAR EL PRODUCTO /////
+/// ///////////////////////////////////////////////
+// EDITAR EL PRODUCTO /////
 const editarProducto = (productData) => {
-  const { formData, id } = productData
-  return clienteAxios.put(
-    `productos/user/editar/${id}`, formData, data);
-}
+  const { formData, id } = productData;
+  return clienteAxios.put(`productos/user/editar/${id}`, formData, data);
+};
 
-
-///////////////////////
+/// ////////////////////
 // DESCARGAR TODOS LOS PRODUCTOS DE UN USUARIO
-/////////
+/// //////
 const obtenerProductosAuthor = (authorId) => {
   return clienteAxios.get(`productos/auth/${authorId}`);
-}
-
-
+};
 
 const ProducServices = {
   obtenerCategoriaActions,
@@ -67,7 +57,7 @@ const ProducServices = {
   obtenerProductosUser,
   borrarProducto,
   crearNuevoProductoAction,
-  editarProducto
-}
+  editarProducto,
+};
 
 export default ProducServices;

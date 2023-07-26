@@ -1,70 +1,67 @@
-import clienteAxios from "../config/axios";
+import clienteAxios from '../config/axios';
 
-
-const user = sessionStorage.getItem("userToken");
+const user = sessionStorage.getItem('userToken');
 console.log(user);
 let data = {
   headers: {
-    "x-auth-token": user,
+    'x-auth-token': user,
   },
-  //body: {imagenData},
+  // body: {imagenData},
 };
-
 
 const registroUsuario = (newUserData) => {
   const { nombre, email, password } = newUserData;
-  return clienteAxios.post('usuarios/newuser', { nombre, email, password, });
-}
+  return clienteAxios.post('usuarios/newuser', { nombre, email, password });
+};
 
 /* const confirmarCuenta = (id) => {    
   return clienteAxios.post(`usuarios/confirmarcuenta/${id}`);
 } */
 
 const loginUsuarioActions = (userData) => {
-  return clienteAxios.post('auth', userData, data)
-}
+  return clienteAxios.post('auth', userData, data);
+};
 
-//CARGAR DATOS DE USUARIO DESDE LA BB DE DATOS
+// CARGAR DATOS DE USUARIO DESDE LA BB DE DATOS
 const obtenerDatosUsuario = (userId) => {
   console.log(userId);
-  console.log(user)
+  console.log(user);
   if (user === null) {
     data = {
       headers: {
-        "x-auth-token": sessionStorage.getItem('userToken'),
+        'x-auth-token': sessionStorage.getItem('userToken'),
       },
-      //body: {imagenData},
+      // body: {imagenData},
     };
   }
-  return clienteAxios.get(`usuarios/${userId}`, data)
-}
+  return clienteAxios.get(`usuarios/${userId}`, data);
+};
 
-//EDITAR USUARIO
+// EDITAR USUARIO
 const editarUsuario = (userData) => {
   console.log(userData.formData);
   console.log(userData.id);
-  return clienteAxios.put(`usuarios/editar/${userData.id}`, userData.formData, data)
-}
+  return clienteAxios.put(`usuarios/editar/${userData.id}`, userData.formData, data);
+};
 
-//ELIMINAR USUARIO
+// ELIMINAR USUARIO
 const eliminarUsuario = (id) => {
-  return clienteAxios.delete(`usuarios/${id}`, data)
-}
+  return clienteAxios.delete(`usuarios/${id}`, data);
+};
 
-// LOG-OUT USUARIO  
+// LOG-OUT USUARIO
 const logoutUsuario = (nombreUser) => {
-  console.log(nombreUser)
+  console.log(nombreUser);
   return true;
-}
+};
 
 const UsersService = {
-
   obtenerDatosUsuario,
   editarUsuario,
   eliminarUsuario,
   registroUsuario,
   logoutUsuario,
-  loginUsuarioActions
-}
+  loginUsuarioActions,
+};
 
 export default UsersService;

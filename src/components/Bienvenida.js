@@ -1,14 +1,11 @@
-import { Fragment } from "react";
-import { Link, Redirect } from "react-router-dom";
-
-//import "./Bienvenida.css";
-
+import { Fragment } from 'react';
+import { Redirect } from 'react-router-dom';
 
 const Bienvenida = () => {
   return (
     <Fragment>
-      <div className="row ">
-        <Redirect to='/productos?busqueda=ultimos_productos&page=0' >  </Redirect>
+      <div className='row '>
+        <Redirect to='/productos?busqueda=ultimos_productos&page=0'> </Redirect>
       </div>
     </Fragment>
   );
