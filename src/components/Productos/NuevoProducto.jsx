@@ -206,7 +206,7 @@ const NuevoProducto = () => {
                     ></input>
                   </div>
                 </div>
-                <pre>{JSON.stringify(values, 0, 2)}</pre>
+                {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
                 <div className='mb-3 mt-3 text-center'>
                   <button
                     className='btn btn-outline-warning'

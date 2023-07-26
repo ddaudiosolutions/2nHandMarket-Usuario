@@ -84,7 +84,7 @@ const CrearUsuario = () => {
                       type='password'
                     />
                   </div>
-                  <pre className='bg-success'>{JSON.stringify(values, 0, 2)}</pre>
+                  {/* <pre className='bg-success'>{JSON.stringify(values, 0, 2)}</pre> */}
                   <div className='form-group text-center'>
                     <button className='btn btn-outline-info btn-block '>Registrarse</button>
                   </div>
