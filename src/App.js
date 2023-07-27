@@ -24,12 +24,13 @@ import { Provider } from 'react-redux';
 import store from './app/store';
 import { Helmet } from 'react-helmet';
 import ResetPassword from './components/Usuario/ResetPassword';
+import './App.css';
 
 function App() {
   return (
     <Router history={history}>
       <Provider store={store}>
-        <div className='App'>
+        <div className='container'>
           <Helmet>
             <meta property='og:type' content='Website' />
             <meta property='og:title' name='title' content='WindyMarket' />

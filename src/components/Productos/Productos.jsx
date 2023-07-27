@@ -9,6 +9,7 @@ import './Producto.css';
 import { obtenerProductos } from '../../slices/productSlice';
 import { obtenerBuscoPosts } from '../../slices/buscoPostSlice';
 import { obtenerDatosUsuario } from '../../slices/usersSlice';
+import IconoBusqueda from './iconos/IconoBusqueda';
 
 const Productos = () => {
   // const history = useHistory();
@@ -26,12 +27,17 @@ const Productos = () => {
   const pagequery = params.get('page');
 
   const dispatch = useDispatch();
-
   const cargarProductos = () => dispatch(obtenerProductos({ busquedaquery, pagequery }));
   const cargarBuscoPosts = () => dispatch(obtenerBuscoPosts());
-
   const userData = useSelector((state) => state.users.user);
-
+  const typeProducts = [
+    'ultimos_productos',
+    'tablas',
+    'velas',
+    'botavaras',
+    'mastiles',
+    'accesorios',
+  ];
   useEffect(() => {
     if (userData === undefined) {
       console.log('cargando usuario');
@@ -49,10 +55,19 @@ const Productos = () => {
           <div className='bg-form col-12 justify-content-center mx-auto rounded mb-3 mt-2'>
             <div className='mb-3 col-9 mx-auto bg-form mt-4'>
               <div className='col col-lg-9 mx-auto'>
-                <h2 className='text-center'>¿Qué buscas hoy?</h2>
+                <h2 className='text-center mb-5'> Compra y vende material para Navegar </h2>
               </div>
-              <div className='col col-md-9 col-lg-9 mx-auto bg-form mt-5 '>
+              {/* <div className='col col-md-9 col-lg-9 mx-auto bg-form mt-5 '>
                 <FormBusqueda busquedaquery={busquedaquery} />
+              </div> */}
+              <div>
+                <div className='row'>
+                  {typeProducts.map((typeProduct) => (
+                    <div className='col-md' key={typeProduct}>
+                      <IconoBusqueda typeProduct={typeProduct} />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -81,7 +96,7 @@ const Productos = () => {
                 <div className='bg-form col-9 justify-content-center mx-auto rounded mb-3 mt-2'>
                   <div className=' bg-form text-center mb-3 p-4 rounded'>
                     <div className='col col-lg-9 mx-auto'>
-                      <h2 className=' '>Pide lo que Quieras Encontrar</h2>
+                      <h4 className=' '>Pide lo que Quieras Encontrar</h4>
                     </div>
                   </div>
                 </div>

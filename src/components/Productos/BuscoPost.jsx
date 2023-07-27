@@ -18,7 +18,7 @@ const BuscoPost = ({ buscoPost }) => {
 
   return (
     <Fragment>
-      <div className='col'>
+      <div className='col' style={{ width: '212px', height: '284px' }}>
         <div
           className='card shadow-sm me-1 ms-1 '
           type='button'
