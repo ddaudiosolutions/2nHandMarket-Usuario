@@ -1,4 +1,4 @@
-// se utilizan el en action y en el reducer
+/* // se utilizan el en action y en el reducer
 //* AYUDAN A DESCRIBIR LO QUE PASA EN LA APP
 
 export const AGREGAR_PRODUCTO = 'AGREGAR_PRODUCTO';
@@ -56,3 +56,4 @@ export const BORRAR_BUSCOPOST_USER_EXITO = 'BORRAR_BUSCOPOST_USER_EXITO';
 export const OBTENER_BUSCOPOST_ELIMINAR = 'OBTENER_BUSCOPOST_ELIMINAR';
 export const OBTENER_BUSCOPOST_EDITAR_EXITO = 'OBTENER_BUSCOPOST_EDITAR_EXITO';
 export const BUSCOPOST_EDITADO_EXITO = 'BUSCOPOST_EDITADO_EXITO';
+ */
