@@ -1,6 +1,6 @@
-.pproductoTitle {
+.verPostTitle {
   font-family: Saira;
-  font-weight: 400;
+  font-weight: 200;
   font-size: 1.1rem;
 }
 
@@ -39,10 +39,10 @@
 }
 .titleH5V {
   overflow: hidden;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 1.8rem;
   /* font-size: 0.5vw; */
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-family: Saira;
 }
 

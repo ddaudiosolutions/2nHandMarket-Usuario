@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import './VerProducto.css';
@@ -7,16 +7,25 @@ import { Helmet } from 'react-helmet';
 import { cargarProductosAuthor } from '../../helpers/utils';
 import SendMessage from '../WhatsApp/SendMessage';
 import Footer from '../WhatsApp/layout/Footer';
+import { BsHeart, BsHeartFill } from 'react-icons/bs';
+import { addFavoriteProduct, removeFavoriteProduct } from '../../slices/usersSlice';
+import _ from 'lodash';
+import { getFavoriteProducts } from '../../slices/favoriteProductsSlice';
 
 const VerProducto = () => {
   const producto = useSelector((state) => state.products.productoId);
-  // const productoIdurl = window.location.pathname.split("/")[2];
-
+  const productoFavoritos =
+    sessionStorage.getItem('userId') !== null
+      ? useSelector((state) => state.users.user.favoritos)
+      : null;
   let paginaActual = useSelector((state) => state.products.paginaActual);
   if (paginaActual === undefined) {
     paginaActual = 0;
   }
-  console.log(producto);
+  const existe = (productoFavoritos, producto) => {
+    return _.includes(productoFavoritos, producto);
+  };
+
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -26,8 +35,34 @@ const VerProducto = () => {
   const date = new Date(producto.creado);
   const clonedDate = toDate(date);
   const clonedDateFormat = format(clonedDate, 'dd-MM-yyyy');
-
   const authorName = producto.author.nombre;
+
+  const [favorite, setFavorite] = useState(existe(productoFavoritos, producto._id));
+  // funcion para cambiar el estado de verdadero a falso al pulsar el boton favoritos
+  const handleFavorite = () => {
+    setFavorite(!favorite);
+    if (favorite) {
+      dispatch(
+        removeFavoriteProduct({
+          productId: producto._id,
+          userId: sessionStorage.getItem('userId'),
+        })
+      ).then((res) => {
+        if (res.payload.status === 200) {
+          dispatch(getFavoriteProducts(res.payload.data.user.favoritos));
+        }
+      });
+    } else if (favorite === false) {
+      dispatch(
+        addFavoriteProduct({ productId: producto._id, userId: sessionStorage.getItem('userId') })
+      ).then((res) => {
+        if (res.payload.status === 200) {
+          dispatch(getFavoriteProducts(res.payload.data.user.favoritos));
+        }
+      });
+    }
+  };
+  useEffect(() => {});
 
   return (
     <Fragment>
@@ -116,20 +151,40 @@ const VerProducto = () => {
           </div>
 
           <div className='card-body'>
-            <h5 className='card-title titleH5V rounded text-center mt-4'>{producto.title}</h5>
-            <div className=' mb-3 text-center'>
-              <span className=' price-hp1'>Precio: {producto.price} €</span>
+            <h4 className=' price-hp1'>Precio: {producto.price} €</h4>
+            <h5 className='card-title titleH5V rounded mt-1'>{producto.title}</h5>
+            <div className='container'>
+              <div className='row justify-content-end'>
+                <div className='col-3 align-self-end pproductoTitleFecha '>{clonedDateFormat}</div>
+                {sessionStorage.getItem('userId') !== null &&
+                  (favorite ? (
+                    <BsHeartFill
+                      className='col-1 align-self-end  mb-1 rounded'
+                      style={{ color: 'red' }}
+                      onClick={() => {
+                        handleFavorite();
+                      }}
+                    />
+                  ) : (
+                    <BsHeart
+                      className='col-1 align-self-end  mb-1 rounded'
+                      style={{ color: 'black' }}
+                      onClick={() => {
+                        handleFavorite();
+                      }}
+                    />
+                  ))}
+              </div>
             </div>
-            <h5 className='card-title pproductoTitleFecha me-3'>{clonedDateFormat}</h5>
             <div className='card-header mb-2'>
               <p className='card-title pproductoTitle'>{producto.description}</p>
             </div>
             <div className='card-header'>
-              <p className='card-title pproductoTitle '>{producto.author.email}</p>
-              {/*  <p className="card-title pproductoTitle ">
-                {producto.author.direccion}
-              </p> */}
-
+              <div className='row'>
+                <h4 className='align-self-start card-title pproductoTitle col-7'>
+                  E-mail: {producto.author.email}
+                </h4>
+              </div>
               <div className='card-title pproductoTitle'>
                 <SendMessage phoneNumber={producto.author.telefono} />
                 <Footer />

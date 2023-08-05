@@ -8,7 +8,10 @@ body {
 
 h2,
 h4,
-h6 {
+h5,
+h6,
+h7,
+h8 {
   font-family: Saira Stencil One;
   color: rgb(56, 217, 223);
 }
@@ -41,26 +44,31 @@ h6 {
   border-radius: 15px;
   max-width: 100% !important;
   max-height: 100% !important;
-  background-color: rgb(223, 15, 15);
+  background-color: rgb(0, 0, 0);
 }
 
 .form-select {
   font-size: 1.3rem;
   font-family: Saira;
 }
-.excerpt {
-  height: 20px;
-  /* width: 300px; */
-  white-space: nowrap;
+
+.prodPreDescription {
+  font-family: Saira;
+  font-weight: 200;
   text-overflow: ellipsis;
   overflow: hidden;
+  white-space: nowrap;
+  line-height: 1.15;
+  font-size: 0.8rem;
 }
-.titleH5 {
+
+.titleH5-product {
   overflow: hidden;
-  font-weight: 500;
-  font-size: 1.1rem;
-  /* font-size: 0.5vw; */
-  text-transform: capitalize;
+  font-weight: 400;
+  font-size: 1rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   font-family: Saira;
 }
 
@@ -211,14 +219,10 @@ h6 {
   letter-spacing: 0.03rem;
 }
 
-.price-hp {
+.product-price {
   font-family: Saira;
-  font-weight: 400;
-  /* text-align: center; */
-  font-size: 1.1rem;
-  letter-spacing: 0.04rem;
-
-  color: #e02b20;
+  color: black;
+  font-size: 1rem;
 }
 
 .btn-select {

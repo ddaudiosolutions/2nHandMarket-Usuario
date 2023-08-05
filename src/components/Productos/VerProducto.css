@@ -1,6 +1,6 @@
 .pproductoTitle {
   font-family: Saira;
-  font-weight: 400;
+  font-weight: 200;
   font-size: 1.1rem;
 }
 
@@ -39,10 +39,10 @@
 }
 .titleH5V {
   overflow: hidden;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 1.8rem;
   /* font-size: 0.5vw; */
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-family: Saira;
 }
 
@@ -83,6 +83,6 @@
   font-family: Saira;
   /* text-align: center; */
   font-size: 1.6rem;
-  font-weight: 400;
-  color: rgb(197, 27, 27);
+  font-weight: 600;
+  color: rgb(5, 5, 5);
 }

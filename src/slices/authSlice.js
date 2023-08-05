@@ -4,29 +4,6 @@ import Swal from 'sweetalert2';
 
 const initialState = [];
 
-/* export const loginUser = createAsyncThunk(
-  "user/login",
-  async (userData) => {
-    const res = await AuthServices.checkAuth(userData);
-    console.log(res)
-    if (res.data) {
-      localStorage.setItem("userName", JSON.stringify(res.data.userName));
-      localStorage.setItem("email", JSON.stringify(res.data.email));
-      localStorage.setItem("userToken", JSON.stringify(res.data.accessToken));
-    }
-    return res
-  }
-);
-
-export const logOutUser = createAsyncThunk(
-  "user/logOut",
-  async () => {
-    const res = await AuthServices.logOutUser();
-    console.log(res)
-    return res
-  }
-); */
-
 export const resetPassword = createAsyncThunk(
   'user/reset-password',
   async (email, { rejectedWithValue }) => {

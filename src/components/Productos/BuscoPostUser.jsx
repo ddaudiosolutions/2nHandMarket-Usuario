@@ -59,7 +59,7 @@ const BuscoPostUser = ({ postUser }) => {
             <img src='/SE_BUSCA_LOGO.png' className='card-img-top-post' alt='SE_BUSCA_IMG'></img>
 
             <div className='card-body'>
-              <h5 className='titleH5 card-title text-center'>{title}</h5>
+              <h5 className='titleH5-post card-title text-center'>{title}</h5>
             </div>
           </div>
         </div>

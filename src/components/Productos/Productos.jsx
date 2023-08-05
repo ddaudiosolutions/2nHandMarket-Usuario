@@ -10,6 +10,7 @@ import { obtenerProductos } from '../../slices/productSlice';
 import { obtenerBuscoPosts } from '../../slices/buscoPostSlice';
 import { obtenerDatosUsuario } from '../../slices/usersSlice';
 import IconoBusqueda from './iconos/IconoBusqueda';
+import { getFavoriteProducts } from '../../slices/favoriteProductsSlice';
 
 const Productos = () => {
   // const history = useHistory();
@@ -40,8 +41,12 @@ const Productos = () => {
   ];
   useEffect(() => {
     if (userData === undefined) {
-      console.log('cargando usuario');
-      dispatch(obtenerDatosUsuario(sessionStorage.getItem('userId')));
+      dispatch(obtenerDatosUsuario(sessionStorage.getItem('userId'))).then((res) => {
+        if (res.payload.status === 200) {
+          /*  res.payload.data.favoritos !== undefined && */
+          dispatch(getFavoriteProducts(res.payload.data.favoritos));
+        }
+      });
     }
     cargarBuscoPosts();
     cargarProductos(busquedaquery, pagequery);

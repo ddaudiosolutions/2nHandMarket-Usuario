@@ -55,9 +55,9 @@ const ProductoUser = ({ producto }) => {
         >
           <img src={images[0].url} className='card-img-top ' alt={images[0].filename}></img>
           <div className='card-body '>
-            <h5 className='excerpt titleH5 card-title'>{title}</h5>
-            <h5 className='price-hp m-1 mb-1'>{price}€</h5>
-            <div className='excerpt pproductoTitle m-1 mb-1' rows='1'>
+            <h5 className='titleH5-product  card-title'>{title}</h5>
+            <h5 className='product-price m-1 mb-1'>{price}€</h5>
+            <div className='pproductoTitle m-1 mb-1' rows='1'>
               {description}
             </div>
           </div>

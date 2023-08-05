@@ -56,7 +56,7 @@ const VerBuscoPost = () => {
             <h5 className='card-title titleH5V rounded text-center mt-4'>{post.title}</h5>
             <h5 className='card-title pproductoTitleFecha me-3'>{clonedDateFormat}</h5>
             <div className='card-header mb-2'>
-              <p className='card-title pproductoTitle'>{post.description}</p>
+              <p className='card-title verPostTitle'>{post.description}</p>
             </div>
             <div className='card-header'>
               <SendMessage phoneNumber={post.author.telefono} />

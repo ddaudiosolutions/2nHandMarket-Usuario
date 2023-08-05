@@ -1,42 +1,99 @@
-import { Fragment } from 'react';
-import './Producto.css';
+import { Fragment, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setProductId } from '../../slices/productSlice';
+import { BsHeart, BsHeartFill } from 'react-icons/bs';
+import { addFavoriteProduct, removeFavoriteProduct } from '../../slices/usersSlice';
+import _ from 'lodash';
+import { getFavoriteProducts } from '../../slices/favoriteProductsSlice';
+import './Producto.css';
 
 const Producto = ({ producto }) => {
   const { title, price, images, description } = producto;
-  console.log(producto);
+  const productoFavoritos =
+    sessionStorage.getItem('userId') !== null
+      ? useSelector((state) => state.users.user.favoritos)
+      : null;
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const existe = (productoFavoritos, producto) => {
+    return _.includes(productoFavoritos, producto);
+  };
   const verProductoId = (producto) => {
-    console.log(producto);
     dispatch(setProductId(producto));
     history.push(`/productos/${producto._id}`);
   };
-  const firsImage = images[0].url
+
+  const [favorite, setFavorite] = useState(existe(productoFavoritos, producto._id));
+  // funcion para cambiar el estado de verdadero a falso al pulsar el boton favoritos
+  const handleFavorite = () => {
+    setFavorite(!favorite);
+    if (favorite) {
+      dispatch(
+        removeFavoriteProduct({
+          productId: producto._id,
+          userId: sessionStorage.getItem('userId'),
+        })
+      ).then((res) => {
+        if (res.payload.status === 200) {
+          dispatch(getFavoriteProducts(res.payload.data.user.favoritos));
+        }
+      });
+    } else if (favorite === false) {
+      dispatch(
+        addFavoriteProduct({ productId: producto._id, userId: sessionStorage.getItem('userId') })
+      ).then((res) => {
+        if (res.payload.status === 200) {
+          dispatch(getFavoriteProducts(res.payload.data.user.favoritos));
+        }
+      });
+    }
+  };
+
+  const firstImage = images[0].url
     ? images[0].url
     : 'https://res.cloudinary.com/dhe1gcno9/image/upload/v1645218203/ProductosMarketV2/AvataresUsuarios/LOGO_CIRCULAR_FONDO_BLANCO_cvhmuo.png';
-  const firsFilename = images[0].filename ? images[0].filename : 'WindyMarket';
+  const firstFilename = images[0].filename ? images[0].filename : 'WindyMarket';
 
   return (
     <Fragment>
-      <div className='col' style={{ width: '212px', height: '284px' }}>
+      <div className='col' style={{ width: '212px', height: '289px' }}>
         <div
           className='card me-1 ms-1 border-light'
           type='button'
           onClick={() => verProductoId(producto)}
         >
           <div className=''>
-            <img src={firsImage} className='card-img-top' alt={firsFilename}></img>
+            <img src={firstImage} className='card-img-top' alt={firstFilename}></img>
           </div>
-          <div className='card-body'>
-            <h5 className='excerpt titleH5 card-title m-1'>{title}</h5>
-            <h5 className='price-hp m-1 mb-3'>{price}€</h5>
-            <div className='excerpt pproductoTitle m-1 mb-3' rows='1'>
-              {description}
+        </div>
+        <div className='card-body'>
+          <div className='container'>
+            <div className='row'>
+              <h5 className='col product-price m-1'>{price}€</h5>
+              {sessionStorage.getItem('userId') !== null &&
+                (favorite ? (
+                  <BsHeartFill
+                    className='col-2 mt-1'
+                    style={{ color: 'red', paddingRight: '5px' }}
+                    onClick={() => {
+                      handleFavorite();
+                    }}
+                  />
+                ) : (
+                  <BsHeart
+                    className='col-2 mt-1'
+                    style={{ color: 'black', paddingRight: '5px' }}
+                    onClick={() => {
+                      handleFavorite();
+                    }}
+                  />
+                ))}
             </div>
+          </div>
+          <h5 className='titleH5-product  card-title m-1'>{title}</h5>
+          <div className='prodPreDescription m-1 mb-3' rows='2'>
+            {description}
           </div>
         </div>
       </div>
