@@ -7,7 +7,9 @@ const Inicio = () => {
   if (sessionStorage.getItem('userToken')) {
     console.log('pillando token');
     dispatch(obtenerDatosUsuario(sessionStorage.getItem('userId'))).then((res) => {
-      if (res.payload.status === 200) window.location = '/';
+      if (res.payload.status === 200) {
+        window.location = '/';
+      }
     });
   }
   return <Redirect to='productos?busqueda=ultimos_productos&page=0'></Redirect>;

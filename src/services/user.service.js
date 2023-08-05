@@ -55,6 +55,24 @@ const logoutUsuario = (nombreUser) => {
   return true;
 };
 
+/// AÑADIR PRODUCTO A FAVORITOS
+const addFavoriteProduct = (productData) => {
+  console.log(productData);
+  return clienteAxios.post('favoriteProducts/addFavorite', productData, data);
+};
+
+/// BORRAR PRODUCTO DE FAVORITOS DE UN USUARIO
+const removeFavorite = (productId) => {
+  console.log(productId);
+  return clienteAxios.post('favoriteProducts/removeFavorite', productId, data);
+};
+
+/// OBTENER LOS PRODUCTOS DE FAVORITOS DE UN USUARIO
+const getFavoriteProducts = (favoriteProductsId) => {
+  console.log(favoriteProductsId);
+  return clienteAxios.post('favoriteProducts/getFavorite', favoriteProductsId, data);
+};
+
 const UsersService = {
   obtenerDatosUsuario,
   editarUsuario,
@@ -62,6 +80,9 @@ const UsersService = {
   registroUsuario,
   logoutUsuario,
   loginUsuarioActions,
+  addFavoriteProduct,
+  removeFavorite,
+  getFavoriteProducts,
 };
 
 export default UsersService;

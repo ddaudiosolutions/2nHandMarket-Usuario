@@ -43,13 +43,7 @@ h2 {
   font-size: 1.3rem;
   font-family: Saira;
 }
-.excerpt {
-  height: 20px;
-  /* width: 300px; */
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
+
 .titleH5-post {
   overflow: hidden;
   font-weight: 600;
@@ -204,16 +198,6 @@ h2 {
   font-family: Saira;
   font-weight: 400;
   letter-spacing: 0.03rem;
-}
-
-.price-hp {
-  font-family: Saira;
-  font-weight: 400;
-  /* text-align: center; */
-  font-size: 1.1rem;
-  letter-spacing: 0.04rem;
-
-  color: #e02b20;
 }
 
 .btn-select {

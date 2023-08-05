@@ -115,13 +115,12 @@ const Header = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        to={`/usuarios/${userId}`}
-                        className='nav-link typeHeader'
-                        /* onClick={() => {
-                        dispatch(obtenerDatosUsuario(userId));
-                      }} */
-                      >
+                      <Link to={`/productos/favoritos/`} className='nav-link  typeHeader'>
+                        Favoritos
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={`/usuarios/${userId}`} className='nav-link typeHeader'>
                         Mi perfil
                       </Link>
                     </li>

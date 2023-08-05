@@ -17,6 +17,7 @@ import NuevoBuscoPost from './components/Productos/NuevoBuscoPost';
 import VerBuscoPost from './components/Productos/VerBuscoPost';
 import EditarBuscoPost from './components/Productos/EditarBuscoPost';
 import Inicio from './components/Inicio';
+import FavoriteProducts from './components/Productos/productosFavoritos/FavoriteProducts';
 import { history } from './helpers/history';
 
 // Redux
@@ -57,6 +58,7 @@ function App() {
             <Route exact path='/productos' component={Productos} />
             <Route exact path='/productos/auth/:id' component={ProductosAuth} />
             <Route exact path='/productos/user' component={ProductosUser} />
+            <Route exact path='/productos/favoritos' component={FavoriteProducts} />
             <Route exact path='/usuarios/editar/:id' component={EditarUser} />
             <Route exact path='/productos/:id' component={VerProducto} />
             <Route exact path='/usuarios/:id' component={Usuario} />

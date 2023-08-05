@@ -84,6 +84,32 @@ export const eliminarUsuario = createAsyncThunk(
   }
 );
 
+export const addFavoriteProduct = createAsyncThunk(
+  'addFavoriteProduct / POST',
+  async (favoriteProductData, { rejectedWithValue }) => {
+    console.log(favoriteProductData);
+    try {
+      const addFavoriteProduct = await UsersService.addFavoriteProduct(favoriteProductData);
+      return addFavoriteProduct;
+    } catch (error) {
+      throw rejectedWithValue(error.message);
+    }
+  }
+);
+
+export const removeFavoriteProduct = createAsyncThunk(
+  'removeFavoriteProduct / POST',
+  async (productId, { rejectedWithValue }) => {
+    console.log(productId);
+    try {
+      const removeFavoriteProduct = await UsersService.removeFavorite(productId);
+      return removeFavoriteProduct;
+    } catch (error) {
+      throw rejectedWithValue(error.message);
+    }
+  }
+);
+
 const usersSlices = createSlice({
   name: 'users',
   initialState,
@@ -148,6 +174,14 @@ const usersSlices = createSlice({
         });
       }
       return action.payload;
+    });
+    builder.addCase(addFavoriteProduct.fulfilled, (state, action) => {
+      console.log(action.payload.data);
+      state.user = action.payload.data.user;
+    });
+    builder.addCase(removeFavoriteProduct.fulfilled, (state, action) => {
+      console.log('removeFavoriteProduct', action.payload);
+      state.user = action.payload.data.user;
     });
   },
 });
