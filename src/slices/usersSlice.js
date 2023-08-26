@@ -158,14 +158,11 @@ const usersSlices = createSlice({
       }
       return action.payload.data;
     });
-    builder.addCase(logOutUsuario.fulfilled, (state, action) => {
-      if (action.payload === true) {
+    builder.addCase(logOutUsuario.fulfilled, (state, action) => {    
         sessionStorage.removeItem('userName');
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('userToken');
-        window.location = '/productos?busqueda=ultimos_productos&page=0';
-      }
-      return action.payload;
+        window.location = '/productos?busqueda=novedades&page=0';
     });
     builder.addCase(eliminarUsuario.fulfilled, (state, action) => {
       if (action.payload.status !== 200) {

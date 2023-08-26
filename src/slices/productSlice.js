@@ -130,6 +130,10 @@ const productsSlices = createSlice({
     builder.addCase(obtenerProductosAuthor.fulfilled, (state, action) => {
       state.productsAuth = action.payload.data.prodAuth;
     });
+    builder.addCase(obtenerProductoIdApi.fulfilled, (state, action) => {
+      console.log(action.payload.data);
+      state.productoId = action.payload.data;
+    });
 
     builder.addCase(borrarProducto.fulfilled, (state, action) => {
       Swal.fire('Correcto', 'PRODUCTO ELIMINADO CON EXITO', 'success');
