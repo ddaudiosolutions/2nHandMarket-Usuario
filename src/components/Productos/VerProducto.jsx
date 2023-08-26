@@ -4,41 +4,60 @@ import { Link, useHistory } from 'react-router-dom';
 import './VerProducto.css';
 import { toDate, format } from 'date-fns';
 import { Helmet } from 'react-helmet';
-import { cargarProductosAuthor } from '../../helpers/utils';
+import { cargarProductosAuthor, extraerIdDeURL } from '../../helpers/utils';
 import SendMessage from '../WhatsApp/SendMessage';
 import Footer from '../WhatsApp/layout/Footer';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
-import { addFavoriteProduct, removeFavoriteProduct } from '../../slices/usersSlice';
+import { addFavoriteProduct, obtenerDatosUsuario, removeFavoriteProduct } from '../../slices/usersSlice';
 import _ from 'lodash';
 import { getFavoriteProducts } from '../../slices/favoriteProductsSlice';
+import { obtenerProductoIdApi } from '../../slices/productSlice';
 
 const VerProducto = () => {
   const producto = useSelector((state) => state.products.productoId);
-  const productoFavoritos =
-    sessionStorage.getItem('userId') !== null
-      ? useSelector((state) => state.users.user.favoritos)
-      : null;
   let paginaActual = useSelector((state) => state.products.paginaActual);
+
   if (paginaActual === undefined) {
     paginaActual = 0;
   }
+  const url = window.location.href;
+  const productoId = extraerIdDeURL(url);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  
+  const fechaCreado = producto !== undefined ? producto.creado : null;
+  const authorName = producto !== undefined ? producto.author.nombre : null;
+  
+  /// CONVERTIMOS LA FECHA A UN FORMATO COMUN
+  const date = new Date(fechaCreado);
+  const clonedDate = toDate(date);
+  const clonedDateFormat = clonedDate !== 'Invalid Date' ? format(clonedDate, 'dd-MM-yyyy') : null;
+  const userId = sessionStorage.getItem('userId'); 
+  // meter el dispatch dentro de un useffect
+  useEffect(() => {
+    dispatch(obtenerProductoIdApi(productoId));
+    
+  }, [dispatch]);
+ 
+  const isLogged = sessionStorage.getItem('userId') !== null;
+ 
+  let productoFavoritos = [];
+  if (isLogged && useSelector((state) => state.users.user) !== undefined){    
+    productoFavoritos =  useSelector((state) => state.users.user.favoritos);      
+  } else if (isLogged && useSelector((state) => state.users.user) === undefined){
+    console.log('obtener datos usuario');
+      
+    dispatch(obtenerDatosUsuario(userId));
+  }
+
   const existe = (productoFavoritos, producto) => {
     return _.includes(productoFavoritos, producto);
   };
 
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const [favorite, setFavorite] = useState(
+    producto ? existe(productoFavoritos, producto._id) : false
+  );
 
-  if (producto === null) return null;
-
-  /// CONVERTIMOS LA FECHA A UN FORMATO COMUN
-  const date = new Date(producto.creado);
-  const clonedDate = toDate(date);
-  const clonedDateFormat = format(clonedDate, 'dd-MM-yyyy');
-  const authorName = producto.author.nombre;
-
-  const [favorite, setFavorite] = useState(existe(productoFavoritos, producto._id));
-  // funcion para cambiar el estado de verdadero a falso al pulsar el boton favoritos
   const handleFavorite = () => {
     setFavorite(!favorite);
     if (favorite) {
@@ -62,7 +81,9 @@ const VerProducto = () => {
       });
     }
   };
-  useEffect(() => {});
+
+
+  if (producto === null || producto === undefined) return null;
 
   return (
     <Fragment>
