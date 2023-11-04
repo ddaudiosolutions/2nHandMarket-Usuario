@@ -57,7 +57,7 @@ const Producto = ({ producto }) => {
 
   return (
     <Fragment>
-      <div className='col' style={{ width: '212px', height: '289px' }}>
+      <div className='col-5' style={{ width: '212px', height: '289px' }}>
         <div
           className='card me-1 ms-1 border-light'
           type='button'

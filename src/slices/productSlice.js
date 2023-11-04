@@ -144,9 +144,11 @@ const productsSlices = createSlice({
     builder.addCase(obtenerProductosAuthor.fulfilled, (state, action) => {
       state.productsAuth = action.payload.data.prodAuth;
     });
+
     builder.addCase(obtenerProductosPorPalabras.fulfilled, (state, action) => {
       return action.payload.data;
     });
+
     builder.addCase(obtenerProductoIdApi.fulfilled, (state, action) => {
       console.log(action.payload.data);
       state.productoId = action.payload.data;
