@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FormBusqueda from '../FormBusqueda';
@@ -6,11 +6,12 @@ import ListaProductos from './ListaProductos';
 import ListadoPosts from './ListadoPosts';
 
 import './Producto.css';
-import { obtenerProductos } from '../../slices/productSlice';
+import { obtenerProductos, obtenerProductosPorPalabras } from '../../slices/productSlice';
 import { obtenerBuscoPosts } from '../../slices/buscoPostSlice';
 import { obtenerDatosUsuario } from '../../slices/usersSlice';
 import IconoBusqueda from './iconos/IconoBusqueda';
 import { getFavoriteProducts } from '../../slices/favoriteProductsSlice';
+import SearchByWords from './busquedaPorTexto/SearchByWords';
 
 const Productos = () => {
   // const history = useHistory();
@@ -26,6 +27,7 @@ const Productos = () => {
   const params = new URL(document.location).searchParams;
   const busquedaquery = params.get('busqueda');
   const pagequery = params.get('page');
+  const [searchWords, setSearchWords] = useState([]);
 
   const dispatch = useDispatch();
   const cargarProductos = () => dispatch(obtenerProductos({ busquedaquery, pagequery }));
@@ -43,7 +45,6 @@ const Productos = () => {
     if (userData === undefined) {
       dispatch(obtenerDatosUsuario(sessionStorage.getItem('userId'))).then((res) => {
         if (res.payload.status === 200) {
-          /*  res.payload.data.favoritos !== undefined && */
           dispatch(getFavoriteProducts(res.payload.data.favoritos));
         }
       });
@@ -53,18 +54,22 @@ const Productos = () => {
     // eslint-disable-next-line
   }, [busquedaquery, pagequery]);
 
+  useEffect(() => {
+    dispatch(obtenerProductosPorPalabras(searchWords));
+    // eslint-disable-next-line
+  }, [searchWords]);
   return (
     <Fragment>
       <div className='container '>
         <div className='row'>
           <div className='bg-form col-12 justify-content-center mx-auto rounded mb-3 mt-2'>
+            <div>
+              <SearchByWords setSearchWords={setSearchWords} />
+            </div>
             <div className='mb-3 col-9 mx-auto bg-form mt-4'>
               <div className='col col-lg-9 mx-auto'>
                 <h2 className='text-center mb-5'> Compra y vende material para Navegar </h2>
               </div>
-              {/* <div className='col col-md-9 col-lg-9 mx-auto bg-form mt-5 '>
-                <FormBusqueda busquedaquery={busquedaquery} />
-              </div> */}
               <div>
                 <div className='row'>
                   {typeProducts.map((typeProduct) => (
