@@ -31,6 +31,11 @@ const obtenerProductoIdApi = (productoid) => {
   return clienteAxios.get(`productos/${productoid}`);
 };
 
+const obtenerProductosPorPalabras = (words) => {
+  console.log(words);
+  return clienteAxios.post(`productos/searchByWords`, words, data);
+};
+
 // SELECCIONAR Y ELIMINAR PRODUCTO
 const borrarProducto = (id) => {
   return clienteAxios.delete(`productos/user/${id}`, data);
@@ -58,6 +63,7 @@ const ProducServices = {
   borrarProducto,
   crearNuevoProductoAction,
   editarProducto,
+  obtenerProductosPorPalabras,
 };
 
 export default ProducServices;
