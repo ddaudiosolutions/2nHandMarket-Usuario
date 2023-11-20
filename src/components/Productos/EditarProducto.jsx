@@ -1,39 +1,25 @@
 import styled from 'styled-components';
 import { useState, useEffect, Fragment } from 'react';
-// import Select from "react-select";
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
 import FormData from 'form-data';
 import { editarProducto } from '../../slices/productSlice';
-import { useHistory } from 'react-router-dom';
 import './EditarProducto.css';
 import VerImagesEdit from './VerImagesEdit';
 import Swal from 'sweetalert2';
+import { verificarPesoImagenes } from '../../helpers/utils';
+import { Field, Form } from 'react-final-form';
 // STYLED COMPONENTS
 const Label = styled.label`
   font-family: Saira;
 `;
 
-const TextArea = styled.textarea`
-  font-family: Saira;
-  font-weight: 300;
-`;
-
 // FUNCION PARA EDITAR PRODUCTO
 
 const EditarProducto = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
 
-  // OPCIONES DESDE NUEVO PRODUCTO
-  const [categoria, setCategoria] = useState('');
-  const [subCategoria, setSubCategoria] = useState('');
-  const [title, setTitle] = useState('');
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
+  // OPCIONES DESDE NUEVO PRODUCTO;
   const [images, setImage] = useState(''); // IMAGENES DEL STATE INICIAL
-  // const [newimages, setNewImages] = useState('');
-  const [contacto, setContacto] = useState('');
   const [id, setId] = useState('');
 
   const productoEditar = useSelector((state) => state.products.productToEdit);
@@ -50,7 +36,7 @@ const EditarProducto = () => {
 
   // STATE PESO IMAGENES
   const [imagesSize, setImagesSize] = useState(0);
-  const [verifySize, setVerifySize] = useState(false);
+  /*  const [verifySize, setVerifySize] = useState(false); */
 
   const sendDataToParent = (filename, status) => {
     if (status.checked === false) {
@@ -67,29 +53,15 @@ const EditarProducto = () => {
     setImageSel(imageSel.filter((image) => image !== filename));
   };
 
-  let total = 0;
-  let muchoPeso = false;
-  for (const image of imagesT) {
-    if (image.size > 1000000) {
-      muchoPeso = true;
-    }
-    total += image.size;
-  }
+  const total = 0;
 
   useEffect(() => {
     setImageDif(imagesTotales - imageSel.length);
-    setVerifySize(muchoPeso);
     setImagesSize(total);
-    setId(productoEditar._id);
-    setCategoria(productoEditar.categoria);
-    setSubCategoria(productoEditar.subCategoria);
-    setTitle(productoEditar.title);
-    setPrice(productoEditar.price);
-    setDescription(productoEditar.description);
     setImages(imagesT); // NUEVAS IMAGENES PARA SUBIR
     setImage(productoEditar.images); // IMAGENES DE ESTADO INICAL
     setImagesTotales(imagesState + imagesSelect);
-    setContacto(productoEditar.author.nombre);
+    setId(productoEditar._id);
     if (imageSel.length === productoEditar.images.length && imagesT.length === 0) {
       Swal.fire({
         icon: 'error',
@@ -98,239 +70,182 @@ const EditarProducto = () => {
     }
   }, [imageSel, imagesT, imagesSize, imageDif, imagesSelect]);
 
-  const sendDataEditProduct = (formData, id) => {
-    dispatch(editarProducto(formData, id));
-    /* .then(res => {
-      console.log(res)
-      if (res.payload.status === 200) {
-        Swal.fire("Correcto", "POST EDITADO CON EXITO", "success")
-          .then(function () {
-            cargarProductosAuthor(dispatch, history, productoEditar)
-          })
-      }
-    }) */
+  const sendDataEditProduct = (producto, id) => {
+    dispatch(editarProducto(producto, id));
   };
 
-  const submitEditarProducto = () => {
-    const formData = new FormData();
-    for (let j = 0; j < imagesT.length; j++) {
-      formData.append('images', imagesT[j]);
+  const submitEditarProducto = (values) => {
+    console.log('submit EditarProducto', values);
+    if (verificarPesoImagenes(imagesT)) {
+      Swal.fire({
+        icon: 'info',
+        html: 'Peso mayor de 1Mb! Se reducirá el peso de la imagen, puede perder algo de calidad!!',
+        showCancelButton: true,
+        cancelButtonColor: '#d33',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Guardar y Continuar',
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          mostrarAlertaYEnviarDatos(sendDataEditProduct, imagesT, imageSel, id, values);
+        }
+      });
+    } else {
+      mostrarAlertaYEnviarDatos(sendDataEditProduct, imagesT, imageSel, id, values);
     }
-    formData.set('title', title);
-    formData.set('categoria', categoria);
-    formData.set('subCategoria', subCategoria);
-    formData.set('price', price);
-    formData.set('description', description);
-    formData.set('contacto', contacto);
-    formData.set('id', id); // PASAMOS EL ID COMO UN STATE MÁS CON EL PRODUCTO, PARA SABER QUE PRODUCTO ESTAMOS E
-
-    for (let i = 0; i < imageSel.length; i++) {
-      formData.append('imagesDelete', imageSel[i]);
-    }
-    setId(productoEditar._id);
-    sendDataEditProduct({ formData, id, history });
   };
 
-  // VALIDACION DE FORMULARIO
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({
-    mode: 'onBlur',
-    defaultValues: {
-      categoria: productoEditar.categoria,
-      subCategoria: productoEditar.subCategoria,
-      title: productoEditar.title,
-      price: productoEditar.price,
-      description: productoEditar.description,
-      contacto: productoEditar.author.nombre,
-    },
-  });
-
+  const required = (value) => value === (undefined || '') && 'Debes Rellenar este campo';
   return (
     <div className='container-fluid  rounded my-4 p-3'>
       <div className='d-flex justify-content-center'>
         <div className='rounded col-12 col-sm-12 shadow-lg p-3 bg-trasparent'>
           <h2 className='text-center mx-auto font-wight-bold mb-5'>Editar Producto</h2>
-          <form onSubmit={handleSubmit(submitEditarProducto)}>
-            <div className='mb-3'>
-              <Label className='mb-2'>Selecciona el tipo de producto</Label>
-              <select
-                className='custom-select form-control pproducto'
-                {...register('categoria', { required: true })}
-                onChange={(e) => setCategoria(e.target.value)}
-              >
-                <option value='tablas'>Tabla</option>
-                <option value='velas'>Vela</option>
-                <option value='botavaras'>Botavara</option>
-                <option value='mastiles'>Mastil</option>
-                <option value='accesorios'>Accesorio</option>
-              </select>
-              {errors.categoria?.type === 'required' && (
-                <h6 className='alert alert-warning col-6 text-center mx-auto'>
-                  Selecciona una Categoria
-                </h6>
-              )}
-            </div>
-            <div className='mb-3'>
-              <Label className='mb-2'>Selecciona la Categoria</Label>
-              <select
-                className='custom-select form-control pproducto'
-                {...register('subCategoria', { required: true })}
-                onChange={(e) => setSubCategoria(e.target.value)}
-              >
-                <option value='slalom'>Slalom</option>
-                <option value='freeride'>Free-Ride</option>
-                <option value='freerace'>Free-Race</option>
-                <option value='freestyle'>Free-Style</option>
-                <option value='foil'>Foil</option>
-                <option value='waves'>Waves</option>
-                <option value='carbono'>Carbono</option>
-                <option value='aluminio'>Aluminio</option>
-                <option value='mixta'>Mixta</option>
-                <option value='rdm'>RDM</option>
-                <option value='sdm'>SDM</option>
-                <option value='aleta'>ALETA</option>
-                <option value='arnes'>ARNES</option>
-                <option value='alargador'>ALARGADOR</option>
-              </select>
-              {errors.subCategoria?.type === 'required' && (
-                <h6 className='alert alert-warning col-6 text-center mx-auto mt-1'>
-                  Selecciona una SubCategoria
-                </h6>
-              )}
-            </div>
-            <div className='mb-3'>
-              <Label htmlFor='tituloProducto' className='form-label'>
-                Título
-              </Label>
-              <input
-                type='text'
-                className='form-control pproducto'
-                id='title'
-                {...register('title', {
-                  required: true,
-                  maxLength: { value: 50 },
-                })}
-                placeholder='....'
-                onChange={(e) => setTitle(e.target.value)}
-              ></input>
-              {errors.title && errors.title.type === 'required' && (
-                <h6 className='alert alert-warning col-6 text-center mx-auto mt-1'>
-                  Pon un título al anuncio
-                </h6>
-              )}
-              {errors.title && errors.title.type === 'maxLength' && (
-                <h6 className='alert alert-warning col-6 text-center mx-auto mt-1'>
-                  Demasiados Caracteres máx 20!!
-                </h6>
-              )}
-            </div>
-            <div className='mb-3'>
-              <Label htmlFor='precioProducto' className='form-label'>
-                Precio
-              </Label>
-              <input
-                type='number'
-                className='form-control pproducto'
-                id='precioProducto'
-                placeholder='.....'
-                {...register('price', { required: true })}
-                onChange={(e) => setPrice(Number(e.target.value))}
-              ></input>
-              {errors.price?.type === 'required' && (
-                <h6 className='alert alert-warning col-6 text-center mx-auto mt-1'>
-                  Pon un precio al producto
-                </h6>
-              )}
-            </div>
 
-            <div className='mb-3'>
-              <Label htmlFor='descripcionProducto' className='form-label'>
-                Descripción del Producto
-              </Label>
-              <TextArea
-                className='form-control '
-                id='description'
-                rows='3'
-                // name="description"
-                // defaultValue={description}
-                {...register('description', { required: true })}
-                onChange={(e) => setDescription(e.target.value)}
-              ></TextArea>
-              {errors.description?.type === 'required' && (
-                <h6 className='alert alert-warning col-6 text-center mx-auto mt-1'>
-                  Describe el producto
-                </h6>
-              )}
-            </div>
+          <Form
+            onSubmit={submitEditarProducto}
+            initialValues={{
+              categoria: productoEditar.categoria,
+              subCategoria: productoEditar.subCategoria,
+              title: productoEditar.title,
+              price: productoEditar.price,
+              description: productoEditar.description,
+              contacto: productoEditar.author.nombre,
+            }}
+            render={({ handleSubmit, values }) => (
+              <form onSubmit={handleSubmit}>
+                <div className='mb-3'>
+                  <Field name='categoria' validate={required}>
+                    {({ input, meta }) => (
+                      <div>
+                        <Label className='mb-2'>Selecciona el tipo de producto</Label>
+                        <select {...input} className='form-select mb-2'>
+                          <option value=''></option>
+                          <option value='tablas'>Tabla</option>
+                          <option value='velas'>Vela</option>
+                          <option value='botavaras'>Botavara</option>
+                          <option value='mastiles'>Mastil</option>
+                          <option value='accesorios'>Accesorio</option>
+                        </select>
+                        {meta.error && meta.touched && (
+                          <span className='error'>Este campo es requerido</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                  <Field name='subCategoria' validate={required}>
+                    {({ input, meta }) => (
+                      <div>
+                        <Label className='mb-2'>Selecciona la SubCategoria</Label>
+                        <select {...input} className='form-select mb-2'>
+                          <option value=''></option>
+                          <option value='slalom'>Slalom</option>
+                          <option value='freeride'>Free-Ride</option>
+                          <option value='freerace'>Free-Race</option>
+                          <option value='freestyle'>Free-Style</option>
+                          <option value='foil'>Foil</option>
+                          <option value='waves'>Waves</option>
+                          <option value='carbono'>Carbono</option>
+                          <option value='aluminio'>Aluminio</option>
+                          <option value='mixta'>Mixta</option>
+                          <option value='rdm'>RDM</option>
+                          <option value='sdm'>SDM</option>
+                          <option value='aleta'>ALETA</option>
+                          <option value='arnes'>ARNES</option>
+                          <option value='alargador'>ALARGADOR</option>
+                        </select>
+                        {meta.error && meta.touched && (
+                          <span className='error'>Este campo es requerido</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                  <Field name='title' validate={required}>
+                    {({ input, meta }) => (
+                      <div>
+                        <Label className='mb-2'>Título</Label>
+                        <input {...input} type='text' className='form-control mb-2' />
+                        {meta.error && meta.touched && (
+                          <span className='error'>Este campo es requerido</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                  <Field name='price' validate={required}>
+                    {({ input, meta }) => (
+                      <div>
+                        <Label className='mb-2'>Precio</Label>
+                        <input {...input} type='number' className='form-control mb-2' />
+                        {meta.error && meta.touched && (
+                          <span className='error'>Este campo es requerido</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                  <Field name='description' validate={required}>
+                    {({ input, meta }) => (
+                      <div>
+                        <Label className='mb-2'>Descripción del Producto</Label>
+                        <textarea {...input} type='textarea' className='form-control mb-2' />
+                        {meta.error && meta.touched && (
+                          <span className='error'>Introduce una descripción</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                  <Field name='contacto' validate={required}>
+                    {({ input, meta }) => (
+                      <div>
+                        <Label className='mb-2'>Contacto</Label>
+                        <input {...input} type='textarea' className='form-control mb-2' />
+                        {meta.error && meta.touched && (
+                          <span className='error'>Este campo es requerido</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
 
-            {/* <div className="mb-3">
-              <Label htmlFor="contacto" className="form-label">
-                Contacto
-              </Label>
-              <TextArea
-                className="form-control"
-                id="contacto"
-                {...register("contacto", { required: true })}
-                rows="4"
-                onChange={(e) => setContacto(e.target.value)}
-              ></TextArea>
-              {errors.contacto?.type === "required" && (
-                <h6 className="alert alert-warning col-6 text-center mx-auto mt-1">
-                  Facilita un Contacto
-                </h6>
-              )}
-            </div> */}
-            <div className='container'>
-              <div className='row d-flex'>
-                <div>
-                  <h6>Selecciona las imagenes que quieres sutituir : </h6>
+                  <div>
+                    <div className='container'>
+                      <div className='row d-flex'>
+                        <div>
+                          <h6>Selecciona las imagenes que quieres sutituir : </h6>
+                        </div>
+                        {!images
+                          ? null
+                          : images.map((imagenEdit) => (
+                              <VerImagesEdit
+                                key={imagenEdit._id}
+                                className=''
+                                imagenEdit={imagenEdit}
+                                sendDataToParent={sendDataToParent}
+                                numImages={images.length}
+                              />
+                            ))}
+                      </div>
+                    </div>
+                    <div className='text-center'></div>
+                    <input
+                      className='form-input'
+                      id='images'
+                      type='file'
+                      multiple
+                      onChange={(e) => setImages(e.target.files)}
+                    ></input>
+                  </div>
+                  <div className='mb-3 mt-3 text-center'>
+                    <button
+                      className='btn btn-outline-warning'
+                      type='submit'
+                      disabled={imageDif > 4}
+                    >
+                      Editar Producto
+                    </button>
+                  </div>
                 </div>
-                {!images
-                  ? null
-                  : images.map((imagenEdit) => (
-                      <VerImagesEdit
-                        key={imagenEdit._id}
-                        className=''
-                        imagenEdit={imagenEdit}
-                        sendDataToParent={sendDataToParent}
-                        numImages={images.length}
-                      />
-                    ))}
-              </div>
-            </div>
-
-            <div>
-              <div className='text-center'></div>
-              <input
-                className='form-input'
-                id='images'
-                type='file'
-                multiple
-                {...register('images', { required: false })}
-                onChange={(e) => setImages(e.target.files)}
-              ></input>
-            </div>
-
-            <div className='mb-3 mt-3 text-center'>
-              <button
-                className='btn btn-outline-warning'
-                type='submit'
-                disabled={
-                  verifySize === true || (imageDif < 4 && verifySize === true) || imageDif > 4
-                }
-              >
-                Editar Producto
-              </button>
-            </div>
-          </form>
-          {verifySize ? (
-            <h6 className='alert alert-warning col-6 text-center mx-auto'>
-              Las imagenes no pueden pesar más de 1MB
-            </h6>
-          ) : null}
+              </form>
+            )}
+          />
           {imageDif > 4 ? (
             <Fragment>
               <h6 className='alert alert-success col-6 text-center mx-auto'>
@@ -344,9 +259,26 @@ const EditarProducto = () => {
         </div>
       </div>
     </div>
-    // </div>
-    // </div>
   );
 };
+
+function mostrarAlertaYEnviarDatos(sendDataEditProduct, images, imageSel, id, values) {
+  const formData = new FormData();
+  for (let j = 0; j < images.length; j++) {
+    formData.append('images', images[j]);
+  }
+  formData.set('title', values.title);
+  formData.set('categoria', values.categoria);
+  formData.set('subCategoria', values.subCategoria);
+  formData.set('price', values.price);
+  formData.set('description', values.description);
+  formData.set('contacto', values.contacto);
+  formData.set('id', id);
+
+  for (let i = 0; i < imageSel.length; i++) {
+    formData.append('imagesDelete', imageSel[i]);
+  }
+  sendDataEditProduct({ formData, id, history });
+}
 
 export default EditarProducto;
