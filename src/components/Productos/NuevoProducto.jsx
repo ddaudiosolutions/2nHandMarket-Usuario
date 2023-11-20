@@ -1,12 +1,13 @@
 //* AQUI ESTARÁ EL FORMULARIO PARA EL PRODUCTO
 import styled from 'styled-components';
 import './NuevoProducto.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import FormData from 'form-data';
 import { useDispatch, useSelector } from 'react-redux';
 import { crearNuevoProducto } from '../../slices/productSlice';
 import { Form, Field } from 'react-final-form';
 import Swal from 'sweetalert2';
+import { verificarPesoImagenes } from '../../helpers/utils';
 
 const Label = styled.label`
   font-family: Saira;
@@ -17,34 +18,27 @@ const NuevoProducto = () => {
   const usuario = useSelector((state) => state.users.user);
   const [images, setImage] = useState('');
 
-  let muchoPeso = false;
-  for (const image of images) {
-    if (image.size > 1000000) {
-      console.log('demasiado peso');
-      muchoPeso = true;
-    }
-  }
-  const [imgVerif, setImagVerif] = useState(false);
-
-  useEffect(() => {
-    setImagVerif(muchoPeso);
-  }, [muchoPeso]);
-
   const agregarProducto = (producto) => dispatch(crearNuevoProducto(producto));
 
   const submitNuevoProducto = (values) => {
     if (images.length > 0 && usuario.telefono !== undefined) {
-      const formData = new FormData();
-      for (let i = 0; i < images.length; i++) {
-        formData.append('images', images[i]);
+      if (verificarPesoImagenes(images)) {
+        Swal.fire({
+          icon: 'info',
+          html: 'Peso mayor de 1Mb! Se reducirá el peso de la imagen, puede perder algo de calidad!!',
+          showCancelButton: true,
+          cancelButtonColor: '#d33',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Guardar y Continuar',
+          reverseButtons: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            mostrarAlertaYEnviarDatos(agregarProducto, images, values);
+          }
+        });
+      } else {
+        mostrarAlertaYEnviarDatos(agregarProducto, images, values);
       }
-      formData.set('title', values.title);
-      formData.set('categoria', values.categoria);
-      formData.set('subCategoria', values.subCategoria);
-      formData.set('price', values.price);
-      formData.set('description', values.description);
-      formData.set('contacto', values.contacto);
-      agregarProducto(formData);
     } else {
       if (usuario.telefono === undefined) {
         Swal.fire({
@@ -57,17 +51,7 @@ const NuevoProducto = () => {
           reverseButtons: true,
         }).then((result) => {
           if (result.isConfirmed) {
-            const formData = new FormData();
-            for (let i = 0; i < images.length; i++) {
-              formData.append('images', images[i]);
-            }
-            formData.set('title', values.title);
-            formData.set('categoria', values.categoria);
-            formData.set('subCategoria', values.subCategoria);
-            formData.set('price', values.price);
-            formData.set('description', values.description);
-            formData.set('contacto', values.contacto);
-            agregarProducto(formData);
+            mostrarAlertaYEnviarDatos(agregarProducto, images, values);
           }
         });
       }
@@ -211,7 +195,7 @@ const NuevoProducto = () => {
                   <button
                     className='btn btn-outline-warning'
                     type='submit'
-                    disabled={images.length > 4 || imgVerif === true}
+                    disabled={images.length > 4}
                   >
                     Agregar Producto
                   </button>
@@ -219,11 +203,6 @@ const NuevoProducto = () => {
               </form>
             )}
           />
-          {imgVerif ? (
-            <h6 className='alert alert-warning col-6 text-center mx-auto mt-2'>
-              Las Imágenes no pueden ser mayores de 1MB
-            </h6>
-          ) : null}
           {images.length > 4 ? (
             <h6 className='alert alert-warning col-6 text-center mx-auto mt-2'>
               Solo puedes subir un maximo de 4 fotos
@@ -234,5 +213,21 @@ const NuevoProducto = () => {
     </div>
   );
 };
+
+function mostrarAlertaYEnviarDatos(agregarProducto, images, values) {
+  console.log(agregarProducto, images, values);
+  const formData = new FormData();
+  for (let j = 0; j < images.length; j++) {
+    formData.append('images', images[j]);
+  }
+  formData.set('title', values.title);
+  formData.set('categoria', values.categoria);
+  formData.set('subCategoria', values.subCategoria);
+  formData.set('price', values.price);
+  formData.set('description', values.description);
+  formData.set('contacto', values.contacto);
+
+  agregarProducto(formData);
+}
 
 export default NuevoProducto;
