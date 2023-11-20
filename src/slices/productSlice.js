@@ -74,6 +74,20 @@ export const obtenerProductosAuthor = createAsyncThunk(
   }
 );
 
+export const obtenerProductosPorPalabras = createAsyncThunk(
+  'obtenerProductosPorPalabras / POST',
+  async (words, { rejectedWithValue }) => {
+    console.log('words', words);
+    try {
+      const productosByWords = await ProductService.obtenerProductosPorPalabras(words);
+      console.log(productosByWords);
+      return productosByWords;
+    } catch (error) {
+      throw rejectedWithValue(error.message);
+    }
+  }
+);
+
 export const editarProducto = createAsyncThunk(
   'editProduct / PUT',
   async (productData, { rejectedWithValue }) => {
@@ -130,6 +144,11 @@ const productsSlices = createSlice({
     builder.addCase(obtenerProductosAuthor.fulfilled, (state, action) => {
       state.productsAuth = action.payload.data.prodAuth;
     });
+
+    builder.addCase(obtenerProductosPorPalabras.fulfilled, (state, action) => {
+      return action.payload.data;
+    });
+
     builder.addCase(obtenerProductoIdApi.fulfilled, (state, action) => {
       console.log(action.payload.data);
       state.productoId = action.payload.data;

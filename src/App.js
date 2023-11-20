@@ -60,7 +60,7 @@ function App() {
             <Route exact path='/productos/user' component={ProductosUser} />
             <Route exact path='/productos/favoritos' component={FavoriteProducts} />
             <Route exact path='/usuarios/editar/:id' component={EditarUser} />
-            <Route exact path='/productos/:id' component={VerProducto} />
+            <Route exact path='/productos/:productId' component={VerProducto} />
             <Route exact path='/usuarios/:id' component={Usuario} />
             <Route exact path='/forgotpassword' component={SolicitarContraseña} />
             <Route exact path='/forgotpassword/:id' component={ResetPassword} />
