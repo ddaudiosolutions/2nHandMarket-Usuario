@@ -15,7 +15,8 @@ import SearchByWords from './busquedaPorTexto/SearchByWords';
 
 const Productos = () => {
   // const history = useHistory();
-  const productos = useSelector((state) => state.products.prodAll);
+  const productos = useSelector((state) => state.products.productos.prodAll);
+  const productosPorPalabras = useSelector((state) => state.products.productsByWords);
   const paginasTotales = useSelector((state) => state.products.totalPages);
 
   // TRAEMOS LAS SOLICITUDES DE BUSQUEDA
@@ -82,7 +83,11 @@ const Productos = () => {
             </div>
           </div>
           <div className='col mx-auto'>
-            <ListaProductos productos={productos} />
+            {productosPorPalabras !== undefined && productosPorPalabras.length === 0 ? (
+              <ListaProductos productos={productos} />
+            ) : (
+              <ListaProductos productos={productosPorPalabras} />
+            )}
           </div>
 
           <div className='d-flex justify-content-center mt-4 '>

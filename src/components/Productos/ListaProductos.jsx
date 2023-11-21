@@ -1,5 +1,6 @@
 import Producto from './Producto';
 const ListaProductosBusqueda = ({ productos }) => {
+  console.log(productos);
   return (
     <div
       className='row row-cols-2 row-cols-xs-4 row-cols-sm-3 
