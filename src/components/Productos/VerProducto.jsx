@@ -8,10 +8,15 @@ import { cargarProductosAuthor, extraerIdDeURL } from '../../helpers/utils';
 import SendMessage from '../WhatsApp/SendMessage';
 import Footer from '../WhatsApp/layout/Footer';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
-import { addFavoriteProduct, obtenerDatosUsuario, removeFavoriteProduct } from '../../slices/usersSlice';
+import {
+  addFavoriteProduct,
+  obtenerDatosUsuario,
+  removeFavoriteProduct,
+} from '../../slices/usersSlice';
 import _ from 'lodash';
 import { getFavoriteProducts } from '../../slices/favoriteProductsSlice';
 import { obtenerProductoIdApi } from '../../slices/productSlice';
+import ContactoentreUsers from '../envioMensajes/ContactoentreUsers';
 
 const VerProducto = () => {
   const producto = useSelector((state) => state.products.productoId);
@@ -24,29 +29,37 @@ const VerProducto = () => {
   const productoId = extraerIdDeURL(url);
   const dispatch = useDispatch();
   const history = useHistory();
-  
+
   const fechaCreado = producto !== undefined ? producto.creado : null;
   const authorName = producto !== undefined ? producto.author.nombre : null;
-  
+
   /// CONVERTIMOS LA FECHA A UN FORMATO COMUN
   const date = new Date(fechaCreado);
   const clonedDate = toDate(date);
   const clonedDateFormat = clonedDate !== 'Invalid Date' ? format(clonedDate, 'dd-MM-yyyy') : null;
-  const userId = sessionStorage.getItem('userId'); 
+  const userId = sessionStorage.getItem('userId');
   // meter el dispatch dentro de un useffect
   useEffect(() => {
     dispatch(obtenerProductoIdApi(productoId));
-    
   }, [dispatch]);
- 
+
+  useEffect(() => {
+    if (producto && producto.images && producto.images.length > 0) {
+      const ogImage = document.querySelector('meta[property="og:image"]');
+      if (ogImage) {
+        ogImage.setAttribute('content', producto.images[0].url || ''); // Actualizar la URL de la imagen en las etiquetas OG
+      }
+    }
+  }, [producto]);
+
   const isLogged = sessionStorage.getItem('userId') !== null;
- 
+
   let productoFavoritos = [];
-  if (isLogged && useSelector((state) => state.users.user) !== undefined){    
-    productoFavoritos =  useSelector((state) => state.users.user.favoritos);      
-  } else if (isLogged && useSelector((state) => state.users.user) === undefined){
+  if (isLogged && useSelector((state) => state.users.user) !== undefined) {
+    productoFavoritos = useSelector((state) => state.users.user.favoritos);
+  } else if (isLogged && useSelector((state) => state.users.user) === undefined) {
     console.log('obtener datos usuario');
-      
+
     dispatch(obtenerDatosUsuario(userId));
   }
 
@@ -82,19 +95,11 @@ const VerProducto = () => {
     }
   };
 
-
   if (producto === null || producto === undefined) return null;
 
   return (
     <Fragment>
-      <div>
-        <Helmet>
-          <meta property='og:type' content='Product' />
-          <meta property='og:title' name='title' content={producto.title} />
-          <meta property='og:image' name='image' content={producto.images[0].url} />
-          <meta property='og:description' name='description' content={producto.description} />
-        </Helmet>
-      </div>
+      <div></div>
       <div className='container col-sm-9 col-md-9 col-lg-7 col-xl-7'>
         <div className='cardVerProducto mt-3 '>
           <div
@@ -201,13 +206,15 @@ const VerProducto = () => {
               <p className='card-title pproductoTitle'>{producto.description}</p>
             </div>
             <div className='card-header'>
-              <div className='row'>
-                <h4 className='align-self-start card-title pproductoTitle col-7'>
-                  E-mail: {producto.author.email}
-                </h4>
-              </div>
               <div className='card-title pproductoTitle'>
-                <SendMessage phoneNumber={producto.author.telefono} />
+                {sessionStorage.getItem('userId') !== null && (
+                  <ContactoentreUsers
+                    productId={productoId}
+                    sellerEmail={producto.author.email}
+                    sellerName={producto.author.nombre}
+                  />
+                )}
+                {/* <SendMessage phoneNumber={producto.author.telefono} /> */}
                 <Footer />
               </div>
             </div>

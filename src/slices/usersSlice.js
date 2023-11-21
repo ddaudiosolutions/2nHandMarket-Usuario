@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 
 const initialState = {
   user: undefined,
+  statusSendEmail: undefined,
 };
 
 export const nuevoUsuario = createAsyncThunk(
@@ -110,6 +111,18 @@ export const removeFavoriteProduct = createAsyncThunk(
   }
 );
 
+export const sendMailToUser = createAsyncThunk(
+  'sendMailToUser / POST',
+  async (dataToSend, { rejectedWithValue }) => {
+    try {
+      const sendMailToUser = await UsersService.sendMailToUser(dataToSend);
+      return sendMailToUser;
+    } catch (error) {
+      throw rejectedWithValue(error.message);
+    }
+  }
+);
+
 const usersSlices = createSlice({
   name: 'users',
   initialState,
@@ -158,11 +171,11 @@ const usersSlices = createSlice({
       }
       return action.payload.data;
     });
-    builder.addCase(logOutUsuario.fulfilled, (state, action) => {    
-        sessionStorage.removeItem('userName');
-        sessionStorage.removeItem('userId');
-        sessionStorage.removeItem('userToken');
-        window.location = '/productos?busqueda=novedades&page=0';
+    builder.addCase(logOutUsuario.fulfilled, (state, action) => {
+      sessionStorage.removeItem('userName');
+      sessionStorage.removeItem('userId');
+      sessionStorage.removeItem('userToken');
+      window.location = '/productos?busqueda=novedades&page=0';
     });
     builder.addCase(eliminarUsuario.fulfilled, (state, action) => {
       if (action.payload.status !== 200) {
@@ -179,6 +192,15 @@ const usersSlices = createSlice({
     builder.addCase(removeFavoriteProduct.fulfilled, (state, action) => {
       console.log('removeFavoriteProduct', action.payload);
       state.user = action.payload.data.user;
+    });
+    builder.addCase(sendMailToUser.fulfilled, (state, action) => {
+      console.log('sendMailToUser', action.payload);
+      state.statusSendEmail = action.payload.status;
+      if (action.payload.status === 200) {
+        Swal.fire('Correcto', 'El email se ha enviado Correctamente', 'success').then(function () {
+          window.location = '/';
+        });
+      }
     });
   },
 });

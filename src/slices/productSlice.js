@@ -8,6 +8,7 @@ const initialState = {
   productsAuth: undefined,
   productosUser: undefined,
   productToEdit: undefined,
+  productsByWords: [],
 };
 
 export const obtenerProductos = createAsyncThunk(
@@ -127,7 +128,8 @@ const productsSlices = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(obtenerProductos.fulfilled, (state, action) => {
-      return action.payload.data;
+      console.log(action.payload);
+      state.productos = action.payload.data;
     });
     builder.addCase(crearNuevoProducto.pending, (state, action) => {
       Swal.fire('Subiendo Producto');
@@ -146,7 +148,8 @@ const productsSlices = createSlice({
     });
 
     builder.addCase(obtenerProductosPorPalabras.fulfilled, (state, action) => {
-      return action.payload.data;
+      console.log('productos por palabras', action.payload.data.prodByWords);
+      state.productsByWords = action.payload.data.prodByWords;
     });
 
     builder.addCase(obtenerProductoIdApi.fulfilled, (state, action) => {
