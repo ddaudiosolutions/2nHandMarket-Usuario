@@ -73,7 +73,14 @@ const getFavoriteProducts = (favoriteProductsId) => {
   return clienteAxios.post('favoriteProducts/getFavorite', favoriteProductsId, data);
 };
 
+// Enviar email interes por producto entre users
+const sendMailToUser = (emailData) => {
+  console.log(emailData);
+  return clienteAxios.post('usuarios/correoentreusuarios', emailData);
+};
+
 const UsersService = {
+  sendMailToUser,
   obtenerDatosUsuario,
   editarUsuario,
   eliminarUsuario,

@@ -31,23 +31,7 @@ function App() {
   return (
     <Router history={history}>
       <Provider store={store}>
-        <div className='container'>
-          <Helmet>
-            <meta property='og:type' content='Website' />
-            <meta property='og:title' name='title' content='WindyMarket' />
-            <meta property='”og:url”' content='https://windymarket.es/' />
-            <meta
-              property='og:description'
-              name='description'
-              content='Mercado de Material de Windsurf Foil de 2a Mano'
-            />
-            <meta
-              property='og:image'
-              name='image'
-              content='https://res.cloudinary.com/dhe1gcno9/image/upload/v1632852406/WINDY_hwp53c.png'
-            />
-          </Helmet>
-        </div>
+        <div className='container'></div>
         <Header />
         <div className='container'>
           <Switch>
