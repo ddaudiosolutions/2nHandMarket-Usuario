@@ -12,6 +12,7 @@ import { obtenerDatosUsuario } from '../../slices/usersSlice';
 import IconoBusqueda from './iconos/IconoBusqueda';
 import { getFavoriteProducts } from '../../slices/favoriteProductsSlice';
 import SearchByWords from './busquedaPorTexto/SearchByWords';
+import Navbar from '../Navbar';
 
 const Productos = () => {
   // const history = useHistory();
@@ -73,11 +74,12 @@ const Productos = () => {
               </div>
               <div>
                 <div className='row'>
-                  {typeProducts.map((typeProduct) => (
+                  <Navbar />
+                  {/* {typeProducts.map((typeProduct) => (
                     <div className='col-md' key={typeProduct}>
                       <IconoBusqueda typeProduct={typeProduct} />
                     </div>
-                  ))}
+                  ))} */}
                 </div>
               </div>
             </div>
