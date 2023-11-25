@@ -45,8 +45,6 @@ function IconoBusqueda({ typeProduct }) {
       </div>
     </div>
   );
-  /*  const history = useHistory();
-  return history.push(`/productos?busqueda=${typeProduct}&page=0`); */
 }
 
 export default IconoBusqueda;
