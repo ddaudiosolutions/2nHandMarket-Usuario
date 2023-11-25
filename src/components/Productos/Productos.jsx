@@ -35,14 +35,7 @@ const Productos = () => {
   const cargarProductos = () => dispatch(obtenerProductos({ busquedaquery, pagequery }));
   const cargarBuscoPosts = () => dispatch(obtenerBuscoPosts());
   const userData = useSelector((state) => state.users.user);
-  const typeProducts = [
-    'ultimos_productos',
-    'tablas',
-    'velas',
-    'botavaras',
-    'mastiles',
-    'accesorios',
-  ];
+
   useEffect(() => {
     if (userData === undefined) {
       dispatch(obtenerDatosUsuario(sessionStorage.getItem('userId'))).then((res) => {
@@ -75,11 +68,6 @@ const Productos = () => {
               <div>
                 <div className='row'>
                   <Navbar />
-                  {/* {typeProducts.map((typeProduct) => (
-                    <div className='col-md' key={typeProduct}>
-                      <IconoBusqueda typeProduct={typeProduct} />
-                    </div>
-                  ))} */}
                 </div>
               </div>
             </div>

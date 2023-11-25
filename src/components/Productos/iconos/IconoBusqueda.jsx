@@ -1,8 +1,4 @@
-import { useHistory } from 'react-router';
-// crear funcion con un nombre que redireccione a la pagina de productos con el parametro typeProduct
-
-function IconoBusqueda({ typeProduct }) {
-  const history = useHistory();
+function IconoBusqueda({ typeProduct, handleIconClick }) {
   let icono;
   switch (typeProduct) {
     case 'tablas':
@@ -31,7 +27,7 @@ function IconoBusqueda({ typeProduct }) {
     <div className='col-md'>
       <div
         className='card text-center mb-3 rounded border-light'
-        onClick={() => history.push(`/productos?busqueda=${typeProduct}&page=0`)}
+        onClick={() => handleIconClick(typeProduct)}
       >
         <div className='col-md mx-auto'>
           <img
