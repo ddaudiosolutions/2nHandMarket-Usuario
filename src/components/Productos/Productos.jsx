@@ -13,6 +13,7 @@ import IconoBusqueda from './iconos/IconoBusqueda';
 import { getFavoriteProducts } from '../../slices/favoriteProductsSlice';
 import SearchByWords from './busquedaPorTexto/SearchByWords';
 import Navbar from '../Navbar';
+import HappyBanner from '../banners/HappyBanner';
 
 const Productos = () => {
   // const history = useHistory();
@@ -94,7 +95,7 @@ const Productos = () => {
                 ))
               : null}
           </div>
-
+          <HappyBanner />
           <div className='col mx-auto mt-4 mb-2'>
             {busquedaquery === 'ultimos_productos' ? (
               <Fragment>
