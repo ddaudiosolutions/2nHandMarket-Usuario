@@ -76,7 +76,12 @@ const EditarProducto = () => {
 
   const submitEditarProducto = (values) => {
     console.log('submit EditarProducto', values);
-    if (verificarPesoImagenes(imagesT)) {
+    if (imageSel.length === productoEditar.images.length && imagesT.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        text: 'No puedes borrar todas las imagenes, deja al menos una, o cargar una imagen nueva',
+      });
+    }else if (verificarPesoImagenes(imagesT)) {
       Swal.fire({
         icon: 'info',
         html: 'Peso mayor de 1Mb! Se reducirá el peso de la imagen, puede perder algo de calidad!!',

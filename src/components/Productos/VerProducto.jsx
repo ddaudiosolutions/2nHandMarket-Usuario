@@ -131,11 +131,11 @@ const VerProducto = () => {
             >
               <div className='carousel-inner'>
                 <div className='carousel-item active'>
-                  <a className=' ' href={producto.images[0].url} target='_blank' rel='noreferrer'>
+                  <a className=' ' href={producto.images && producto.images.length > 0 && producto.images[0].url ? producto.images[0].url : 'https://res.cloudinary.com/dhe1gcno9/image/upload/v1707814598/ProductosMarketV2/WINDY_fakeImage_fbkd2s.jpg'} target='_blank' rel='noreferrer'>
                     <img
-                      src={producto.images[0].url}
+                      src={producto.images && producto.images.length > 0 && producto.images[0].url ? producto.images[0].url : 'https://res.cloudinary.com/dhe1gcno9/image/upload/v1707814598/ProductosMarketV2/WINDY_fakeImage_fbkd2s.jpg'}
                       style={{ height: '25rem' }}
-                      key={producto.images[0]._id}
+                      key={producto.images && producto.images.length > 0 && producto.images[0]._id ? producto.images[0]._id : 'fakeImage'}
                       className='card-img-top mt-3'
                       alt='...'
                     ></img>

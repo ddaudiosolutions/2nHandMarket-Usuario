@@ -50,10 +50,13 @@ const Producto = ({ producto }) => {
     }
   };
 
-  const firstImage = images[0].url
-    ? images[0].url
-    : 'https://res.cloudinary.com/dhe1gcno9/image/upload/v1645218203/ProductosMarketV2/AvataresUsuarios/LOGO_CIRCULAR_FONDO_BLANCO_cvhmuo.png';
-  const firstFilename = images[0].filename ? images[0].filename : 'WindyMarket';
+  const firstImage =
+    images.length > 0 && images[0].url
+      ? images[0].url
+      : 'https://res.cloudinary.com/dhe1gcno9/image/upload/v1707814598/ProductosMarketV2/WINDY_fakeImage_fbkd2s.jpg';
+
+  console.log('firstImage', firstImage);
+  const firstFilename = (images.length === 0 || images[0].filename) ?? 'WindyMarket';
 
   return (
     <Fragment>
