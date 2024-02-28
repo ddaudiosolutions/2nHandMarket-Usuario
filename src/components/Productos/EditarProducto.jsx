@@ -8,6 +8,7 @@ import VerImagesEdit from './VerImagesEdit';
 import Swal from 'sweetalert2';
 import { verificarPesoImagenes } from '../../helpers/utils';
 import { Field, Form } from 'react-final-form';
+import FormPaqueteEnvio from '../gestionEnvios/FormPaqueteEnvio';
 // STYLED COMPONENTS
 const Label = styled.label`
   font-family: Saira;
@@ -81,7 +82,7 @@ const EditarProducto = () => {
         icon: 'error',
         text: 'No puedes borrar todas las imagenes, deja al menos una, o cargar una imagen nueva',
       });
-    }else if (verificarPesoImagenes(imagesT)) {
+    } else if (verificarPesoImagenes(imagesT)) {
       Swal.fire({
         icon: 'info',
         html: 'Peso mayor de 1Mb! Se reducirá el peso de la imagen, puede perder algo de calidad!!',
@@ -116,8 +117,15 @@ const EditarProducto = () => {
               price: productoEditar.price,
               description: productoEditar.description,
               contacto: productoEditar.author.nombre,
+              delivery: productoEditar.delivery,
+              alto: productoEditar.alto,
+              ancho: productoEditar.ancho,
+              largo: productoEditar.largo,
+              peso: productoEditar.peso,
+              precioEstimado: productoEditar.precioEstimado,
+              balearicDelivery: productoEditar.balearicDelivery,
             }}
-            render={({ handleSubmit, values }) => (
+            render={({ handleSubmit, values, form }) => (
               <form onSubmit={handleSubmit}>
                 <div className='mb-3'>
                   <Field name='categoria' validate={required}>
@@ -209,6 +217,34 @@ const EditarProducto = () => {
                       </div>
                     )}
                   </Field>
+                  <Field name='delivery' type='checkbox'>
+                    {({ input, meta }) => (
+                      <div className='mb-4 mt-4'>
+                        <div className='d-flex align-items-center'>
+                          <Label className='me-2'>¿Envío disponible?</Label>
+                          <div className='btn-primary form-check form-switch mt-1'>
+                            <input
+                              {...input}
+                              /* type='checkbox' */
+                              className='form-check-input'
+                              role='switch'
+                              id={`${input.name}-switch`}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </Field>
+                  {values.delivery && (
+                    <FormPaqueteEnvio
+                      alto={values.alto}
+                      ancho={values.ancho}
+                      largo={values.largo}
+                      peso={values.peso}
+                      balearicDelivery={values.balearicDelivery}
+                      form={form}
+                    />
+                  )}
 
                   <div>
                     <div className='container'>
@@ -248,6 +284,7 @@ const EditarProducto = () => {
                     </button>
                   </div>
                 </div>
+                <pre className='bg-success'>{JSON.stringify(values, 0, 2)}</pre>
               </form>
             )}
           />
@@ -279,6 +316,13 @@ function mostrarAlertaYEnviarDatos(sendDataEditProduct, images, imageSel, id, va
   formData.set('description', values.description);
   formData.set('contacto', values.contacto);
   formData.set('id', id);
+  formData.set('delivery', values.delivery);
+  formData.set('balearicDelivery', values.balearicDelivery);
+  formData.set('alto', values.alto);
+  formData.set('ancho', values.ancho);
+  formData.set('largo', values.largo);
+  formData.set('precioEstimado', values.precioEstimado);
+  formData.set('peso', values.peso);
 
   for (let i = 0; i < imageSel.length; i++) {
     formData.append('imagesDelete', imageSel[i]);

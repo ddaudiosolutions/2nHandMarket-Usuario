@@ -23,7 +23,7 @@ import { history } from './helpers/history';
 // Redux
 import { Provider } from 'react-redux';
 import store from './app/store';
-import { Helmet } from 'react-helmet';
+/* import { Helmet } from 'react-helmet'; */
 import ResetPassword from './components/Usuario/ResetPassword';
 import './App.css';
 

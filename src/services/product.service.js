@@ -45,6 +45,7 @@ const borrarProducto = (id) => {
 // EDITAR EL PRODUCTO /////
 const editarProducto = (productData) => {
   const { formData, id } = productData;
+  console.log('editarProductoService', productData);
   return clienteAxios.put(`productos/user/editar/${id}`, formData, data);
 };
 

@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import FormBusqueda from '../FormBusqueda';
+/* import FormBusqueda from '../FormBusqueda'; */
 import ListaProductos from './ListaProductos';
 import ListadoPosts from './ListadoPosts';
 
@@ -9,7 +9,7 @@ import './Producto.css';
 import { obtenerProductos, obtenerProductosPorPalabras } from '../../slices/productSlice';
 import { obtenerBuscoPosts } from '../../slices/buscoPostSlice';
 import { obtenerDatosUsuario } from '../../slices/usersSlice';
-import IconoBusqueda from './iconos/IconoBusqueda';
+/* import IconoBusqueda from './iconos/IconoBusqueda'; */
 import { getFavoriteProducts } from '../../slices/favoriteProductsSlice';
 import SearchByWords from './busquedaPorTexto/SearchByWords';
 import Navbar from '../Navbar';

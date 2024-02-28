@@ -37,10 +37,11 @@
   background-color: rgb(252, 252, 252);
   border-radius: 5px;
 }
-.titleH5V {
+.titleH5VerProducto {
   overflow: hidden;
-  font-weight: 400;
-  font-size: 1.8rem;
+/*   font-weight: 400; */
+  font-size: 1.7rem;
+  font-weight: 600;
   /* font-size: 0.5vw; */
   /* text-transform: uppercase; */
   font-family: Saira;

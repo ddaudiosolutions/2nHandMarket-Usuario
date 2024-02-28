@@ -8,6 +8,7 @@ import { crearNuevoProducto } from '../../slices/productSlice';
 import { Form, Field } from 'react-final-form';
 import Swal from 'sweetalert2';
 import { verificarPesoImagenes } from '../../helpers/utils';
+import FormPaqueteEnvio from '../gestionEnvios/FormPaqueteEnvio';
 
 const Label = styled.label`
   font-family: Saira;
@@ -25,7 +26,7 @@ const NuevoProducto = () => {
       if (verificarPesoImagenes(images)) {
         Swal.fire({
           icon: 'info',
-          html: 'Peso mayor de 1Mb! Se reducirá el peso de la imagen, puede perder algo de calidad!!',
+          html: 'Peso mayor de 1Mb! Se reducirá el peso, puede perder algo de calidad!!',
           showCancelButton: true,
           cancelButtonColor: '#d33',
           confirmButtonColor: '#3085d6',
@@ -172,6 +173,28 @@ const NuevoProducto = () => {
                       </div>
                     )}
                   </Field>
+                  <Field name='delivery' type='checkbox'>
+                    {({ input, meta }) => (
+                      <div className='mb-4 mt-4'>
+                        <div className='d-flex align-items-center'>
+                          <Label className='me-2'>¿Envío disponible?</Label>
+                          <div className='btn-primary form-check form-switch mt-1'>
+                            <input
+                              {...input}
+                              /* type='checkbox' */
+                              className='form-check-input'
+                              role='switch'
+                              id={`${input.name}-switch`}
+                            />
+                          </div>
+                        </div>
+                        {meta.error && meta.touched && (
+                          <span className='error'>Este campo es requerido</span>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                  {values.delivery && <FormPaqueteEnvio />}
 
                   <div>
                     <div>
@@ -190,7 +213,7 @@ const NuevoProducto = () => {
                     ></input>
                   </div>
                 </div>
-                {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
+                <pre>{JSON.stringify(values, 0, 2)}</pre>
                 <div className='mb-3 mt-3 text-center'>
                   <button
                     className='btn btn-outline-warning'
@@ -226,7 +249,7 @@ function mostrarAlertaYEnviarDatos(agregarProducto, images, values) {
   formData.set('price', values.price);
   formData.set('description', values.description);
   formData.set('contacto', values.contacto);
-
+  formData.set('delivery', values.delivery);
   agregarProducto(formData);
 }
 

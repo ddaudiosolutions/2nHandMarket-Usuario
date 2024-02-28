@@ -11,6 +11,14 @@
   color: rgb(158, 157, 157);
   text-align: right;
 }
+
+.pproductoGestionEnvio {
+  font-family: Saira;
+  font-weight: 400;
+  font-size: 1rem;
+  color: rgb(158, 157, 157);
+  text-align: left;
+}
 .pproducto {
   font-family: Saira;
   font-weight: 300;
