@@ -265,8 +265,8 @@ function mostrarAlertaYEnviarDatos(agregarProducto, images, values) {
   formData.set('largo', values.largo);
   formData.set('precioEstimado', values.precioEstimado);
   formData.set('peso', values.peso);
-  formData.set('vendido', values.vendido);
-  formData.set('reservado', values.reservado);
+  formData.set('vendido', false);
+  formData.set('reservado', false);
 
   agregarProducto(formData);
 }
