@@ -260,11 +260,11 @@ function mostrarAlertaYEnviarDatos(agregarProducto, images, values) {
   formData.set('contacto', values.contacto);
   formData.set('delivery', values.delivery);
   formData.set('balearicDelivery', values.balearicDelivery);
-  formData.set('alto', values.alto);
-  formData.set('ancho', values.ancho);
-  formData.set('largo', values.largo);
-  formData.set('precioEstimado', values.precioEstimado);
-  formData.set('peso', values.peso);
+  formData.set('alto', values.alto || 0);
+  formData.set('ancho', values.ancho || 0);
+  formData.set('largo', values.largo || 0);
+  formData.set('precioEstimado', values.precioEstimado || 0);
+  formData.set('peso', values.peso || 0);
   formData.set('vendido', false);
   formData.set('reservado', false);
 
