@@ -11,10 +11,9 @@ import './Producto.css';
 const Producto = ({ producto }) => {
   console.log(producto);
   const { title, price, images, description, delivery } = producto;
+  const favoritos = useSelector((state) => state.users.user.favoritos);
   const productoFavoritos =
-    sessionStorage.getItem('userId') !== null
-      ? useSelector((state) => state.users.user.favoritos)
-      : null;
+    sessionStorage.getItem('userId') !== null && favoritos !== undefined ? favoritos : null;
   const dispatch = useDispatch();
   const history = useHistory();
   const existe = (productoFavoritos, producto) => {
@@ -24,7 +23,7 @@ const Producto = ({ producto }) => {
     dispatch(setProductId(producto));
     history.push(`/productos/${producto._id}`);
   };
-
+  console.log('productosFavoritos', productoFavoritos);
   const [favorite, setFavorite] = useState(existe(productoFavoritos, producto._id));
   // funcion para cambiar el estado de verdadero a falso al pulsar el boton favoritos
   const handleFavorite = () => {
