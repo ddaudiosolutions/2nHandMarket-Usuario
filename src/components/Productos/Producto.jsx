@@ -11,7 +11,7 @@ import './Producto.css';
 const Producto = ({ producto }) => {
   console.log(producto);
   const { title, price, images, description, delivery } = producto;
-  const favoritos = useSelector((state) => state.users.user.favoritos);
+  const favoritos = useSelector((state) => state.users.user?.favoritos || []);
   const productoFavoritos =
     sessionStorage.getItem('userId') !== null && favoritos !== undefined ? favoritos : null;
   const dispatch = useDispatch();
