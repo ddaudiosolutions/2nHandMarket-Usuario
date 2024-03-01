@@ -45,6 +45,7 @@ const borrarProducto = (id) => {
 // EDITAR EL PRODUCTO /////
 const editarProducto = (productData) => {
   const { formData, id } = productData;
+  console.log('editarProductoService', productData);
   return clienteAxios.put(`productos/user/editar/${id}`, formData, data);
 };
 
@@ -53,6 +54,17 @@ const editarProducto = (productData) => {
 /// //////
 const obtenerProductosAuthor = (authorId) => {
   return clienteAxios.get(`productos/auth/${authorId}`);
+};
+
+const sendMailPegatinas = (emailData) => {
+  return clienteAxios.post('productos/envioPegatinas', emailData);
+};
+
+const editReservedState = (stateData) => {
+  return clienteAxios.post('productos/editReservedState', stateData);
+};
+const editVendidoState = (stateData) => {
+  return clienteAxios.post('productos/editVendidoState', stateData);
 };
 
 const ProducServices = {
@@ -64,6 +76,9 @@ const ProducServices = {
   crearNuevoProductoAction,
   editarProducto,
   obtenerProductosPorPalabras,
+  sendMailPegatinas,
+  editReservedState,
+  editVendidoState
 };
 
 export default ProducServices;

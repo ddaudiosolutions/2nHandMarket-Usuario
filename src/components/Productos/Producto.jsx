@@ -9,7 +9,8 @@ import { getFavoriteProducts } from '../../slices/favoriteProductsSlice';
 import './Producto.css';
 
 const Producto = ({ producto }) => {
-  const { title, price, images, description } = producto;
+  console.log(producto);
+  const { title, price, images, description, delivery } = producto;
   const productoFavoritos =
     sessionStorage.getItem('userId') !== null
       ? useSelector((state) => state.users.user.favoritos)
@@ -55,7 +56,6 @@ const Producto = ({ producto }) => {
       ? images[0].url
       : 'https://res.cloudinary.com/dhe1gcno9/image/upload/v1707814598/ProductosMarketV2/WINDY_fakeImage_fbkd2s.jpg';
 
-  console.log('firstImage', firstImage);
   const firstFilename = (images.length === 0 || images[0].filename) ?? 'WindyMarket';
 
   return (
@@ -68,6 +68,11 @@ const Producto = ({ producto }) => {
         >
           <div className=''>
             <img src={firstImage} className='card-img-top' alt={firstFilename}></img>
+            {producto.reservado && (
+              <div className='text-container mt-3'>
+                <div className='text-over-image'>Reservado</div>
+              </div>
+            )}
           </div>
         </div>
         <div className='card-body'>
@@ -98,6 +103,16 @@ const Producto = ({ producto }) => {
           <div className='prodPreDescription m-1 mb-3' rows='2'>
             {description}
           </div>
+          {delivery && (
+            <div className='d-flex'>
+              <img
+                src='./images/windyMarket_delivery Icon.jpg'
+                alt='DeliveryWindymarket_icon'
+                style={{ width: '1.5rem' }}
+              ></img>
+              <h6 className='ms-3 mt-2'>Envio Disponible</h6>
+            </div>
+          )}
         </div>
       </div>
     </Fragment>

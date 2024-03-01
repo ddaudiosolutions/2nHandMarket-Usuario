@@ -6,7 +6,7 @@ import jwtDecode from 'jwt-decode';
 import { logOutUsuario } from '../slices/usersSlice';
 import { obtenerProductos, obtenerProductosAuthor } from '../slices/productSlice';
 import { obtenerBuscoPostsUserAction } from '../slices/buscoPostSlice';
-import HappyBanner from './banners/HappyBanner';
+/* import HappyBanner from './banners/HappyBanner'; */
 
 const Header = () => {
   const dispatch = useDispatch();
