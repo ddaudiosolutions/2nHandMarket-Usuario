@@ -56,6 +56,17 @@ const obtenerProductosAuthor = (authorId) => {
   return clienteAxios.get(`productos/auth/${authorId}`);
 };
 
+const sendMailPegatinas = (emailData) => {
+  return clienteAxios.post('productos/envioPegatinas', emailData);
+};
+
+const editReservedState = (stateData) => {
+  return clienteAxios.post('productos/editReservedState', stateData);
+};
+const editVendidoState = (stateData) => {
+  return clienteAxios.post('productos/editVendidoState', stateData);
+};
+
 const ProducServices = {
   obtenerCategoriaActions,
   obtenerProductoIdApi,
@@ -65,6 +76,9 @@ const ProducServices = {
   crearNuevoProductoAction,
   editarProducto,
   obtenerProductosPorPalabras,
+  sendMailPegatinas,
+  editReservedState,
+  editVendidoState
 };
 
 export default ProducServices;

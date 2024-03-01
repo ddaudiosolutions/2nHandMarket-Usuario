@@ -98,6 +98,11 @@ module.exports = {
           'initial_messages', // temporalmente
           /* 'items_listFiltered',  */ // temporalmente
           /* 'revertLateral_W', */ // temporalmente
+          'purchase_units',
+          'currency_code',
+          'payment_method',
+          'billing_details',
+          'return_url'
         ],
         ignoreDestructuring: true,
         ignoreImports: true,

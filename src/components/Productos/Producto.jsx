@@ -68,6 +68,11 @@ const Producto = ({ producto }) => {
         >
           <div className=''>
             <img src={firstImage} className='card-img-top' alt={firstFilename}></img>
+            {producto.reservado && (
+              <div className='text-container mt-3'>
+                <div className='text-over-image'>Reservado</div>
+              </div>
+            )}
           </div>
         </div>
         <div className='card-body'>

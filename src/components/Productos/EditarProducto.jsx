@@ -24,6 +24,7 @@ const EditarProducto = () => {
   const [id, setId] = useState('');
 
   const productoEditar = useSelector((state) => state.products.productToEdit);
+  console.log(productoEditar);
   const [imagesTotales, setImagesTotales] = useState(''); // NUM TOTA DE IMGS (SUBIDAS Y POR SUBIR)
   const [imagesT, setImages] = useState(''); // NUEVAS IMAGENES PARA SUBIR
   const imagesState = parseInt(productoEditar.images.length); // NUM IMAGENES YA SUBIDAS
@@ -124,6 +125,8 @@ const EditarProducto = () => {
               peso: productoEditar.peso,
               precioEstimado: productoEditar.precioEstimado,
               balearicDelivery: productoEditar.balearicDelivery,
+              reservado: productoEditar.reservado,
+              vendido: productoEditar.vendido,
             }}
             render={({ handleSubmit, values, form }) => (
               <form onSubmit={handleSubmit}>
@@ -323,6 +326,8 @@ function mostrarAlertaYEnviarDatos(sendDataEditProduct, images, imageSel, id, va
   formData.set('largo', values.largo);
   formData.set('precioEstimado', values.precioEstimado);
   formData.set('peso', values.peso);
+  formData.set('vendido', values.vendido);
+  formData.set('reservado', values.reservado);
 
   for (let i = 0; i < imageSel.length; i++) {
     formData.append('imagesDelete', imageSel[i]);

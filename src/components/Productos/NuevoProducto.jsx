@@ -81,7 +81,7 @@ const NuevoProducto = () => {
               description: '',
               contacto: usuario.email,
             }}
-            render={({ handleSubmit, values }) => (
+            render={({ handleSubmit, values, form }) => (
               <form onSubmit={handleSubmit}>
                 <div className='mb-3'>
                   <Field name='categoria' validate={required}>
@@ -194,7 +194,16 @@ const NuevoProducto = () => {
                       </div>
                     )}
                   </Field>
-                  {values.delivery && <FormPaqueteEnvio />}
+                  {values.delivery && (
+                    <FormPaqueteEnvio
+                      alto={values.alto}
+                      ancho={values.ancho}
+                      largo={values.largo}
+                      peso={values.peso}
+                      balearicDelivery={values.balearicDelivery}
+                      form={form}
+                    />
+                  )}
 
                   <div>
                     <div>
@@ -250,6 +259,13 @@ function mostrarAlertaYEnviarDatos(agregarProducto, images, values) {
   formData.set('description', values.description);
   formData.set('contacto', values.contacto);
   formData.set('delivery', values.delivery);
+  formData.set('balearicDelivery', values.balearicDelivery);
+  formData.set('alto', values.alto);
+  formData.set('ancho', values.ancho);
+  formData.set('largo', values.largo);
+  formData.set('precioEstimado', values.precioEstimado);
+  formData.set('peso', values.peso);
+
   agregarProducto(formData);
 }
 

@@ -53,7 +53,7 @@ export const obtenerProductoIdApi = createAsyncThunk(
     console.log(productoid);
     try {
       const producto = await ProductService.obtenerProductoIdApi(productoid);
-      console.log(producto);
+      console.log('obtenerProductoIdApi', producto);
       return producto;
     } catch (error) {
       throw rejectedWithValue(error.message);
@@ -115,6 +115,42 @@ export const borrarProducto = createAsyncThunk(
   }
 );
 
+export const sendMailPegatinas = createAsyncThunk(
+  'sendMailToUser / POST',
+  async (emailData, { rejectedWithValue }) => {
+    try {
+      const sendMailToUser = await ProductService.sendMailPegatinas(emailData);
+      return sendMailToUser;
+    } catch (error) {
+      throw rejectedWithValue(error.message);
+    }
+  }
+);
+
+export const changeReservedProductState = createAsyncThunk(
+  'changleReservedState / POST',
+  async (reservedData, { rejectedWithValue }) => {
+    try {
+      const reservedState = await ProductService.editReservedState(reservedData);
+      return reservedState;
+    } catch (error) {
+      throw rejectedWithValue(error.message);
+    }
+  }
+);
+
+export const changeVendidoProductState = createAsyncThunk(
+  'changVendioState / POST',
+  async (vendidoData, { rejectedWithValue }) => {
+    try {
+      const vendidoState = await ProductService.editVendidoState(vendidoData);
+      return vendidoState;
+    } catch (error) {
+      throw rejectedWithValue(error.message);
+    }
+  }
+);
+
 const productsSlices = createSlice({
   name: 'products',
   initialState,
@@ -170,6 +206,38 @@ const productsSlices = createSlice({
           window.location = `/`;
         });
       }
+    });
+    builder.addCase(sendMailPegatinas.pending, (state, action) => {
+      console.log('sendMailPegatinas', action.payload);
+      Swal.fire('Enviando Email....');
+      Swal.showLoading();
+    });
+    builder.addCase(sendMailPegatinas.fulfilled, (state, action) => {
+      console.log('sendMailPegatinas', action.payload);
+      state.statusSendEmail = action.payload.status;
+      if (action.payload.status === 200) {
+        Swal.fire('Correcto', 'El email se ha enviado Correctamente', 'success').then(function () {
+          window.location = '/';
+        });
+      }
+    });
+    builder.addCase(changeReservedProductState.fulfilled, (state, action) => {
+      console.log('changeReservedProductState', action.payload);
+      state.statusChangeReserved = action.payload.status;
+      /* if (action.payload.status === 200) {
+        Swal.fire('Correcto', 'El estado del producto ha cambiado', 'success').then(function () {
+          window.location = '/';
+        });
+      } */
+    });
+    builder.addCase(changeVendidoProductState.fulfilled, (state, action) => {
+      console.log('changeVendidoProductState', action.payload);
+      state.changeVendidoProductState = action.payload.status;
+      /* if (action.payload.status === 200) {
+        Swal.fire('Correcto', 'El estado del producto ha cambiado', 'success').then(function () {
+          window.location = '/';
+        });
+      } */
     });
   },
 });

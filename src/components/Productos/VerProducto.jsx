@@ -15,11 +15,18 @@ import {
 } from '../../slices/usersSlice';
 import _ from 'lodash';
 import { getFavoriteProducts } from '../../slices/favoriteProductsSlice';
-import { obtenerProductoIdApi } from '../../slices/productSlice';
+import {
+  changeReservedProductState,
+  changeVendidoProductState,
+  obtenerProductoIdApi,
+} from '../../slices/productSlice';
 import ContactoentreUsers from '../envioMensajes/ContactoentreUsers';
 import BotonGestionEnvio from '../gestionEnvios/BotonGestionEnvio';
 
 import GestionEnvioModal from '../modals/GestionEnvioModal';
+import BotonReservarProducto from './botonesProducto/BotonReservarProducto';
+import BotonVendidoProducto from './botonesProducto/BotonVendidoProducto';
+import BotonEditarProducto from './botonesProducto/BotonEditarProducto';
 
 const VerProducto = () => {
   const producto = useSelector((state) => state.products.productoId);
@@ -42,6 +49,62 @@ const VerProducto = () => {
   const clonedDateFormat = clonedDate !== 'Invalid Date' ? format(clonedDate, 'dd-MM-yyyy') : null;
   const userId = sessionStorage.getItem('userId');
   // meter el dispatch dentro de un useffect
+
+  const [reservado, setReservado] = useState(producto ? producto.reservado : false);
+  const handleReservado = () => {
+    if (reservado) {
+      console.log('envio datos de reserva');
+      dispatch(
+        changeReservedProductState({
+          productId: producto._id,
+          reservado: false,
+        })
+      ).then((res) => {
+        if (res.payload.status === 200) {
+          dispatch(obtenerProductoIdApi(productoId));
+        }
+      });
+    } else if (reservado === false) {
+      dispatch(
+        changeReservedProductState({
+          productId: producto._id,
+          reservado: true,
+        })
+      ).then((res) => {
+        if (res.payload.status === 200) {
+          dispatch(obtenerProductoIdApi(productoId));
+        }
+      });
+    }
+  };
+  const [vendido, setVendido] = useState(producto ? producto.vendido : false);
+  const handleVendido = () => {
+    if (vendido) {
+      console.log('envio datos de reserva');
+      dispatch(
+        changeVendidoProductState({
+          productId: producto._id,
+          vendido: false,
+        })
+      ).then((res) => {
+        if (res.payload.status === 200) {
+          dispatch(obtenerProductoIdApi(productoId));
+        }
+      });
+    } else if (vendido === false) {
+      dispatch(
+        changeVendidoProductState({
+          productId: producto._id,
+          vendido: true,
+        })
+      ).then((res) => {
+        if (res.payload.status === 200) {
+          dispatch(obtenerProductoIdApi(productoId));
+        }
+      });
+    }
+  };
+
   useEffect(() => {
     dispatch(obtenerProductoIdApi(productoId));
   }, [dispatch]);
@@ -61,8 +124,6 @@ const VerProducto = () => {
   if (isLogged && useSelector((state) => state.users.user) !== undefined) {
     productoFavoritos = useSelector((state) => state.users.user.favoritos);
   } else if (isLogged && useSelector((state) => state.users.user) === undefined) {
-    console.log('obtener datos usuario');
-
     dispatch(obtenerDatosUsuario(userId));
   }
 
@@ -70,15 +131,13 @@ const VerProducto = () => {
     return _.includes(productoFavoritos, producto);
   };
 
+  // CREAR FORMULARIO PARA GESTION DE DATOS DE ENVIO
+  const [showForm, setShowForm] = useState(false);
+
   const [favorite, setFavorite] = useState(
     producto ? existe(productoFavoritos, producto._id) : false
   );
 
-  // CREAR FORMULARIO PARA GESTION DE DATOS DE ENVIO
-  const [showForm, setShowForm] = useState(false);
-
-  /* const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true); */
   const handleFavorite = () => {
     setFavorite(!favorite);
     if (favorite) {
@@ -104,7 +163,6 @@ const VerProducto = () => {
   };
 
   if (producto === null || producto === undefined) return null;
-  console.log(showForm);
   return (
     <Fragment>
       <GestionEnvioModal
@@ -115,25 +173,44 @@ const VerProducto = () => {
       <div></div>
       <div className='container col-sm-9 col-md-9 col-lg-7 col-xl-7'>
         <div className='cardVerProducto mt-3 '>
-          <div
-            className='d-flex justify-content-start  mt-3'
-            type='button'
-            onClick={() => cargarProductosAuthor(dispatch, history, producto)}
-          >
-            {producto.author.imagesAvatar[0].url === undefined ? (
-              <img
-                src='/Avatar_Default2.png'
-                className='card-img-topAvatar ms-4 mt-3'
-                alt='avatar for User'
-              ></img>
-            ) : (
-              <img
-                src={producto.author.imagesAvatar[0].url}
-                className='card-img-topAvatar ms-4 mt-3'
-                alt='avatarUser'
-              ></img>
-            )}
-            <h5 className='h2Author ms-2 mt-4'>{authorName}</h5>
+          <div className='d-flex justify-content-between'>
+            <div
+              className='d-flex justify-content-start  mt-3'
+              type='button'
+              onClick={() => cargarProductosAuthor(dispatch, history, producto)}
+            >
+              {producto.author.imagesAvatar[0].url === undefined ? (
+                <img
+                  src='/Avatar_Default2.png'
+                  className='card-img-topAvatar ms-4 mt-3'
+                  alt='avatar for User'
+                ></img>
+              ) : (
+                <img
+                  src={producto.author.imagesAvatar[0].url}
+                  className='card-img-topAvatar ms-4 mt-3'
+                  alt='avatarUser'
+                ></img>
+              )}
+              <h5 className='h2Author ms-2 mt-4'>{authorName}</h5>
+            </div>
+            <div>
+              {sessionStorage.getItem('userId') === producto.author._id && (
+                <div className='mt-4'>
+                  <BotonReservarProducto
+                    reservado={reservado} // Cambia 'colorSiReservado' y 'colorSiNoReservado' por los colores reales que desees
+                    handleReservado={handleReservado}
+                    setReservado={setReservado}
+                  />
+                  <BotonVendidoProducto
+                    vendido={vendido}
+                    handleVendido={handleVendido}
+                    setVendido={setVendido}
+                  />
+                  <BotonEditarProducto producto={producto} />
+                </div>
+              )}
+            </div>
           </div>
           <div>
             <div
@@ -169,6 +246,11 @@ const VerProducto = () => {
                       className='card-img-top mt-3'
                       alt='...'
                     ></img>
+                    {reservado && (
+                      <div className='text-container mt-3'>
+                        <div className='text-over-image'>Reservado</div>
+                      </div>
+                    )}
                   </a>
                 </div>
                 {producto.images.slice(1).map((image) => (
