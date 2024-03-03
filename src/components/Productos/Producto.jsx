@@ -10,7 +10,7 @@ import './Producto.css';
 
 const Producto = ({ producto }) => {
   console.log(producto);
-  const { title, price, images, description, delivery } = producto;
+  const { title, price, images, /* description, */ delivery } = producto;
   const favoritos = useSelector((state) => state.users?.user?.favoritos || []);
   const productoFavoritos =
     sessionStorage.getItem('userId') !== null && favoritos !== undefined ? favoritos : null;
@@ -99,17 +99,17 @@ const Producto = ({ producto }) => {
             </div>
           </div>
           <h5 className='titleH5-product  card-title m-1'>{title}</h5>
-          <div className='prodPreDescription m-1 mb-3' rows='2'>
+          {/* <div className='prodPreDescription m-1' rows='2'>
             {description}
-          </div>
+          </div> */}
           {delivery && (
             <div className='d-flex'>
               <img
                 src='./images/windyMarket_delivery Icon.jpg'
                 alt='DeliveryWindymarket_icon'
-                style={{ width: '1.5rem' }}
+                style={{ width: '1.2rem', height: '1.5rem' }}
               ></img>
-              <h6 className='ms-3 mt-2'>Envio Disponible</h6>
+              <h6 className='ms-3 mt-1'>Envio Disponible</h6>
             </div>
           )}
         </div>

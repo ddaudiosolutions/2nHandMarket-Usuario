@@ -138,10 +138,9 @@ h2 {
   letter-spacing: 0.03rem;
 }
 
-.btn-outline-success {
+/* .btn-outline-success {
   background-color: transparent;
   color: #237a00;
-  /* fill: #ffffff; */
   border: 1px solid;
   text-decoration: none;
   outline: 0;
@@ -149,7 +148,7 @@ h2 {
   font-family: Saira;
   font-weight: 400;
   letter-spacing: 0.03rem;
-}
+} */
 
 .btn-outline-primary {
   background-color: transparent;

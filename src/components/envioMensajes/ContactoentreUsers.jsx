@@ -1,6 +1,7 @@
 import { Form, Field } from 'react-final-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendMailToUser } from '../../slices/usersSlice';
+import '../Productos/Producto.css';
 
 const ContactoentreUsers = ({ productId, sellerEmail, sellerName }) => {
   const userSender = useSelector((state) => state.users.user);

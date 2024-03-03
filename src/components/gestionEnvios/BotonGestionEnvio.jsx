@@ -2,7 +2,7 @@ function BotonGestionEnvio({ setShowForm }) {
   return (
     <>
       <button
-        className='btn btn-primary'
+        className='btn btn-success'
         onClick={() => {
           setShowForm(true);
         }}
