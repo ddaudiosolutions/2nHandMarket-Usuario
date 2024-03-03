@@ -170,7 +170,7 @@ function FormularioDatosEnvio({ handleClose, datosRemitente }) {
 
             <button
               type='submit'
-              className='btn btn-primary'
+              className='btn btn-outline-success'
               /* onClick={() => handleClose(false)} */ disabled={submitting}
             >
               Enviar

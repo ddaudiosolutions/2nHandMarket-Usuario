@@ -104,7 +104,7 @@
 .text-over-image {
   color: #38D9DF;
   font-size: 2rem;
-  font-weight: 800;
-  font-family: Saira;
+  font-weight: 200;
+  font-family: Saira stencil one;
  /*  text-shadow: 2px 2px 4px rgba(145, 145, 145, 0.5); */
 }
