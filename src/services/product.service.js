@@ -16,7 +16,6 @@ const crearNuevoProductoAction = (producto, history) => {
 
 // FUNCION QUE DESCARGA LOS PRODUCTOS DE LA BBDD
 const obtenerCategoriaActions = (pageAndData) => {
-  console.log(pageAndData);
   const { busquedaquery, pagequery } = pageAndData;
   return clienteAxios.get(`productos?busqueda=${busquedaquery}&page=${pagequery}`, data);
 };
@@ -32,7 +31,6 @@ const obtenerProductoIdApi = (productoid) => {
 };
 
 const obtenerProductosPorPalabras = (words) => {
-  console.log(words);
   return clienteAxios.post(`productos/searchByWords`, words, data);
 };
 
@@ -45,7 +43,6 @@ const borrarProducto = (id) => {
 // EDITAR EL PRODUCTO /////
 const editarProducto = (productData) => {
   const { formData, id } = productData;
-  console.log('editarProductoService', productData);
   return clienteAxios.put(`productos/user/editar/${id}`, formData, data);
 };
 

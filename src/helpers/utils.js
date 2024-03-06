@@ -14,7 +14,6 @@ export const extraerIdDeURL = (url) => {
 };
 
 export const verificarPesoImagenes = (images) => {
-  console.log(images);
   let isPesado = false;
   for (const image of images) {
     if (image.size > 1000000) {
@@ -22,37 +21,6 @@ export const verificarPesoImagenes = (images) => {
       break;
     }
   }
-  console.log('isPesado', isPesado);
   return isPesado;
 };
 
-/* export const sendDataNewOrEdit = (
-  sendDataEditProduct,
-  agregarProducto,
-  images,
-  imageSel,
-  id,
-  values
-) => {
-  console.log(id);
-  const formData = new FormData();
-  for (let j = 0; j < images.length; j++) {
-    formData.append('images', images[j]);
-  }
-  formData.set('title', values.title);
-  formData.set('categoria', values.categoria);
-  formData.set('subCategoria', values.subCategoria);
-  formData.set('price', values.price);
-  formData.set('description', values.description);
-  formData.set('contacto', values.contacto);
-  formData.set('id', id);
-
-  if (id !== null) {
-    for (let i = 0; i < imageSel.length; i++) {
-      formData.append('imagesDelete', imageSel[i]);
-    }
-    sendDataEditProduct(formData, id, history);
-  } else {
-    agregarProducto(formData);
-  }
-}; */

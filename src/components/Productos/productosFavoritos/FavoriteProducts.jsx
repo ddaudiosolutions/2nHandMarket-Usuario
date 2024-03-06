@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { getFavoriteProducts } from '../../../slices/favoriteProductsSlice';
 
 function FavoriteProducts() {
-  const favoriteProductsId = useSelector((state) => state.users.user.favoritos);
+  const favoriteProductsId = useSelector((state) => state.users.user?.favoritos);
   const dispatch = useDispatch();
   const favoriteProductsData = useSelector((state) => state.favoriteProducts.favoriteProducts);
   if (favoriteProductsData === null) return null;

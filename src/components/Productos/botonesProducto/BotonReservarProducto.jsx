@@ -1,8 +1,6 @@
 import { BsBookmarkCheck } from 'react-icons/bs';
 
 const BotonReservarProducto = (props) => {
-  console.log(props.reservado);
-
   return (
     <BsBookmarkCheck
       className=''

@@ -9,7 +9,6 @@ import { getFavoriteProducts } from '../../slices/favoriteProductsSlice';
 import './Producto.css';
 
 const Producto = ({ producto }) => {
-  console.log(producto);
   const { title, price, images, /* description, */ delivery } = producto;
   const favoritos = useSelector((state) => state.users?.user?.favoritos || []);
   const productoFavoritos =
@@ -19,11 +18,12 @@ const Producto = ({ producto }) => {
   const existe = (productoFavoritos, producto) => {
     return _.includes(productoFavoritos, producto);
   };
+
   const verProductoId = (producto) => {
     dispatch(setProductId(producto));
     history.push(`/productos/${producto._id}`);
   };
-  console.log('productosFavoritos', productoFavoritos);
+
   const [favorite, setFavorite] = useState(existe(productoFavoritos, producto._id));
   // funcion para cambiar el estado de verdadero a falso al pulsar el boton favoritos
   const handleFavorite = () => {
@@ -70,6 +70,11 @@ const Producto = ({ producto }) => {
             {producto.reservado && (
               <div className='text-container mt-3'>
                 <div className='text-over-image'>Reservado</div>
+              </div>
+            )}
+            {producto.vendido && (
+              <div className='text-container mt-3'>
+                <div className='text-over-image'>Vendido</div>
               </div>
             )}
           </div>

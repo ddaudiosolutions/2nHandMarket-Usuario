@@ -37,7 +37,7 @@ function IconoBusqueda({ typeProduct, handleIconClick }) {
             style={{ width: '60px', height: '60px' }}
           />
         </div>
-        <h7>{typeProduct}</h7>
+        <h6>{typeProduct}</h6>
       </div>
     </div>
   );

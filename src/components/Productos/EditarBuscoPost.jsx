@@ -24,7 +24,6 @@ const EditarBuscoPost = () => {
   // AL HACER SUBMIT EN EL FORMULARIO
   const submitEditarBuscoPost = (values) => {
     const { contacto, descripcionBuscoPost, title } = values;
-    console.log(values);
     dispatch(
       editarBuscoPostAction({
         title,
@@ -33,7 +32,6 @@ const EditarBuscoPost = () => {
         id: editPost._id,
       })
     ).then((res) => {
-      console.log(res);
       if (res.payload.status === 200) {
         Swal.fire('Correcto', 'POST EDITADO CON EXITO', 'success').then(function () {
           cargarProductosAuthor(dispatch, history, editPost);

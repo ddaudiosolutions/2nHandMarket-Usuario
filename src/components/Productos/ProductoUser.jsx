@@ -36,7 +36,6 @@ const ProductoUser = ({ producto }) => {
   };
 
   const verProductoId = (producto) => {
-    console.log(producto);
     dispatch(setProductId(producto));
     history.push(`/productos/${producto._id}`);
   };

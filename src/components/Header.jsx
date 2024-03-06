@@ -18,19 +18,19 @@ const Header = () => {
   const [nombreUsuario, setNombreUsuario] = useState('');
   const history = useHistory();
   useEffect(() => {
-    if (!userTokenCheck) {
-      console.log('NO HAY TOKEN');
-      return null;
-    } else {
+    // Solo proceder si userTokenCheck existe
+    if (userTokenCheck) {
       const { exp } = jwtDecode(userTokenCheck);
       const expiredToken = exp * 1000 - 60000;
       if (expiredToken < date) {
         logOut();
+      } else {
+        setNombreUsuario(nombreUser);
       }
-      setNombreUsuario(nombreUser);
     }
-    // eslint-disable-next-line
-  }, [nombreUser]);
+    // Nota: No hay un `return` explícito aquí, lo que significa que este useEffect
+    // retorna `undefined` por defecto, cumpliendo con las reglas de React.
+  }, [nombreUser, userTokenCheck, date]); // Asegúrate de incluir todas las dependencias relevantes
 
   const logOut = (nombreUser) => {
     dispatch(logOutUsuario(nombreUser));
@@ -42,6 +42,7 @@ const Header = () => {
   };
 
   const cargarProductosAuthor = (id) => {
+    console.log('cagando productos');
     dispatch(obtenerProductosAuthor(id));
     dispatch(obtenerBuscoPostsUserAction(id));
     history.push(`/productos/auth/${id}`);
