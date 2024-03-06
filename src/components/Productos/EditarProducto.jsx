@@ -76,7 +76,6 @@ const EditarProducto = () => {
   };
 
   const submitEditarProducto = (values) => {
-    console.log('submit EditarProducto', values);
     if (imageSel.length === productoEditar.images.length && imagesT.length === 0) {
       Swal.fire({
         icon: 'error',
@@ -95,6 +94,14 @@ const EditarProducto = () => {
         if (result.isConfirmed) {
           mostrarAlertaYEnviarDatos(sendDataEditProduct, imagesT, imageSel, id, values);
         }
+      });
+    } else if (values.pesoVolumetrico <= -1 && values.pesoKgs <= 0) {
+      Swal.fire({
+        icon: 'info',
+        html: 'Debes introducir el peso en Kgs del paquete para darte un precio estimado',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Cerrar',
+        reverseButtons: true,
       });
     } else {
       mostrarAlertaYEnviarDatos(sendDataEditProduct, imagesT, imageSel, id, values);
@@ -121,8 +128,9 @@ const EditarProducto = () => {
               alto: productoEditar.alto,
               ancho: productoEditar.ancho,
               largo: productoEditar.largo,
-              peso: productoEditar.peso,
-              precioEstimado: productoEditar.precioEstimado,
+              pesoVolumetrico: parseFloat(productoEditar.pesoVolumetrico),
+              pesoKgs: productoEditar.pesoKgs,
+              precioEstimado: parseFloat(productoEditar.precioEstimado),
               balearicDelivery: productoEditar.balearicDelivery,
               reservado: productoEditar.reservado,
               vendido: productoEditar.vendido,
@@ -242,7 +250,8 @@ const EditarProducto = () => {
                       alto={values.alto}
                       ancho={values.ancho}
                       largo={values.largo}
-                      peso={values.peso}
+                      pesoVolumetrico={values.pesoVolumetrico}
+                      pesoKgs={values.pesoKgs}
                       balearicDelivery={values.balearicDelivery}
                       form={form}
                     />
@@ -286,7 +295,8 @@ const EditarProducto = () => {
                     </button>
                   </div>
                 </div>
-                {/*  <pre className='bg-success'>{JSON.stringify(values, 0, 2)}</pre> */}
+
+                <pre className='bg-success'>{JSON.stringify(values, 0, 2)}</pre>
               </form>
             )}
           />
@@ -324,7 +334,8 @@ function mostrarAlertaYEnviarDatos(sendDataEditProduct, images, imageSel, id, va
   formData.set('ancho', values.ancho);
   formData.set('largo', values.largo);
   formData.set('precioEstimado', values.precioEstimado);
-  formData.set('peso', values.peso);
+  formData.set('pesoVolumetrico', values.pesoVolumetrico);
+  formData.set('pesoKgs', values.pesoKgs);
   formData.set('vendido', values.vendido);
   formData.set('reservado', values.reservado);
 

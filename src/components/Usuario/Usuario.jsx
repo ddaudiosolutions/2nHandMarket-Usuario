@@ -67,6 +67,12 @@ const Usuario = () => {
                   {datosUsuario.direccion}
                 </div>
               </div>
+              <div className='row form-group mb-2'>
+                <label className='loginLabel'>Poblacion y CP</label>
+                <div data-cy='direccion' type='text' className='form-control'>
+                  {datosUsuario.poblacion_CP}
+                </div>
+              </div>
               <div className='text-center'>
                 {datosUsuario.imagesAvatar[0].url === undefined ? (
                   <img

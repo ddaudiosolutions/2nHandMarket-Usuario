@@ -203,7 +203,13 @@ const productsSlices = createSlice({
     builder.addCase(sendMailPegatinas.fulfilled, (state, action) => {
       state.statusSendEmail = action.payload.status;
       if (action.payload.status === 200) {
-        Swal.fire('Correcto', 'El email se ha enviado Correctamente', 'success').then(function () {
+        Swal.fire({
+          title: 'Correcto', 
+          text: `Email Enviado!! en breve recibiar un email con el precio definitivo 
+            y el enlace de pago.
+            Gracias por confiar tu envio a WindyMarket`, 
+          icon: 'success'
+        }).then(function () {
           window.location = '/';
         });
       }
