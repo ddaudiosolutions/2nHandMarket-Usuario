@@ -4,11 +4,8 @@ import { /* useDispatch, */ useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
 function FormularioDatosEnvio({ handleClose, datosRemitente }) {
-  /*  const dispatch = useDispatch(); */
-  console.log(datosRemitente);
   const datosDestinatario = useSelector((state) => state.users.user);
   const onSubmit = async (values) => {
-    console.log('onSubmit', values);
     Swal.fire({
       title: 'En Mantenimiento',
       text: 'Si quieres que gestionemos tu envio envia un email a info@windymarket.es',
@@ -17,26 +14,6 @@ function FormularioDatosEnvio({ handleClose, datosRemitente }) {
     }).then(function () {
       handleClose(false);
     });
-    /* dispatch(
-      sendMailPegatinas({
-        sellerEmail: 'info@windymarket.es',
-        sellerName: 'David',
-        senderEmail: 'david.cladera@gmail.com',
-        message: {
-          NombreRemi: values.nombreRemi,
-          DireccionRemi: values.direccionRemi,
-          PoblacionCPRemi: values.poblacion_cpRemi,
-          TelefonoRemi: values.telefonoRemi,
-          EmailRemi: values.emailRemi,
-          NombreDesti: values.nombreDesti,
-          DireccionDesti: values.direccionDesti,
-          PoblacionCPDesti: values.poblacion_cpDesti,
-          TelefonoDesti: values.telefonoDesti,
-          EmailDesti: values.emailDesti,
-        },
-      })
-    ); 
-    handleClose(false); */
   };
   return (
     <>

@@ -29,17 +29,10 @@ const categoriaEnvioBaleares = (pesoVolumetrico) =>{
   if (pesoVolumetrico > 0.24 && pesoVolumetrico <= 0.28) return 3;
   if (pesoVolumetrico > 0.28 && pesoVolumetrico <= 0.33) return 4;
   if (pesoVolumetrico > 0.33 && pesoVolumetrico <= 0.38) return 5;
-  /* if (pesoVolumetrico > 0.38 && pesoVolumetrico <= 0.43) return 6;
-   if (pesoVolumetrico > 0.43 && pesoVolumetrico <= 0.48) return 7;
-  if (pesoVolumetrico > 0.48 && pesoVolumetrico <= 0.53) return 8;
-  if (pesoVolumetrico > 0.53 && pesoVolumetrico <= 0.58) return 9;
-  if (pesoVolumetrico > 0.58 && pesoVolumetrico <= 0.63) return 10;
-  if (pesoVolumetrico > 0.63 && pesoVolumetrico <= 0.68) return 11; */
 };
 
 
 export const calculoPrecioEnvio = (peso, balearicDelivery) => {
-  console.log(balearicDelivery);
   const comision = 4;
   const categoria = balearicDelivery === true ? 
     categoriaEnvioBaleares(peso) : categoriaEnvioPensinsular(peso);

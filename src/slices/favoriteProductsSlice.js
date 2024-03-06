@@ -8,7 +8,6 @@ const initialState = {
 export const getFavoriteProducts = createAsyncThunk(
   'getFavoriteProducts / GET',
   async (productId, { rejectedWithValue }) => {
-    console.log(productId);
     try {
       const getFavoriteProducts = await UsersService.getFavoriteProducts(productId);
       return getFavoriteProducts;
@@ -24,7 +23,6 @@ const favortieProductsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getFavoriteProducts.fulfilled, (state, action) => {
-      console.log(action.payload.data.favoritos);
       state.favoriteProducts = action.payload.data.favoritos;
     });
   },

@@ -11,12 +11,10 @@ const Label = styled.label`
 
 const NuevoBuscoPost = () => {
   const usuario = useSelector((state) => state.users.user);
-  console.log(usuario);
   // UTILIZAR USEDISPATCH Y TE CREA UNA FUNCION
   const dispatch = useDispatch();
   const submitNuevoBuscoPost = (values) => {
     const { contacto, descripcionBuscoPost, title } = values;
-    console.log(values);
     dispatch(crearNuevoBuscoPostActions({ title, description: descripcionBuscoPost, contacto }));
   };
 

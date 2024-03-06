@@ -2,7 +2,6 @@ import { Fragment, useState } from 'react';
 
 const VerImagesEdit = ({ imagenEdit, sendDataToParent, numImages }) => {
   const [checked, setChecked] = useState(false);
-  console.log(checked);
   return (
     <Fragment>
       <div className='container col-2  mb-3'>

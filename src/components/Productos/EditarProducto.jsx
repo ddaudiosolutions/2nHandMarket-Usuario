@@ -24,7 +24,6 @@ const EditarProducto = () => {
   const [id, setId] = useState('');
 
   const productoEditar = useSelector((state) => state.products.productToEdit);
-  console.log(productoEditar);
   const [imagesTotales, setImagesTotales] = useState(''); // NUM TOTA DE IMGS (SUBIDAS Y POR SUBIR)
   const [imagesT, setImages] = useState(''); // NUEVAS IMAGENES PARA SUBIR
   const imagesState = parseInt(productoEditar.images.length); // NUM IMAGENES YA SUBIDAS

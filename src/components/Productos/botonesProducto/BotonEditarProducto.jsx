@@ -16,7 +16,6 @@ const BotonEditarProducto = ({ producto }) => {
       style={{ /* color: 'red', */ fontSize: '2.5rem' }}
       onClick={() => {
         sendtoEdicion(producto);
-        console.log('editando producto');
       }}
     />
   );

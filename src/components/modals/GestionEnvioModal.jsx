@@ -2,7 +2,6 @@ import { Modal } from 'react-bootstrap';
 import FormularioDatosEnvio from '../gestionEnvios/FormularioDatosEnvio';
 
 function GestionEnvioModal({ show, handleClose, datosRemitente }) {
-  console.log(datosRemitente);
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>

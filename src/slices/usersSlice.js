@@ -12,7 +12,7 @@ export const nuevoUsuario = createAsyncThunk(
   async (newUserData, { rejectWithValue }) => {
     try {
       const newUser = await UsersService.registroUsuario(newUserData);
-      return newUser;
+            return newUser;
     } catch (error) {
       throw rejectWithValue(error.message);
     }
@@ -42,7 +42,7 @@ export const obtenerDatosUsuario = createAsyncThunk(
       const user = await UsersService.obtenerDatosUsuario(userId);
       return user;
     } catch (error) {
-      throw rejectWithValue(error.message);
+      throw rejectWithValue(error);
     }
   }
 );
@@ -137,6 +137,15 @@ const usersSlices = createSlice({
       }
       return action.payload;
     });
+    builder.addCase(nuevoUsuario.rejected, (state, action) => {
+      console.log(action.payload);
+      if (action.payload.response.status === 403) {
+        Swal.fire('Error', 'El Usuario ya existe', 'error').then(function () {
+          window.location = '/login';
+        });
+      }
+      return action.payload;
+    });
     builder.addCase(loginUsuario.fulfilled, (state, action) => {
       if (action.payload.status === 200) {
         sessionStorage.setItem('userName', action.payload.data.nombre);
@@ -154,10 +163,19 @@ const usersSlices = createSlice({
       return action.payload;
     });
     builder.addCase(obtenerDatosUsuario.fulfilled, (state, action) => {
-      console.log(action.payload);
+      console.log('obtenerDatosUsuario', action.payload);
       return {
         user: action.payload.data,
       };
+    });
+    builder.addCase(obtenerDatosUsuario.rejected, (state, action) => {
+      console.log('obtenerDatosUsuarioError', action.payload);
+      if(action.payload.response.status === 401){
+
+        return {
+          user: null,
+        };
+      }
     });
     builder.addCase(editarDatosUsuario.fulfilled, (state, action) => {
       console.log(action.payload);
@@ -175,15 +193,17 @@ const usersSlices = createSlice({
       sessionStorage.removeItem('userName');
       sessionStorage.removeItem('userId');
       sessionStorage.removeItem('userToken');
-      window.location = '/productos?busqueda=novedades&page=0';
+      window.location = '/productos?busqueda=ultimos_productos&page=0'; 
     });
     builder.addCase(eliminarUsuario.fulfilled, (state, action) => {
-      if (action.payload.status !== 200) {
-        Swal.fire('Error', 'Usuario o Contraseña Incorrectos', 'error').then(function () {
-          window.location = '/login';
-        });
-      }
-      return action.payload;
+      console.log('eliminarUsuario', action.payload);      
+        Swal.fire('Correct', 'Usuario Eliminado Correctamente', 'success')
+           .then(function () {  
+            sessionStorage.removeItem('userName');
+          sessionStorage.removeItem('userId');
+          sessionStorage.removeItem('userToken');
+            window.location = '/productos?busqueda=ultimos_productos&page=0'; } 
+        );          
     });
     builder.addCase(addFavoriteProduct.fulfilled, (state, action) => {
       console.log(action.payload.data);

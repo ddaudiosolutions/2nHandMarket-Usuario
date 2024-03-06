@@ -1,6 +1,5 @@
 import BuscoPost from './BuscoPost';
 const ListadoPosts = ({ buscoPosts }) => {
-  console.log(buscoPosts);
   return (
     <div
       className='row row-cols-2 row-cols-xs-2 row-cols-sm-2 

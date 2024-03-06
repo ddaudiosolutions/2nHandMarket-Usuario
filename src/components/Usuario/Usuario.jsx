@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { eliminarUsuario, logOutUsuario } from '../../slices/usersSlice';
+import { eliminarUsuario /* , logOutUsuario */ } from '../../slices/usersSlice';
 import './Usuario.css';
 import Swal from 'sweetalert2';
 
@@ -11,9 +11,9 @@ const Usuario = () => {
   const datosUsuario = useSelector((state) => state.users.user);
   if (!datosUsuario) return null;
 
-  const logOut = () => {
+  /* const logOut = () => {
     dispatch(logOutUsuario());
-  };
+  }; */
 
   const confirmarBorrarUsuario = (_id) => {
     Swal.fire({
@@ -27,7 +27,7 @@ const Usuario = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(eliminarUsuario(_id));
-        logOut();
+        /* logOut(); */
       }
     });
   };

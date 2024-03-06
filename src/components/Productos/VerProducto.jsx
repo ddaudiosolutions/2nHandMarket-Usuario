@@ -53,7 +53,6 @@ const VerProducto = () => {
   const [reservado, setReservado] = useState(producto ? producto.reservado : false);
   const handleReservado = () => {
     if (reservado) {
-      console.log('envio datos de reserva');
       dispatch(
         changeReservedProductState({
           productId: producto._id,
@@ -78,9 +77,11 @@ const VerProducto = () => {
     }
   };
   const [vendido, setVendido] = useState(producto ? producto.vendido : false);
+  useEffect(() => {
+    setVendido(producto.vendido);
+  }, [producto]);
   const handleVendido = () => {
     if (vendido) {
-      console.log('envio datos de reserva');
       dispatch(
         changeVendidoProductState({
           productId: producto._id,
@@ -249,6 +250,11 @@ const VerProducto = () => {
                     {reservado && (
                       <div className='text-container mt-3'>
                         <div className='text-over-image'>Reservado</div>
+                      </div>
+                    )}
+                    {vendido && (
+                      <div className='text-container mt-3'>
+                        <div className='text-over-image'>Vendido</div>
                       </div>
                     )}
                   </a>

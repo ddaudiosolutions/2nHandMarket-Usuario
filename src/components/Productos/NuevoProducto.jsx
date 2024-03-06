@@ -208,10 +208,9 @@ const NuevoProducto = () => {
                   <div>
                     <div>
                       <Label className=''>Sube Tus Fotos:</Label>
-                      <text className='text-danger'>
-                        {' '}
+                      <h5 className='text-danger'>
                         Las Imagenes no pueden pesar más de 1MB cada Una{' '}
-                      </text>
+                      </h5>
                     </div>
                     <input
                       className='form-input btn-file-upload'
@@ -247,7 +246,6 @@ const NuevoProducto = () => {
 };
 
 function mostrarAlertaYEnviarDatos(agregarProducto, images, values) {
-  console.log(agregarProducto, images, values);
   const formData = new FormData();
   for (let j = 0; j < images.length; j++) {
     formData.append('images', images[j]);
@@ -258,8 +256,8 @@ function mostrarAlertaYEnviarDatos(agregarProducto, images, values) {
   formData.set('price', values.price);
   formData.set('description', values.description);
   formData.set('contacto', values.contacto);
-  formData.set('delivery', values.delivery);
-  formData.set('balearicDelivery', values.balearicDelivery);
+  formData.set('delivery', values.delivery || false);
+  formData.set('balearicDelivery', values.balearicDelivery || false);
   formData.set('alto', values.alto || 0);
   formData.set('ancho', values.ancho || 0);
   formData.set('largo', values.largo || 0);

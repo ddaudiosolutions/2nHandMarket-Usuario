@@ -18,7 +18,6 @@ export const resetPassword = createAsyncThunk(
 
 export const changePasswordUser = createAsyncThunk('user/changePasswordUser', async (data) => {
   const res = await AuthServices.changePasswordUser(data);
-  console.log(res);
   return res;
 });
 
@@ -31,7 +30,6 @@ const authSlice = createSlice({
       return action.payload
     }); */
     builder.addCase(resetPassword.fulfilled, (state, action) => {
-      console.log('resetPass', action.payload);
       if (action.payload.status === 200) {
         Swal.fire('Correcto', 'Hemos enviado un email con las instrucciones', 'success').then(
           function () {
@@ -42,7 +40,6 @@ const authSlice = createSlice({
       return action.payload;
     });
     builder.addCase(resetPassword.rejected, (state, action) => {
-      console.log('rejected', action.payload);
       Swal.fire(
         'Vuelve a introducir el correo',
         'El correo no es correcto o no está registrado en WindyMarket. ',
@@ -54,7 +51,6 @@ const authSlice = createSlice({
       return action.payload;
     });
     builder.addCase(changePasswordUser.fulfilled, (state, action) => {
-      console.log('changePass', action.payload);
       if (action.payload.status === 200) {
         Swal.fire(
           'Correcto',

@@ -50,10 +50,8 @@ export const obtenerProductosUser = createAsyncThunk(
 export const obtenerProductoIdApi = createAsyncThunk(
   'getProductsId / GET',
   async (productoid, { rejectedWithValue }) => {
-    console.log(productoid);
     try {
       const producto = await ProductService.obtenerProductoIdApi(productoid);
-      console.log('obtenerProductoIdApi', producto);
       return producto;
     } catch (error) {
       throw rejectedWithValue(error.message);
@@ -64,10 +62,8 @@ export const obtenerProductoIdApi = createAsyncThunk(
 export const obtenerProductosAuthor = createAsyncThunk(
   'getAuthorProducts / GET',
   async (authorId, { rejectedWithValue }) => {
-    console.log(authorId);
     try {
       const producto = await ProductService.obtenerProductosAuthor(authorId);
-      console.log(producto);
       return producto;
     } catch (error) {
       throw rejectedWithValue(error.message);
@@ -78,10 +74,8 @@ export const obtenerProductosAuthor = createAsyncThunk(
 export const obtenerProductosPorPalabras = createAsyncThunk(
   'obtenerProductosPorPalabras / POST',
   async (words, { rejectedWithValue }) => {
-    console.log('words', words);
     try {
       const productosByWords = await ProductService.obtenerProductosPorPalabras(words);
-      console.log(productosByWords);
       return productosByWords;
     } catch (error) {
       throw rejectedWithValue(error.message);
@@ -92,10 +86,8 @@ export const obtenerProductosPorPalabras = createAsyncThunk(
 export const editarProducto = createAsyncThunk(
   'editProduct / PUT',
   async (productData, { rejectedWithValue }) => {
-    console.log(productData);
     try {
       const producto = await ProductService.editarProducto(productData);
-      console.log(producto);
       return producto;
     } catch (error) {
       throw rejectedWithValue(error.message);
@@ -164,7 +156,6 @@ const productsSlices = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(obtenerProductos.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.productos = action.payload.data;
     });
     builder.addCase(crearNuevoProducto.pending, (state, action) => {
@@ -184,12 +175,10 @@ const productsSlices = createSlice({
     });
 
     builder.addCase(obtenerProductosPorPalabras.fulfilled, (state, action) => {
-      console.log('productos por palabras', action.payload.data.prodByWords);
       state.productsByWords = action.payload.data.prodByWords;
     });
 
     builder.addCase(obtenerProductoIdApi.fulfilled, (state, action) => {
-      console.log(action.payload.data);
       state.productoId = action.payload.data;
     });
 
@@ -208,12 +197,10 @@ const productsSlices = createSlice({
       }
     });
     builder.addCase(sendMailPegatinas.pending, (state, action) => {
-      console.log('sendMailPegatinas', action.payload);
       Swal.fire('Enviando Email....');
       Swal.showLoading();
     });
     builder.addCase(sendMailPegatinas.fulfilled, (state, action) => {
-      console.log('sendMailPegatinas', action.payload);
       state.statusSendEmail = action.payload.status;
       if (action.payload.status === 200) {
         Swal.fire('Correcto', 'El email se ha enviado Correctamente', 'success').then(function () {
@@ -222,22 +209,10 @@ const productsSlices = createSlice({
       }
     });
     builder.addCase(changeReservedProductState.fulfilled, (state, action) => {
-      console.log('changeReservedProductState', action.payload);
-      state.statusChangeReserved = action.payload.status;
-      /* if (action.payload.status === 200) {
-        Swal.fire('Correcto', 'El estado del producto ha cambiado', 'success').then(function () {
-          window.location = '/';
-        });
-      } */
+      state.statusChangeReserved = action.payload.status;      
     });
     builder.addCase(changeVendidoProductState.fulfilled, (state, action) => {
-      console.log('changeVendidoProductState', action.payload);
-      state.changeVendidoProductState = action.payload.status;
-      /* if (action.payload.status === 200) {
-        Swal.fire('Correcto', 'El estado del producto ha cambiado', 'success').then(function () {
-          window.location = '/';
-        });
-      } */
+      state.changeVendidoProductState = action.payload.status;      
     });
   },
 });

@@ -1,7 +1,6 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-/* import FormBusqueda from '../FormBusqueda'; */
 import ListaProductos from './ListaProductos';
 import ListadoPosts from './ListadoPosts';
 
@@ -9,7 +8,6 @@ import './Producto.css';
 import { obtenerProductos, obtenerProductosPorPalabras } from '../../slices/productSlice';
 import { obtenerBuscoPosts } from '../../slices/buscoPostSlice';
 import { obtenerDatosUsuario } from '../../slices/usersSlice';
-/* import IconoBusqueda from './iconos/IconoBusqueda'; */
 import { getFavoriteProducts } from '../../slices/favoriteProductsSlice';
 import SearchByWords from './busquedaPorTexto/SearchByWords';
 import Navbar from '../Navbar';
@@ -24,7 +22,6 @@ const Productos = () => {
   // TRAEMOS LAS SOLICITUDES DE BUSQUEDA
   const buscoPosts = useSelector((state) => state.buscoPosts.obtenerBuscoPost);
   const paginas = new Array(paginasTotales).fill(null).map((v, i) => i);
-  console.log(buscoPosts);
 
   // TRAEMOS LAS SOLICITUDES DE BUSQUEDA
   const params = new URL(document.location).searchParams;
@@ -35,25 +32,27 @@ const Productos = () => {
   const dispatch = useDispatch();
   const cargarProductos = () => dispatch(obtenerProductos({ busquedaquery, pagequery }));
   const cargarBuscoPosts = () => dispatch(obtenerBuscoPosts());
-  const userData = useSelector((state) => state.users.user);
+  /* const userData = useSelector((state) => state.users.user); */
 
   useEffect(() => {
-    if (userData === undefined) {
+    cargarBuscoPosts();
+    cargarProductos(busquedaquery, pagequery);
+  }, [busquedaquery, pagequery]);
+
+  useEffect(() => {
+    if (sessionStorage.getItem('userId')) {
       dispatch(obtenerDatosUsuario(sessionStorage.getItem('userId'))).then((res) => {
         if (res.payload.status === 200) {
           dispatch(getFavoriteProducts(res.payload.data.favoritos));
         }
       });
     }
-    cargarBuscoPosts();
-    cargarProductos(busquedaquery, pagequery);
-    // eslint-disable-next-line
-  }, [busquedaquery, pagequery]);
+  }, [sessionStorage.getItem('userId')]);
 
   useEffect(() => {
     dispatch(obtenerProductosPorPalabras(searchWords));
-    // eslint-disable-next-line
   }, [searchWords]);
+
   return (
     <Fragment>
       <div className='container '>

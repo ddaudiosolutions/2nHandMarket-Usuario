@@ -26,13 +26,14 @@ const loginUsuarioActions = (userData) => {
 const obtenerDatosUsuario = (userId) => {
   console.log(userId);
   console.log(user);
-  if (user === null) {
+  if (user !== null) {
     data = {
       headers: {
         'x-auth-token': sessionStorage.getItem('userToken'),
       },
       // body: {imagenData},
     };
+    return clienteAxios.get(`usuarios/${userId}`, data);
   }
   return clienteAxios.get(`usuarios/${userId}`, data);
 };

@@ -1,5 +1,4 @@
-import ReactDOM from 'react-dom';
-/* import ReactGA from 'react-ga4'; */
+import { createRoot } from 'react-dom/client'; // Importa createRoot de react-dom/client
 import 'bootstrap/dist/js/bootstrap.js'; // PARA QUE FUNCIONEN LOS DROPDOWN MENUS
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
@@ -8,19 +7,8 @@ import { Provider } from 'react-redux';
 import store from './app/store';
 import reportWebVitals from './reportWebVitals';
 
-/* const Tracking_ID = 'G-LN814BQ9FL';
-ReactGA.initialize(Tracking_ID); */
-
-/* ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-);
-
-reportWebVitals(); */
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const container = document.getElementById('root'); // Obtiene el contenedor
+const root = createRoot(container); // Crea la raíz con el contenedor
 root.render(
   <Provider store={store}>
     <App />
