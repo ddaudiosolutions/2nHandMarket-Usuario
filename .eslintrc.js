@@ -102,7 +102,8 @@ module.exports = {
           'currency_code',
           'payment_method',
           'billing_details',
-          'return_url'
+          'return_url',
+          'poblacion_CP'
         ],
         ignoreDestructuring: true,
         ignoreImports: true,

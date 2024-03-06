@@ -5,22 +5,32 @@ import { calculoPesoVolumetrico, calculoPrecioEnvio } from './formulasEnvio';
 const FormPaqueteEnvio = (props) => {
   const { alto, ancho, largo, form } = props;
   useEffect(() => {
-    const peso = calculoPesoVolumetrico(alto || 0, ancho || 0, largo || 0).toFixed(3);
-    form.change('peso', peso); // Actualiza el valor de 'peso' en el formulario
+    const pesoVolumetrico = calculoPesoVolumetrico(alto || 0, ancho || 0, largo || 0).toFixed(3);
+    form.change('pesoVolumetrico', parseFloat(pesoVolumetrico)); // Actualiza el valor de 'peso' en el formulario
   }, [alto, ancho, largo, form]);
 
   useEffect(() => {
     const precioEstimado = calculoPrecioEnvio(
-      form.getState().values.peso,
-      form.getState().values.balearicDelivery
+      form.getState().values.pesoVolumetrico,
+      form.getState().values.balearicDelivery,
+      form.getState().values.pesoKgs
     );
-    form.change('precioEstimado', precioEstimado.toFixed(2)); // Actualiza el valor de 'precioEstimado' en el formulario
+    form.change('precioEstimado', parseFloat(precioEstimado.toFixed(2))); // Actualiza el valor de 'precioEstimado' en el formulario
+    form.change(
+      'pesoKgs',
+      form.getState().values.pesoVolumetrico >= 0 ? 0 : form.getState().values.pesoKgs
+    );
   }, [form]); // Dependiendo de cómo estés manejando `peso`, puede que necesites incluirlo en las dependencias
+  const pesoVolumetrico = form.getState().values.pesoVolumetrico;
 
   return (
     <div className='mb-3'>
       <h6 className='mt-1' style={{ color: 'red' }}>
-        IMPORTANTE!! No olvide rellenar todos los datos de envio en tu perfil
+        IMPORTANTE!! No olvides rellenar todos los datos de envio en tu perfil
+      </h6>
+      <h6 className='mt-1' style={{ color: 'red' }}>
+        IMPORTANTE!! Si tu paquete tiene una medida máxima en uno de sus lados de 120cm NO OLVIDES
+        AÑADIR EL PESO EN KGS
       </h6>
       <Field name='balearicDelivery' type='checkbox'>
         {({ input, meta }) => (
@@ -42,7 +52,6 @@ const FormPaqueteEnvio = (props) => {
       </Field>
       <h5>Medidas producto (en metros)</h5>
       <div className='d-flex justify-content-between'>
-        {/* Campos Alto, Ancho y Largo */}
         <div>
           <label className='mb-2'>Alto</label>
           <Field
@@ -75,20 +84,36 @@ const FormPaqueteEnvio = (props) => {
         </div>
 
         {/* Campo Peso (actualizado automáticamente) */}
-        <div>
-          <label className='mb-2'>Peso Volumétrico</label>
-          <Field
-            className='form-control'
-            name='peso'
-            component='input'
-            type='number'
-            placeholder='Peso'
-            // No es necesario establecer el valor aquí; se gestiona a través de form.change
-          />
-        </div>
+        {pesoVolumetrico >= 0 && (
+          <div>
+            <label className='mb-2'>Peso Volumétrico</label>
+            <Field
+              className='form-control'
+              name='pesoVolumetrico'
+              component='input'
+              type='number'
+              placeholder='pesoVolumetrico'
+              // No es necesario establecer el valor aquí; se gestiona a través de form.change
+            />
+          </div>
+        )}
+        {/* Campo Peso en Kgs si medidas no superan 120cm */}
+        {pesoVolumetrico <= -1 && (
+          <div>
+            <label className='mb-2'>Peso en Kilos</label>
+            <Field
+              className='form-control'
+              name='pesoKgs'
+              component='input'
+              type='number'
+              placeholder='Peso Kgs'
+            />
+          </div>
+        )}
+
         {/* Campo Precio (actualizado automáticamente) */}
         <div>
-          <label className='mb-2'>Precio Estimado</label>
+          <label className='mb-2'>Precio Estimado en €</label>
           <Field
             className='form-control'
             name='precioEstimado'

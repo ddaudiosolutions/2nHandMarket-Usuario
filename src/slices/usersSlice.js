@@ -14,7 +14,7 @@ export const nuevoUsuario = createAsyncThunk(
       const newUser = await UsersService.registroUsuario(newUserData);
             return newUser;
     } catch (error) {
-      throw rejectWithValue(error.message);
+      throw rejectWithValue(error);
     }
   }
 );

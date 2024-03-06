@@ -19,6 +19,7 @@ const EditarUser = () => {
       formData.set('email', values.email);
       formData.set('telefono', values.telefono);
       formData.set('direccion', values.direccion);
+      formData.set('poblacion_CP', values.poblacion_CP);
       formData.set('imagesAvatar', values.imagesAvatar);
       dispatch(editarDatosUsuario({ formData, id: datosUsuarioEditar._id }));
     } else {
@@ -90,6 +91,17 @@ const EditarUser = () => {
                         name='direccion'
                         component='input'
                         value={datosUsuarioEditar.direccion}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor='poblacion_CP' className='loginLabel'>
+                        Población y Código Postal
+                      </label>
+                      <Field
+                        className='form-control mb-2'
+                        name='poblacion_CP'
+                        component='input'
+                        value={datosUsuarioEditar.poblacion_CP}
                       />
                     </div>
                     <div>

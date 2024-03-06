@@ -199,7 +199,8 @@ const NuevoProducto = () => {
                       alto={values.alto}
                       ancho={values.ancho}
                       largo={values.largo}
-                      peso={values.peso}
+                      pesoVolumetrico={values.pesoVolumetrico}
+                      pesoKgs={values.pesoKgs}
                       balearicDelivery={values.balearicDelivery}
                       form={form}
                     />
@@ -262,7 +263,8 @@ function mostrarAlertaYEnviarDatos(agregarProducto, images, values) {
   formData.set('ancho', values.ancho || 0);
   formData.set('largo', values.largo || 0);
   formData.set('precioEstimado', values.precioEstimado || 0);
-  formData.set('peso', values.peso || 0);
+  formData.set('pesoVolumetrico', values.pesoVolumetrico || 0);
+  formData.set('pesoKgs', values.pesoKgs || 0);
   formData.set('vendido', false);
   formData.set('reservado', false);
 
