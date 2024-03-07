@@ -60,6 +60,16 @@ const Usuario = () => {
                 <div data-cy='telefono' type='text' className='form-control'>
                   {datosUsuario.telefono}
                 </div>
+                <div className='form-group'>
+                  <label htmlFor='showPhone'>Ocultar Teléfono</label>
+                  <input
+                    type='checkbox' // Asegúrate de especificar el tipo de input
+                    className='form-check-input ms-3'
+                    role='switch'
+                    checked={datosUsuario.showPhone} // Establece el estado del switch según showPhone
+                    disabled={true} // Deshabilita el input para evitar cambios
+                  />
+                </div>
               </div>
               <div className='row form-group mb-2'>
                 <label className='loginLabel'>Dirección</label>
