@@ -77,9 +77,15 @@ const VerProducto = () => {
     }
   };
   const [vendido, setVendido] = useState(producto ? producto.vendido : false);
+
   useEffect(() => {
-    setVendido(producto.vendido);
+    console.log(producto);
+    if (producto !== undefined) {
+      setReservado(producto.reservado);
+      setVendido(producto.vendido);
+    }
   }, [producto]);
+
   const handleVendido = () => {
     if (vendido) {
       dispatch(
