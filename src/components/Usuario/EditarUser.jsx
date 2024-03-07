@@ -29,7 +29,8 @@ const EditarUser = () => {
   };
 
   const validateTelefono = (value) => {
-    const telefonoRegex = /^\d{9}$/;
+    // Esta expresión regular permite un prefijo opcional que comienza con + seguido de 1 a 3 dígitos, y luego 9 dígitos para el número de teléfono.
+    const telefonoRegex = /^\+?\d{1,3}?\d{9}$/;
     return telefonoRegex.test(value);
   };
 
