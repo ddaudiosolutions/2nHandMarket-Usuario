@@ -339,11 +339,18 @@ const VerProducto = () => {
             <div className='card-header'>
               <div className='card-title pproductoTitle'>
                 {sessionStorage.getItem('userId') !== null && (
-                  <ContactoentreUsers
-                    productId={productoId}
-                    sellerEmail={producto.author.email}
-                    sellerName={producto.author.nombre}
-                  />
+                  <>
+                    {!producto.author.showPhone && (
+                      <div>
+                        <label>Llámame o manda un WhatsApp: {producto.author.telefono}</label>
+                      </div>
+                    )}
+                    <ContactoentreUsers
+                      productId={productoId}
+                      sellerEmail={producto.author.email}
+                      sellerName={producto.author.nombre}
+                    />
+                  </>
                 )}
                 {/* <SendMessage phoneNumber={producto.author.telefono} /> */}
                 <Footer />
