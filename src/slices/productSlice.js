@@ -108,11 +108,11 @@ export const borrarProducto = createAsyncThunk(
 );
 
 export const sendMailPegatinas = createAsyncThunk(
-  'sendMailToUser / POST',
+  'sendMailPegatinas / POST',
   async (emailData, { rejectedWithValue }) => {
     try {
-      const sendMailToUser = await ProductService.sendMailPegatinas(emailData);
-      return sendMailToUser;
+      const sendMailPegatinas = await ProductService.sendMailPegatinas(emailData);
+      return sendMailPegatinas;
     } catch (error) {
       throw rejectedWithValue(error.message);
     }

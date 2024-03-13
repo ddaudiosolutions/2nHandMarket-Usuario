@@ -24,10 +24,8 @@ export const loginUsuario = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const user = await UsersService.loginUsuarioActions(userData);
-      console.log(user);
       return user;
     } catch (error) {
-      console.log(error);
       throw rejectWithValue(error.message);
     }
   }
@@ -36,8 +34,6 @@ export const loginUsuario = createAsyncThunk(
 export const obtenerDatosUsuario = createAsyncThunk(
   'getUserData / get',
   async (userId, { rejectWithValue }) => {
-    console.log(userId);
-
     try {
       const user = await UsersService.obtenerDatosUsuario(userId);
       return user;
@@ -50,7 +46,6 @@ export const obtenerDatosUsuario = createAsyncThunk(
 export const editarDatosUsuario = createAsyncThunk(
   'editUserData / put',
   async (data, { rejectWithValue }) => {
-    console.log(data);
     try {
       const user = await UsersService.editarUsuario(data);
       return user;
@@ -65,7 +60,6 @@ export const logOutUsuario = createAsyncThunk(
   async (nombreUser, { rejectWithValue }) => {
     try {
       const isLogOut = await UsersService.logoutUsuario(nombreUser);
-      console.log(isLogOut);
       return isLogOut;
     } catch (error) {
       throw rejectWithValue(error.message);
@@ -88,7 +82,6 @@ export const eliminarUsuario = createAsyncThunk(
 export const addFavoriteProduct = createAsyncThunk(
   'addFavoriteProduct / POST',
   async (favoriteProductData, { rejectedWithValue }) => {
-    console.log(favoriteProductData);
     try {
       const addFavoriteProduct = await UsersService.addFavoriteProduct(favoriteProductData);
       return addFavoriteProduct;
@@ -101,7 +94,6 @@ export const addFavoriteProduct = createAsyncThunk(
 export const removeFavoriteProduct = createAsyncThunk(
   'removeFavoriteProduct / POST',
   async (productId, { rejectedWithValue }) => {
-    console.log(productId);
     try {
       const removeFavoriteProduct = await UsersService.removeFavorite(productId);
       return removeFavoriteProduct;
@@ -206,15 +198,16 @@ const usersSlices = createSlice({
         );          
     });
     builder.addCase(addFavoriteProduct.fulfilled, (state, action) => {
-      console.log(action.payload.data);
       state.user = action.payload.data.user;
     });
     builder.addCase(removeFavoriteProduct.fulfilled, (state, action) => {
-      console.log('removeFavoriteProduct', action.payload);
       state.user = action.payload.data.user;
     });
+    builder.addCase(sendMailToUser.pending, (state, action) => {
+      Swal.fire('Enviando Email....');
+      Swal.showLoading();
+    });
     builder.addCase(sendMailToUser.fulfilled, (state, action) => {
-      console.log('sendMailToUser', action.payload);
       state.statusSendEmail = action.payload.status;
       if (action.payload.status === 200) {
         Swal.fire('Correcto', 'El email se ha enviado Correctamente', 'success').then(function () {

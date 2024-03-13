@@ -26,7 +26,6 @@ const BuscoPostUser = ({ postUser }) => {
       if (result.isConfirmed) {
         // pasalor al Action
         dispatch(borrarBuscoPostsUserAction(_id)).then((res) => {
-          console.log(res);
           if (res.payload.status === 200) {
             Swal.fire('Correcto', 'POST BORRADO CON EXITO', 'success').then(function () {
               cargarProductosAuthor(dispatch, history, postUser);

@@ -6,7 +6,12 @@ import { editarProducto } from '../../slices/productSlice';
 import './EditarProducto.css';
 import VerImagesEdit from './VerImagesEdit';
 import Swal from 'sweetalert2';
-import { verificarPesoImagenes } from '../../helpers/utils';
+import {
+  swalFireFaltaTelefono,
+  swalFirePesoImagenes,
+  swalPesoKgsAlert,
+  verificarPesoImagenes,
+} from '../../helpers/utils';
 import { Field, Form } from 'react-final-form';
 import FormPaqueteEnvio from '../gestionEnvios/FormPaqueteEnvio';
 // STYLED COMPONENTS
@@ -75,6 +80,14 @@ const EditarProducto = () => {
     dispatch(editarProducto(producto, id));
   };
 
+  const verificarPesoVolumetricoYEnviar = (values) => {
+    if (values.delivery && values.pesoVolumetrico <= -1 && values.pesoKgs <= 0) {
+      swalPesoKgsAlert();
+    } else {
+      mostrarAlertaYEnviarDatos(sendDataEditProduct, imagesT, imageSel, id, values);
+    }
+  };
+
   const submitEditarProducto = (values) => {
     if (imageSel.length === productoEditar.images.length && imagesT.length === 0) {
       Swal.fire({
@@ -82,29 +95,28 @@ const EditarProducto = () => {
         text: 'No puedes borrar todas las imagenes, deja al menos una, o cargar una imagen nueva',
       });
     } else if (verificarPesoImagenes(imagesT)) {
-      Swal.fire({
-        icon: 'info',
-        html: 'Peso mayor de 1Mb! Se reducirá el peso de la imagen, puede perder algo de calidad!!',
-        showCancelButton: true,
-        cancelButtonColor: '#d33',
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'Guardar y Continuar',
-        reverseButtons: true,
-      }).then((result) => {
+      swalFirePesoImagenes().then((result) => {
         if (result.isConfirmed) {
-          mostrarAlertaYEnviarDatos(sendDataEditProduct, imagesT, imageSel, id, values);
+          if (productoEditar.author.telefono === undefined) {
+            swalFireFaltaTelefono().then((result) => {
+              if (result.isConfirmed) {
+                verificarPesoVolumetricoYEnviar(values, result);
+              }
+            });
+          }
+          verificarPesoVolumetricoYEnviar(values, result);
         }
       });
-    } else if (values.pesoVolumetrico <= -1 && values.pesoKgs <= 0) {
-      Swal.fire({
-        icon: 'info',
-        html: 'Debes introducir el peso en Kgs del paquete para darte un precio estimado',
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'Cerrar',
-        reverseButtons: true,
-      });
     } else {
-      mostrarAlertaYEnviarDatos(sendDataEditProduct, imagesT, imageSel, id, values);
+      if (productoEditar.author.telefono === undefined) {
+        swalFireFaltaTelefono().then((result) => {
+          if (result.isConfirmed) {
+            verificarPesoVolumetricoYEnviar(values, result);
+          }
+        });
+      } else {
+        verificarPesoVolumetricoYEnviar(values);
+      }
     }
   };
 
@@ -289,21 +301,21 @@ const EditarProducto = () => {
                     <button
                       className='btn btn-outline-warning'
                       type='submit'
-                      disabled={imageDif > 4}
+                      disabled={imageDif > 8}
                     >
                       Editar Producto
                     </button>
                   </div>
                 </div>
 
-                <pre className='bg-success'>{JSON.stringify(values, 0, 2)}</pre>
+                {/*  <pre className='bg-success'>{JSON.stringify(values, 0, 2)}</pre> */}
               </form>
             )}
           />
-          {imageDif > 4 ? (
+          {imageDif > 8 ? (
             <Fragment>
               <h6 className='alert alert-success col-6 text-center mx-auto'>
-                El numero máximo de imágenes es 4.
+                El numero máximo de imágenes es 8.
               </h6>
               <h5 className='alert alert-success col-6 text-center mx-auto'>
                 Selecciona las imagenes que quieres sustituir

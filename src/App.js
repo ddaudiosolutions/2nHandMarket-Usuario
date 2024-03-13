@@ -26,8 +26,24 @@ import store from './app/store';
 /* import { Helmet } from 'react-helmet'; */
 import ResetPassword from './components/Usuario/ResetPassword';
 import './App.css';
+import { useEffect } from 'react';
+// Importa la biblioteca de Google Analytics
+import ReactGA from 'react-ga4';
+
 
 function App() {
+
+  useEffect(() => {
+    // Inicializa Google Analytics con tu ID de seguimiento
+    ReactGA.initialize('G-LN814BQ9FL');
+
+    // Opcional: seguimiento de las vistas de página con React Router
+    history.listen((location) => {
+      ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
+    });
+
+  }, []);
+
   return (
     <Router history={history}>
       <Provider store={store}>

@@ -2,10 +2,10 @@ import { Form, Field } from 'react-final-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendMailToUser } from '../../slices/usersSlice';
 import '../Productos/Producto.css';
+import { trackSendMail } from '../../helpers/analyticsCalls';
 
 const ContactoentreUsers = ({ productId, sellerEmail, sellerName }) => {
   const userSender = useSelector((state) => state.users.user);
-  console.log(sellerName);
   const dispatch = useDispatch();
 
   const onSubmit = async (values) => {
@@ -55,7 +55,7 @@ const ContactoentreUsers = ({ productId, sellerEmail, sellerName }) => {
               placeholder='Correo electrónico'
             />
           </div>
-          <button className='btn btn-outline-success mt-2' type='submit'>
+          <button className='btn btn-outline-success mt-2' type='submit' onClick={trackSendMail}>
             Enviar mensaje
           </button>
         </form>
