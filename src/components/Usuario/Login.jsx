@@ -4,18 +4,16 @@ import { Link } from 'react-router-dom';
 import { loginUsuario } from '../../slices/usersSlice';
 import { Field, Form } from 'react-final-form';
 import './Usuario.css';
+import { trackLoginButton } from '../../helpers/analyticsCalls';
 
 const Login = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   const submitLogin = (values) => {
-    console.log(values);
     setLoading(true);
     dispatch(loginUsuario({ email: values.email, password: values.password })).then((res) => {
-      console.log(res);
       if (res.payload.status === 200) {
-        console.log('super logeado');
         window.location = '/';
       }
     });
@@ -77,6 +75,7 @@ const Login = () => {
                       data-cy='btn-login'
                       className='btn btn-outline-info btn-block mt-3'
                       disabled={loading}
+                      onClick={trackLoginButton}
                     >
                       {loading && <span className='spinner-border spinner-border-sm'></span>}
                       <span>Login</span>

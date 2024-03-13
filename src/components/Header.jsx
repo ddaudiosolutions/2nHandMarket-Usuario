@@ -42,7 +42,6 @@ const Header = () => {
   };
 
   const cargarProductosAuthor = (id) => {
-    console.log('cagando productos');
     dispatch(obtenerProductosAuthor(id));
     dispatch(obtenerBuscoPostsUserAction(id));
     history.push(`/productos/auth/${id}`);

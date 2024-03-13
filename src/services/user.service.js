@@ -1,7 +1,6 @@
 import clienteAxios from '../config/axios';
 
 const user = sessionStorage.getItem('userToken');
-console.log(user);
 let data = {
   headers: {
     'x-auth-token': user,
@@ -24,8 +23,6 @@ const loginUsuarioActions = (userData) => {
 
 // CARGAR DATOS DE USUARIO DESDE LA BB DE DATOS
 const obtenerDatosUsuario = (userId) => {
-  console.log(userId);
-  console.log(user);
   if (user !== null) {
     data = {
       headers: {
@@ -40,8 +37,6 @@ const obtenerDatosUsuario = (userId) => {
 
 // EDITAR USUARIO
 const editarUsuario = (userData) => {
-  console.log(userData.formData);
-  console.log(userData.id);
   return clienteAxios.put(`usuarios/editar/${userData.id}`, userData.formData, data);
 };
 
@@ -52,31 +47,26 @@ const eliminarUsuario = (id) => {
 
 // LOG-OUT USUARIO
 const logoutUsuario = (nombreUser) => {
-  console.log(nombreUser);
   return true;
 };
 
 /// AÑADIR PRODUCTO A FAVORITOS
 const addFavoriteProduct = (productData) => {
-  console.log(productData);
   return clienteAxios.post('favoriteProducts/addFavorite', productData, data);
 };
 
 /// BORRAR PRODUCTO DE FAVORITOS DE UN USUARIO
 const removeFavorite = (productId) => {
-  console.log(productId);
   return clienteAxios.post('favoriteProducts/removeFavorite', productId, data);
 };
 
 /// OBTENER LOS PRODUCTOS DE FAVORITOS DE UN USUARIO
 const getFavoriteProducts = (favoriteProductsId) => {
-  console.log(favoriteProductsId);
   return clienteAxios.post('favoriteProducts/getFavorite', favoriteProductsId, data);
 };
 
 // Enviar email interes por producto entre users
 const sendMailToUser = (emailData) => {
-  console.log(emailData);
   return clienteAxios.post('usuarios/correoentreusuarios', emailData);
 };
 

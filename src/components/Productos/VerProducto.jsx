@@ -27,6 +27,7 @@ import GestionEnvioModal from '../modals/GestionEnvioModal';
 import BotonReservarProducto from './botonesProducto/BotonReservarProducto';
 import BotonVendidoProducto from './botonesProducto/BotonVendidoProducto';
 import BotonEditarProducto from './botonesProducto/BotonEditarProducto';
+import ReactGA from 'react-ga4';
 
 const VerProducto = () => {
   const producto = useSelector((state) => state.products.productoId);
@@ -79,7 +80,6 @@ const VerProducto = () => {
   const [vendido, setVendido] = useState(producto ? producto.vendido : false);
 
   useEffect(() => {
-    console.log(producto);
     if (producto !== undefined) {
       setReservado(producto.reservado);
       setVendido(producto.vendido);
@@ -170,6 +170,16 @@ const VerProducto = () => {
   };
 
   if (producto === null || producto === undefined) return null;
+
+  useEffect(() => {
+    // Asegúrate de que ReactGA haya sido inicializado en alguna parte de tu aplicación
+    ReactGA.event({
+      category: 'Producto', // Categoría del evento
+      action: 'Ver_Producto', // Acción del evento
+      label: 'Visita_Producto', // Etiqueta opcional para proporcionar más contexto
+    });
+  }, []);
+
   return (
     <Fragment>
       <GestionEnvioModal

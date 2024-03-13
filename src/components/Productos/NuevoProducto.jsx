@@ -7,7 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { crearNuevoProducto } from '../../slices/productSlice';
 import { Form, Field } from 'react-final-form';
 import Swal from 'sweetalert2';
-import { verificarPesoImagenes } from '../../helpers/utils';
+import {
+  swalFireFaltaTelefono,
+  swalFirePesoImagenes,
+  swalPesoKgsAlert,
+  verificarPesoImagenes,
+} from '../../helpers/utils';
 import FormPaqueteEnvio from '../gestionEnvios/FormPaqueteEnvio';
 
 const Label = styled.label`
@@ -21,47 +26,45 @@ const NuevoProducto = () => {
 
   const agregarProducto = (producto) => dispatch(crearNuevoProducto(producto));
 
+  const verificarPesoVolumetricoYEnviar = (values) => {
+    if (values.delivery && values.pesoVolumetrico <= -1 && values.pesoKgs <= 0) {
+      swalPesoKgsAlert();
+    } else {
+      mostrarAlertaYEnviarDatos(agregarProducto, images, values);
+    }
+  };
   const submitNuevoProducto = (values) => {
-    if (images.length > 0 && usuario.telefono !== undefined) {
+    if (images.length > 0) {
       if (verificarPesoImagenes(images)) {
-        Swal.fire({
-          icon: 'info',
-          html: 'Peso mayor de 1Mb! Se reducirá el peso, puede perder algo de calidad!!',
-          showCancelButton: true,
-          cancelButtonColor: '#d33',
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'Guardar y Continuar',
-          reverseButtons: true,
-        }).then((result) => {
+        swalFirePesoImagenes().then((result) => {
           if (result.isConfirmed) {
-            mostrarAlertaYEnviarDatos(agregarProducto, images, values);
+            if (usuario.telefono === undefined) {
+              swalFireFaltaTelefono().then((result) => {
+                if (result.isConfirmed) {
+                  verificarPesoVolumetricoYEnviar(values);
+                }
+              });
+            } else {
+              verificarPesoVolumetricoYEnviar(values);
+            }
           }
         });
       } else {
-        mostrarAlertaYEnviarDatos(agregarProducto, images, values);
+        if (usuario.telefono === undefined) {
+          swalFireFaltaTelefono().then((result) => {
+            if (result.isConfirmed) {
+              verificarPesoVolumetricoYEnviar(values);
+            }
+          });
+        } else {
+          verificarPesoVolumetricoYEnviar(values);
+        }
       }
     } else {
-      if (usuario.telefono === undefined) {
-        Swal.fire({
-          icon: 'info',
-          html: 'No podrás recibir mensajes por Whatsapp <br> añade el telefono a tu perfil',
-          showCancelButton: true,
-          cancelButtonColor: '#d33',
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'Guardar y Continuar',
-          reverseButtons: true,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            mostrarAlertaYEnviarDatos(agregarProducto, images, values);
-          }
-        });
-      }
-      if (images.length <= 0) {
-        Swal.fire({
-          icon: 'error',
-          text: 'Debes subir al menos una imagen',
-        });
-      }
+      Swal.fire({
+        icon: 'error',
+        text: 'Debes subir al menos una imagen',
+      });
     }
   };
   const required = (value) => value === (undefined || '') && 'Debes Rellenar este campo';
@@ -227,7 +230,7 @@ const NuevoProducto = () => {
                   <button
                     className='btn btn-outline-warning'
                     type='submit'
-                    disabled={images.length > 4}
+                    disabled={images.length > 8}
                   >
                     Agregar Producto
                   </button>
@@ -235,9 +238,9 @@ const NuevoProducto = () => {
               </form>
             )}
           />
-          {images.length > 4 ? (
+          {images.length > 8 ? (
             <h6 className='alert alert-warning col-6 text-center mx-auto mt-2'>
-              Solo puedes subir un maximo de 4 fotos
+              Solo puedes subir un maximo de 8 fotos
             </h6>
           ) : null}
         </div>

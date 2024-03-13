@@ -3,10 +3,7 @@ import { Field, Form } from 'react-final-form';
 import Swal from 'sweetalert2';
 
 const SendMessage = ({ phoneNumber }) => {
-  console.log(phoneNumber);
-
   const onSubmit = (values) => {
-    console.log(values);
     if (_.isEmpty(values.message)) {
       Swal.fire('Debes introducir un mensaje');
     } else {

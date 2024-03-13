@@ -1,9 +1,7 @@
 
 export const calculoPesoVolumetrico = (alto, ancho, largo) => {
   if (alto && ancho && largo) {
-    console.log('entrando en pesos');
     if(Math.max(alto, ancho, largo) <= 1.20) {
-      console.log('so muuuu largo');
       return -1;
     } else {
       return alto * ancho * largo;
@@ -39,7 +37,6 @@ const categoriaEnvioBaleares = (pesoVolumetrico) =>{
 };
 
 const categoriaPorPesoKgs = (pesoKgs) => {
-  console.log(pesoKgs);
   if (pesoKgs <= 1 ) return 'k1';
   if (pesoKgs <= 2 ) return 'k2';
   if (pesoKgs <= 3 ) return 'k3';
@@ -54,14 +51,12 @@ const categoriaPorPesoKgs = (pesoKgs) => {
 };
 
 export const calculoPrecioEnvio = (pesoVolumetrico, balearicDelivery, pesoKgs) => {
-  console.log(pesoKgs);
   const comision = 4;
   const categoria = balearicDelivery === true && pesoKgs <= 0 ? 
     categoriaEnvioBaleares(pesoVolumetrico) : pesoKgs > 0 ? 
     categoriaPorPesoKgs(pesoKgs) : categoriaEnvioPensinsular(pesoVolumetrico);
   let tarifaBase;
   const iva = 0.21;
-  console.log('categoria', categoria);
   switch (categoria){
     case -1:
       tarifaBase = balearicDelivery ? 39 : 24;
