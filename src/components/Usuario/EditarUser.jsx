@@ -18,9 +18,9 @@ const EditarUser = () => {
       formData.set('nombre', values.nombre);
       formData.set('email', values.email);
       formData.set('telefono', values.telefono);
-      formData.set('showPhone', values.showPhone);
-      formData.set('direccion', values.direccion);
-      formData.set('poblacion_CP', values.poblacion_CP);
+      formData.set('showPhone', values.showPhone || false);
+      formData.set('direccion', values.direccion || '');
+      formData.set('poblacion_CP', values.poblacion_CP || '');
       formData.set('imagesAvatar', values.imagesAvatar);
       dispatch(editarDatosUsuario({ formData, id: datosUsuarioEditar._id }));
     } else {
@@ -48,7 +48,15 @@ const EditarUser = () => {
             <div className='rounded m-3 bg-transparent'>
               <Form
                 onSubmit={submitEditarUsuario}
-                initialValues={datosUsuarioEditar}
+                initialValues={{
+                  nombre: datosUsuarioEditar.nombre,
+                  email: datosUsuarioEditar.email,
+                  telefono: datosUsuarioEditar.telefono,
+                  showPhone: datosUsuarioEditar.showPhone,
+                  direccion: datosUsuarioEditar.direccion,
+                  poblacion_CP: datosUsuarioEditar.poblacion_CP,
+                  imagesAvatar: datosUsuarioEditar.imagesAvatar[0].url,
+                }}
                 render={({ handleSubmit, values }) => (
                   <>
                     <form onSubmit={handleSubmit}>
@@ -56,34 +64,19 @@ const EditarUser = () => {
                         <label htmlFor='nombre' className='loginLabel'>
                           Nombre
                         </label>
-                        <Field
-                          className='form-control mb-2'
-                          name='nombre'
-                          component='input'
-                          value={datosUsuarioEditar.nombre}
-                        />
+                        <Field className='form-control mb-2' name='nombre' component='input' />
                       </div>
                       <div>
                         <label htmlFor='email' className='loginLabel'>
                           E-mail
                         </label>
-                        <Field
-                          className='form-control mb-2'
-                          name='email'
-                          component='input'
-                          value={datosUsuarioEditar.email}
-                        />
+                        <Field className='form-control mb-2' name='email' component='input' />
                       </div>
                       <div>
                         <label htmlFor='telefono' className='loginLabel'>
                           Teléfono
                         </label>
-                        <Field
-                          className='form-control mb-2'
-                          name='telefono'
-                          component='input'
-                          value={datosUsuarioEditar.telefono}
-                        />
+                        <Field className='form-control mb-2' name='telefono' component='input' />
                         <Field name='showPhone' type='checkbox'>
                           {({ input, meta }) => (
                             <div className='mb-1 '>
@@ -106,12 +99,7 @@ const EditarUser = () => {
                         <label htmlFor='direccion' className='loginLabel'>
                           Dirección
                         </label>
-                        <Field
-                          className='form-control mb-2'
-                          name='direccion'
-                          component='input'
-                          value={datosUsuarioEditar.direccion}
-                        />
+                        <Field className='form-control mb-2' name='direccion' component='input' />
                       </div>
                       <div>
                         <label htmlFor='poblacion_CP' className='loginLabel'>
@@ -121,7 +109,6 @@ const EditarUser = () => {
                           className='form-control mb-2'
                           name='poblacion_CP'
                           component='input'
-                          value={datosUsuarioEditar.poblacion_CP}
                         />
                       </div>
                       <div>
@@ -132,7 +119,6 @@ const EditarUser = () => {
                           className='form-control mb-4'
                           name='imagesAvatar'
                           component={FileInput}
-                          value={datosUsuarioEditar.imagesAvatar[0].url}
                         />
                       </div>
 
