@@ -55,7 +55,11 @@ const BuscoPostUser = ({ postUser }) => {
           onClick={() => verBuscoPostId(postUser)}
         >
           <div className='card shadow-sm me-1 ms-1 mt-4'>
-            <img src='/SE_BUSCA_LOGO.png' className='card-img-top-post' alt='SE_BUSCA_IMG'></img>
+            <img
+              src='/SE_BUSCA_LOGO.png'
+              className='card-img-top-post'
+              alt='SE_BUSCA_IMG windsuf windymarket segunda mano'
+            ></img>
 
             <div className='card-body'>
               <h5 className='titleH5-post card-title text-center'>{title}</h5>

@@ -3,9 +3,10 @@ import { obtenerBuscoPostsUserAction } from '../slices/buscoPostSlice';
 import Swal from 'sweetalert2';
 
 export const cargarProductosAuthor = (dispatch, history, post) => {
-  dispatch(obtenerProductosAuthor(post.author._id));
-  dispatch(obtenerBuscoPostsUserAction(post.author._id));
-  history.push(`/productos/auth/${post.author._id}`);
+  const idAuthor = post.author._id;
+  dispatch(obtenerProductosAuthor(idAuthor));
+  dispatch(obtenerBuscoPostsUserAction(idAuthor));
+  history.push(`/productos/auth/${idAuthor}`);
 };
 
 export const extraerIdDeURL = (url) => {

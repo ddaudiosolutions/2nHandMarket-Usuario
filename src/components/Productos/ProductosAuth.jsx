@@ -1,12 +1,27 @@
-import { Fragment } from 'react';
-import { useSelector } from 'react-redux';
+import { Fragment, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './Producto.css';
 import ProductoUser from './ProductoUser';
 import BuscoPostUser from './BuscoPostUser';
+import { cargarProductosAuthor } from '../../helpers/utils';
+import { useHistory, useLocation } from 'react-router';
 
 const ProductosAuth = () => {
+  console.log('mostrando productos de autor');
   const productos = useSelector((state) => state.products.productsAuth);
   const buscoPostsUser = useSelector((state) => state.buscoPosts.postsUser);
+
+  const location = useLocation();
+  const idAuthor = location.pathname.split('/')[3];
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!productos) {
+      console.log('entrando en productos de author', productos);
+      cargarProductosAuthor(dispatch, history, { author: { _id: idAuthor } });
+    }
+  }, [dispatch, history, idAuthor, productos]);
 
   return (
     <Fragment>

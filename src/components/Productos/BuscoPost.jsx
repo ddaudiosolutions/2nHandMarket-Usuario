@@ -25,7 +25,11 @@ const BuscoPost = ({ buscoPost }) => {
           onClick={() => verBuscoPostId(buscoPost)}
         >
           <div className=''>
-            <img src='/SE_BUSCA_LOGO.png' className='card-img-top-post' alt='SE_BUSCA_IMG'></img>
+            <img
+              src='/SE_BUSCA_LOGO.png'
+              className='card-img-top-post'
+              alt='SE_BUSCA_IMG material segunda mano'
+            ></img>
           </div>
           <div className='card-body '>
             <h5 className='excerpt titleH5-post card-title m-1 text-center mb-5'>{titulo}</h5>
