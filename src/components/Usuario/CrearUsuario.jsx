@@ -36,7 +36,7 @@ const CrearUsuario = () => {
         <div className='col col-lg-4 col-xl-4 '>
           <img
             src='/LOGO_CIRCULAR_SIN_FONDO.png'
-            alt='WindyMArket_Logo'
+            alt='WindyMArket_Logo windymarket windsurf segunda mano'
             style={{ width: '20rem', objectFit: 'contain' }}
             className='mx-auto d-block'
           ></img>

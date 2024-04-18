@@ -33,13 +33,13 @@ const VerBuscoPost = () => {
               <img
                 src='/Avatar_Default2.png'
                 className='card-img-topAvatar ms-4 mt-3'
-                alt='avatar for User'
+                alt='avatar for User windymarket windsurf segunda mano'
               ></img>
             ) : (
               <img
                 src={post.author.imagesAvatar[0].url}
                 className='card-img-topAvatar ms-4 mt-3'
-                alt='avatarUser'
+                alt='avatarUser windymarket windsurf segunda mano'
               ></img>
             )}
             <h5 className='h2Author ms-2 mt-4'>{authorName}</h5>
@@ -48,7 +48,7 @@ const VerBuscoPost = () => {
             <img
               src='/SE_BUSCA_LOGO.png'
               className='card-img-top1-buscoPost'
-              alt='SE_BUSCA_IMG'
+              alt='SE_BUSCA_IMG windymarket windsurf segunda mano'
             ></img>
           </div>
 

@@ -4,9 +4,8 @@ import { useDispatch } from 'react-redux';
 import './Bienvenida.css';
 import jwtDecode from 'jwt-decode';
 import { logOutUsuario } from '../slices/usersSlice';
-import { obtenerProductos, obtenerProductosAuthor } from '../slices/productSlice';
-import { obtenerBuscoPostsUserAction } from '../slices/buscoPostSlice';
-/* import HappyBanner from './banners/HappyBanner'; */
+import { obtenerProductos } from '../slices/productSlice';
+import { cargarProductosAuthor } from '../helpers/utils';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -14,9 +13,9 @@ const Header = () => {
   const userId = sessionStorage.getItem('userId');
   const userTokenCheck = sessionStorage.getItem('userToken');
   const date = Date.now();
+  const history = useHistory();
 
   const [nombreUsuario, setNombreUsuario] = useState('');
-  const history = useHistory();
   useEffect(() => {
     // Solo proceder si userTokenCheck existe
     if (userTokenCheck) {
@@ -41,16 +40,8 @@ const Header = () => {
     window.location = '/productos?busqueda=ultimos_productos&page=0';
   };
 
-  const cargarProductosAuthor = (id) => {
-    dispatch(obtenerProductosAuthor(id));
-    dispatch(obtenerBuscoPostsUserAction(id));
-    history.push(`/productos/auth/${id}`);
-  };
-
-  //
   return (
     <>
-      {/* <HappyBanner /> */}
       <nav className='mt-2 bg-nav  d-flex align-items-end '>
         <div className='container-fluid col-md '>
           <Link
@@ -60,7 +51,7 @@ const Header = () => {
           >
             <img
               src='/LOGO_CIRCULAR_SIN_FONDO.png'
-              alt='WindyMArket_Logo'
+              alt='WindyMArket_Logo windsurf segunda mano'
               style={{ width: '8rem' }}
               className='navbar-brand ms-4 mt-2 mb-2'
             ></img>
@@ -112,7 +103,9 @@ const Header = () => {
                         <Link
                           to={`/productos/auth/${userId}`}
                           className='nav-link  typeHeader'
-                          onClick={() => cargarProductosAuthor(userId)}
+                          onClick={() =>
+                            cargarProductosAuthor(dispatch, history, { author: { _id: userId } })
+                          }
                         >
                           Mis Productos
                         </Link>

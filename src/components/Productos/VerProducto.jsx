@@ -27,7 +27,7 @@ import GestionEnvioModal from '../modals/GestionEnvioModal';
 import BotonReservarProducto from './botonesProducto/BotonReservarProducto';
 import BotonVendidoProducto from './botonesProducto/BotonVendidoProducto';
 import BotonEditarProducto from './botonesProducto/BotonEditarProducto';
-import ReactGA from 'react-ga4';
+/* import ReactGA from 'react-ga4'; */
 
 const VerProducto = () => {
   const producto = useSelector((state) => state.products.productoId);
@@ -171,14 +171,14 @@ const VerProducto = () => {
 
   if (producto === null || producto === undefined) return null;
 
-  useEffect(() => {
+  /* useEffect(() => {
     // Asegúrate de que ReactGA haya sido inicializado en alguna parte de tu aplicación
     ReactGA.event({
-      category: 'Producto', // Categoría del evento
-      action: 'Ver_Producto', // Acción del evento
-      label: 'Visita_Producto', // Etiqueta opcional para proporcionar más contexto
+      category: 'Producto',
+      action: 'Ver_Producto',
+      label: 'Visita_Producto',
     });
-  }, []);
+  }, [producto]); */
 
   return (
     <Fragment>
@@ -200,13 +200,13 @@ const VerProducto = () => {
                 <img
                   src='/Avatar_Default2.png'
                   className='card-img-topAvatar ms-4 mt-3'
-                  alt='avatar for User'
+                  alt='avatar for User windymarket windsurf segunda mano'
                 ></img>
               ) : (
                 <img
                   src={producto.author.imagesAvatar[0].url}
                   className='card-img-topAvatar ms-4 mt-3'
-                  alt='avatarUser'
+                  alt='avatarUser windymarket windsurf segunda mano'
                 ></img>
               )}
               <h5 className='h2Author ms-2 mt-4'>{authorName}</h5>
@@ -283,7 +283,7 @@ const VerProducto = () => {
                         style={{ height: '25rem' }}
                         key={image._id}
                         className='card-img-top mt-3'
-                        alt='...'
+                        alt='... windymarket windsurf segunda mano'
                       ></img>
                     </a>
                   </div>
