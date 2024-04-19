@@ -103,7 +103,8 @@ module.exports = {
           'payment_method',
           'billing_details',
           'return_url',
-          'poblacion_CP'
+          'poblacion_CP',
+          'client_id'
         ],
         ignoreDestructuring: true,
         ignoreImports: true,

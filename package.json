@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@ctrl/react-adsense": "^1.6.0",
+    "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^1.9.5",
     "@stripe/react-stripe-js": "^2.5.1",
     "@stripe/stripe-js": "^3.0.6",
