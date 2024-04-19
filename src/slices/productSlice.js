@@ -29,8 +29,8 @@ export const obtenerProductosMasVistos = createAsyncThunk(
   async ( data, { rejectedWithValue }) => {
     console.log('entrando en productos mas vistos', data);
     try {
-      const mostviewedProductos = await ProductService.obtenerProductosMasVistos();
-      console.log('mostviewedProductosMasVistos', mostviewedProductos);
+      const mostviewedProductos = await ProductService.obtenerProductosMasVistos();/* 
+      console.log('mostviewedProductosMasVistos', mostviewedProductos); */
       return mostviewedProductos;
     } catch (error) {
       console.log('entrando en productos mas vistos');
@@ -67,7 +67,6 @@ export const obtenerProductosUser = createAsyncThunk(
 export const obtenerProductoIdApi = createAsyncThunk(
   'getProductsId / GET',
   async (productoid, { rejectedWithValue }) => {
-    console.log(productoid);
     try {
       const producto = await ProductService.obtenerProductoIdApi(productoid);
       return producto;

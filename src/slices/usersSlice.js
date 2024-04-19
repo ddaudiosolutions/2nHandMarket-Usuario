@@ -154,8 +154,7 @@ const usersSlices = createSlice({
       }
       return action.payload;
     });
-    builder.addCase(obtenerDatosUsuario.fulfilled, (state, action) => {
-      console.log('obtenerDatosUsuario', action.payload);
+    builder.addCase(obtenerDatosUsuario.fulfilled, (state, action) => {    
       return {
         user: action.payload.data,
       };
