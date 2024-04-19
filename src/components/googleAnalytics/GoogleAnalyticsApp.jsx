@@ -3,15 +3,14 @@ import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 // eslint-disable-next-line max-len
-import web from '../../client_secret_65165896958-keasbil4r5ui0mlvafu64svvcm4sb6cv.apps.googleusercontent.com.json';
+/* import web from '../../client_secret_65165896958-keasbil4r5ui0mlvafu64svvcm4sb6cv.apps.googleusercontent.com.json'; */
 
 const GoogleAnalyticsApp = () => {
   const propertyId = '338632609';
   const startDate = '2024-03-10';
   const endDate = '2024-03-18';
-  console.log(web.web.client_id);
   const googleLogin = useGoogleLogin({
-    clientId: web.web.client_id,
+    clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
     responseType: 'token',
     onSuccess: async (tokenResponse) => {
       const accessToken = tokenResponse?.access_token;
