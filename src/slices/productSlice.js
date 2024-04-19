@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 
 const initialState = {
   productos: [],
+  productosMasVistos: [],
   productoId: undefined,
   productsAuth: undefined,
   productosUser: undefined,
@@ -18,6 +19,22 @@ export const obtenerProductos = createAsyncThunk(
       const products = await ProductService.obtenerCategoriaActions(pageAndData);
       return products;
     } catch (error) {
+      throw rejectedWithValue(error.message);
+    }
+  }
+);
+
+export const obtenerProductosMasVistos = createAsyncThunk(
+  'getMostViewedProducts / GET',
+  async ( data, { rejectedWithValue }) => {
+    console.log('entrando en productos mas vistos', data);
+    try {
+      const mostviewedProductos = await ProductService.obtenerProductosMasVistos();
+      console.log('mostviewedProductosMasVistos', mostviewedProductos);
+      return mostviewedProductos;
+    } catch (error) {
+      console.log('entrando en productos mas vistos');
+      console.log('error mostviewedProductosMasVistos', error);
       throw rejectedWithValue(error.message);
     }
   }
@@ -50,6 +67,7 @@ export const obtenerProductosUser = createAsyncThunk(
 export const obtenerProductoIdApi = createAsyncThunk(
   'getProductsId / GET',
   async (productoid, { rejectedWithValue }) => {
+    console.log(productoid);
     try {
       const producto = await ProductService.obtenerProductoIdApi(productoid);
       return producto;
@@ -157,6 +175,12 @@ const productsSlices = createSlice({
   extraReducers: (builder) => {
     builder.addCase(obtenerProductos.fulfilled, (state, action) => {
       state.productos = action.payload.data;
+    });
+    builder.addCase(obtenerProductosMasVistos.fulfilled, (state, action) => {
+      state.productosMasVistos = action.payload.data;
+    });
+    builder.addCase(obtenerProductosMasVistos.rejected, (state, action) => {
+      console.log(action);
     });
     builder.addCase(crearNuevoProducto.pending, (state, action) => {
       Swal.fire('Subiendo Producto');

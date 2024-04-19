@@ -22,6 +22,11 @@ const obtenerCategoriaActions = (pageAndData) => {
 
 // DESCARGAR PRODUCTOS USUARIO
 
+const obtenerProductosMasVistos = () => {
+  console.log('entrando en mostviewed FRONT');
+  return clienteAxios.get(`productos/mostviewedProducts`, data);
+};
+
 const obtenerProductosUser = (pageNuser) => {
   return clienteAxios.get(`productos/user?=${pageNuser}`, data);
 };
@@ -69,6 +74,7 @@ const ProducServices = {
   obtenerProductoIdApi,
   obtenerProductosAuthor,
   obtenerProductosUser,
+  obtenerProductosMasVistos,
   borrarProducto,
   crearNuevoProductoAction,
   editarProducto,
