@@ -27,14 +27,14 @@ export const obtenerProductos = createAsyncThunk(
 export const obtenerProductosMasVistos = createAsyncThunk(
   'getMostViewedProducts / GET',
   async ( data, { rejectedWithValue }) => {
-    console.log('entrando en productos mas vistos', data);
+    /* console.log('entrando en productos mas vistos', data); */
     try {
       const mostviewedProductos = await ProductService.obtenerProductosMasVistos();/* 
       console.log('mostviewedProductosMasVistos', mostviewedProductos); */
       return mostviewedProductos;
     } catch (error) {
-      console.log('entrando en productos mas vistos');
-      console.log('error mostviewedProductosMasVistos', error);
+      /* console.log('entrando en productos mas vistos');
+      console.log('error mostviewedProductosMasVistos', error); */
       throw rejectedWithValue(error.message);
     }
   }

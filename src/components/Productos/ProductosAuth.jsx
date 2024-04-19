@@ -7,7 +7,6 @@ import { cargarProductosAuthor } from '../../helpers/utils';
 import { useHistory, useLocation } from 'react-router';
 
 const ProductosAuth = () => {
-  console.log('mostrando productos de autor');
   const productos = useSelector((state) => state.products.productsAuth);
   const buscoPostsUser = useSelector((state) => state.buscoPosts.postsUser);
 
@@ -18,7 +17,6 @@ const ProductosAuth = () => {
 
   useEffect(() => {
     if (!productos) {
-      console.log('entrando en productos de author', productos);
       cargarProductosAuthor(dispatch, history, { author: { _id: idAuthor } });
     }
   }, [dispatch, history, idAuthor, productos]);

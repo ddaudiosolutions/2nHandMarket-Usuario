@@ -23,7 +23,7 @@ const obtenerCategoriaActions = (pageAndData) => {
 // DESCARGAR PRODUCTOS USUARIO
 
 const obtenerProductosMasVistos = () => {
-  console.log('entrando en mostviewed FRONT');
+ /*  console.log('entrando en mostviewed FRONT'); */
   return clienteAxios.get(`productos/mostviewedProducts`, data);
 };
 
