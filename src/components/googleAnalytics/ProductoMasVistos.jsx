@@ -37,9 +37,11 @@ export const ProductoMasVistos = ({ productosMasvistos }) => {
       className='row row-cols-2 row-cols-xs-4 row-cols-sm-3 row-cols-md-3 
     row-cols-lg-4 row-cols-xl-4 row-cols-xxl-4 g-2 justify-content-center mx-4'
     >
-      {mostViewed.map((producto, index) => (
-        <Producto key={producto._id} producto={producto} busqueda={index} />
-      ))}
+      {mostViewed.map(
+        (producto, index) =>
+          // si producto no es null
+          producto && <Producto key={producto._id} producto={producto} busqueda={index} />
+      )}
     </div>
   );
 };

@@ -19,6 +19,9 @@ import HappyBanner from '../banners/HappyBanner';
 import { ProductoMasVistos } from '../googleAnalytics/ProductoMasVistos';
 import { Helmet } from 'react-helmet';
 
+import WebCamsContainer from '../webCams/WebCamsContainer';
+import GoogleAds from '../adsense/GoogleAds';
+
 const Productos = () => {
   // const history = useHistory();
   const productos = useSelector((state) => state.products.productos.prodAll);
@@ -70,7 +73,7 @@ const Productos = () => {
   return (
     <Fragment>
       <Helmet>
-        <title>My Page Title</title>
+        <title>WindyMarket</title>
         <meta name='description' content='Material windsurf segunda mano' />
         <meta
           name='keywords'
@@ -88,11 +91,13 @@ const Productos = () => {
       <div className='container '>
         <div className='row'>
           <div className='bg-form col-12 justify-content-center mx-auto rounded mb-3 mt-2'>
+            <WebCamsContainer />
             <div>
               <SearchByWords setSearchWords={setSearchWords} />
             </div>
             <div className='mb-3 col-9 mx-auto bg-form mt-4'>
               <div className='col col-lg-9 mx-auto'>
+                <GoogleAds />
                 <h2 className='text-center mb-5'> Compra y vende material para Navegar </h2>
               </div>
               <div>
