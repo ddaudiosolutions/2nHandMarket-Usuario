@@ -1,5 +1,5 @@
 const CanPastilla = () => {
-  const parentDomain = process.env.REACT_APP_PARENT_DOMAIN || 'www.mallorcapipeline.com';
+  const parentDomain = 'www.mallorcapipeline.com';
   return (
     <div className='col-3 me-3'>
       <h5>Can Pastilla</h5>
