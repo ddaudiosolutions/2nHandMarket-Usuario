@@ -1,5 +1,5 @@
 const CanPastilla = () => {
-  const parentDomain = 'www.mallorcapipeline.com';
+  const parentDomain = 'www.windymarket.es';
   return (
     <div className='col-3 me-3'>
       <h5>Can Pastilla</h5>
