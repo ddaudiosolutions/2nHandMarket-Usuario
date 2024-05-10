@@ -6,7 +6,7 @@ const WebCamsContainer = () => {
     <div className='mt-4'>
       <h2 className='text-center'>Webcams en Vivo</h2>
       <div className='container'>
-        <div className='row justify-content-center'>
+        <div className='row text-center'>
           <AlcudiaWebCam />
           <CanPastilla />
         </div>
