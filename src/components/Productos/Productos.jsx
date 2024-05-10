@@ -92,7 +92,7 @@ const Productos = () => {
         <div className='row'>
           <div className='bg-form col-12 justify-content-center mx-auto rounded mb-3 mt-2'>
             <WebCamsContainer />
-            <div>
+            <div className='mx-auto'>
               <SearchByWords setSearchWords={setSearchWords} />
             </div>
             <div className='mb-3 col-9 mx-auto bg-form mt-4'>

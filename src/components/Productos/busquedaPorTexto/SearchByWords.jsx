@@ -7,7 +7,7 @@ const SearchByWords = ({ setSearchWords }) => {
   };
 
   return (
-    <div className='row d-flex justify-content-center'>
+    <div className='row justify-content-center'>
       <div className='col-9  mt-4'>
         <Form
           onSubmit={onSubmit}
