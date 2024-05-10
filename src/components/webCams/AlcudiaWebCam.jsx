@@ -1,7 +1,7 @@
 const AlcudiaWebCam = () => {
   return (
-    <div className='col-3 me-3'>
-      <h5>Alcudia Mar</h5>
+    <div className='col-ms-3 col-md-4'>
+      <h5 className='text-center'>Alcudia Mar</h5>
       <iframe
         src='https://in2thebeach.es/callbacks/camviewer_ext2.php?id=83'
         width='320'
