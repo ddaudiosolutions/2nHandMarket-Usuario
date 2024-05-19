@@ -14,6 +14,7 @@ const ProductoUser = ({ producto }) => {
   const { title, price, images, _id, description } = producto;
   const dispatch = useDispatch();
   const history = useHistory();
+  console.log('ProductoUser', images);
 
   // Confirmar si desea Eliminar el Producto
   const confirmarBorrarProducto = (_id) => {
@@ -52,7 +53,15 @@ const ProductoUser = ({ producto }) => {
           type='button'
           onClick={() => verProductoId(producto)}
         >
-          <img src={images[0].url} className='card-img-top ' alt={images[0].filename}></img>
+          {images[0]?.url === undefined ? (
+            <img
+              src='/LOGO_CIRCULAR_SIN_FONDO.png'
+              className='card-img-topAvatar ms-4 mt-3'
+              alt='avatar for User windymarket windsurf segunda mano'
+            ></img>
+          ) : (
+            <img src={images[0].url} className='card-img-top ' alt={images[0].filename}></img>
+          )}
           <div className='card-body '>
             <h5 className='titleH5-product  card-title'>{title}</h5>
             <h5 className='product-price m-1 mb-1'>{price}€</h5>
