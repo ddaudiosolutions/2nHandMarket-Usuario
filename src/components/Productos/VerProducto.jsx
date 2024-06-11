@@ -32,6 +32,7 @@ import BotonEditarProducto from './botonesProducto/BotonEditarProducto';
 
 import { FacebookIcon, FacebookShareButton, WhatsappShareButton } from 'react-share';
 import WhatsappIconShare from './iconos/WhatsappIconShare';
+import MetaTagsDinamicas from '../gestionOpenGraph/MetaTagsDinamicas';
 
 const VerProducto = () => {
   const producto = useSelector((state) => state.products.productoId);
@@ -186,6 +187,7 @@ const VerProducto = () => {
 
   return (
     <Fragment>
+      <MetaTagsDinamicas title={producto.title} image={producto.images[0].url} url={url} />
       <GestionEnvioModal
         show={showForm}
         handleClose={() => setShowForm(false)}
@@ -314,7 +316,7 @@ const VerProducto = () => {
             </div>
           </div>
           <div className='mt-3 me-2 d-flex justify-content-end'>
-            <WhatsappShareButton url={url}>
+            <WhatsappShareButton url={url} image={producto.images[0].url}>
               <WhatsappIconShare size={25} />
             </WhatsappShareButton>
             <FacebookShareButton url={url} className='ms-3'>
