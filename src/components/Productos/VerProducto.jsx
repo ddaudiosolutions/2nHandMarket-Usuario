@@ -30,6 +30,9 @@ import BotonEditarProducto from './botonesProducto/BotonEditarProducto';
 /* import GoogleAds from '../adsense/GoogleAds'; */
 /* import ReactGA from 'react-ga4'; */
 
+import { FacebookIcon, FacebookShareButton, WhatsappShareButton } from 'react-share';
+import WhatsappIconShare from './iconos/WhatsappIconShare';
+
 const VerProducto = () => {
   const producto = useSelector((state) => state.products.productoId);
   let paginaActual = useSelector((state) => state.products.paginaActual);
@@ -310,7 +313,14 @@ const VerProducto = () => {
               </button>
             </div>
           </div>
-
+          <div className='mt-3 me-2 d-flex justify-content-end'>
+            <WhatsappShareButton url={url}>
+              <WhatsappIconShare size={25} />
+            </WhatsappShareButton>
+            <FacebookShareButton url={url} className='ms-3'>
+              <FacebookIcon size={30} round={true} />
+            </FacebookShareButton>
+          </div>
           <div className='card-body'>
             <h4 className=' price-hp1'>Precio: {producto.price} €</h4>
             <h5 className='card-title titleH5VerProducto rounded mt-1'>{producto.title}</h5>
@@ -321,6 +331,7 @@ const VerProducto = () => {
                     <BotonGestionEnvio setShowForm={setShowForm} />
                   </div>
                 )}
+
                 <div className='col d-flex justify-content-end'>
                   <div className='col-3 pproductoTitleFecha '>{clonedDateFormat}</div>
                   {sessionStorage.getItem('userId') !== null &&
