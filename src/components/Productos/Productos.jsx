@@ -20,7 +20,8 @@ import { ProductoMasVistos } from '../googleAnalytics/ProductoMasVistos';
 import { Helmet } from 'react-helmet';
 
 import WebCamsContainer from '../webCams/WebCamsContainer';
-import GoogleAds from '../adsense/GoogleAds';
+/* 
+import GoogleAds from '../adsense/GoogleAds'; */
 
 const Productos = () => {
   // const history = useHistory();
@@ -97,7 +98,7 @@ const Productos = () => {
             </div>
             <div className='mb-3 col-9 mx-auto bg-form mt-4'>
               <div className='col col-lg-9 mx-auto'>
-                <GoogleAds />
+                {/* <GoogleAds /> */}
                 <h2 className='text-center mb-5'> Compra y vende material para Navegar </h2>
               </div>
               <div>

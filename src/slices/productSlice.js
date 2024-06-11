@@ -175,6 +175,12 @@ const productsSlices = createSlice({
     builder.addCase(obtenerProductos.fulfilled, (state, action) => {
       state.productos = action.payload.data;
     });
+    builder.addCase(obtenerProductos.rejected, (state, action) => {
+      Swal.fire({title: 'Servidor Caido 2', text: `Estamos Teniendo Problemas con el servidor, Esperamos se reestablezca la conexión
+      lo antes posible`, imageUrl: './WINDMARKET_LOGO_CIRCULO_uadyzn.png'}).then(function () {
+        window.location = '/';
+      });
+    });
     builder.addCase(obtenerProductosMasVistos.fulfilled, (state, action) => {
       state.productosMasVistos = action.payload.data;
     });

@@ -27,7 +27,7 @@ import GestionEnvioModal from '../modals/GestionEnvioModal';
 import BotonReservarProducto from './botonesProducto/BotonReservarProducto';
 import BotonVendidoProducto from './botonesProducto/BotonVendidoProducto';
 import BotonEditarProducto from './botonesProducto/BotonEditarProducto';
-import GoogleAds from '../adsense/GoogleAds';
+/* import GoogleAds from '../adsense/GoogleAds'; */
 /* import ReactGA from 'react-ga4'; */
 
 const VerProducto = () => {
@@ -188,9 +188,7 @@ const VerProducto = () => {
         handleClose={() => setShowForm(false)}
         datosRemitente={producto}
       />
-      <div>
-        <GoogleAds />
-      </div>
+      <div>{/* <GoogleAds /> */}</div>
       <div className='container col-sm-9 col-md-9 col-lg-7 col-xl-7'>
         <div className='cardVerProducto mt-3 '>
           <div className='d-flex justify-content-between'>
