@@ -1,9 +1,11 @@
-import { Fragment, useState, useEffect, useRef } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import './VerProducto.css';
 import { toDate, format } from 'date-fns';
+/* import { Helmet } from 'react-helmet'; */
 import { cargarProductosAuthor, extraerIdDeURL } from '../../helpers/utils';
+/* import SendMessage from '../WhatsApp/SendMessage'; */
 import Footer from '../WhatsApp/layout/Footer';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import {
@@ -20,10 +22,14 @@ import {
 } from '../../slices/productSlice';
 import ContactoentreUsers from '../envioMensajes/ContactoentreUsers';
 import BotonGestionEnvio from '../gestionEnvios/BotonGestionEnvio';
+
 import GestionEnvioModal from '../modals/GestionEnvioModal';
 import BotonReservarProducto from './botonesProducto/BotonReservarProducto';
 import BotonVendidoProducto from './botonesProducto/BotonVendidoProducto';
 import BotonEditarProducto from './botonesProducto/BotonEditarProducto';
+/* import GoogleAds from '../adsense/GoogleAds'; */
+/* import ReactGA from 'react-ga4'; */
+
 import { FacebookIcon, FacebookShareButton, WhatsappShareButton } from 'react-share';
 import WhatsappIconShare from './iconos/WhatsappIconShare';
 import MetaTagsDinamicas from '../gestionOpenGraph/MetaTagsDinamicas';
@@ -43,60 +49,14 @@ const VerProducto = () => {
   const fechaCreado = producto !== undefined ? producto.creado : null;
   const authorName = producto !== undefined ? producto.author.nombre : null;
 
-  // Convertir la fecha a un formato común
+  /// CONVERTIMOS LA FECHA A UN FORMATO COMUN
   const date = new Date(fechaCreado);
   const clonedDate = toDate(date);
   const clonedDateFormat = clonedDate !== 'Invalid Date' ? format(clonedDate, 'dd-MM-yyyy') : null;
   const userId = sessionStorage.getItem('userId');
+  // meter el dispatch dentro de un useffect
 
   const [reservado, setReservado] = useState(producto ? producto.reservado : false);
-  const [vendido, setVendido] = useState(producto ? producto.vendido : false);
-
-  const [showForm, setShowForm] = useState(false);
-  const [urlShare, setUrlShare] = useState('none'); // Placeholder para evitar errores con el botón de compartir
-
-  const shareButton = useRef(null);
-
-  useEffect(() => {
-    if (producto !== undefined) {
-      setReservado(producto.reservado);
-      setVendido(producto.vendido);
-    }
-  }, [producto]);
-
-  useEffect(() => {
-    dispatch(obtenerProductoIdApi(productoId));
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (producto && producto.images && producto.images.length > 0) {
-      const ogImage = document.querySelector('meta[property="og:image"]');
-      if (ogImage) {
-        ogImage.setAttribute('content', producto.images[0].url || '');
-      }
-    }
-  }, [producto]);
-
-  const getUrFromService = async () => {
-    // Simular una llamada a un servicio real
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    return producto.images[0].url;
-  };
-
-  const onClick = async () => {
-    if (urlShare === 'none') {
-      const newUrl = await getUrFromService();
-      setUrlShare(newUrl);
-    }
-  };
-
-  useEffect(() => {
-    if (urlShare !== 'none') {
-      shareButton.current?.click();
-      setUrlShare('none');
-    }
-  }, [urlShare, shareButton]);
-
   const handleReservado = () => {
     if (reservado) {
       dispatch(
@@ -122,6 +82,14 @@ const VerProducto = () => {
       });
     }
   };
+  const [vendido, setVendido] = useState(producto ? producto.vendido : false);
+
+  useEffect(() => {
+    if (producto !== undefined) {
+      setReservado(producto.reservado);
+      setVendido(producto.vendido);
+    }
+  }, [producto]);
 
   const handleVendido = () => {
     if (vendido) {
@@ -149,19 +117,38 @@ const VerProducto = () => {
     }
   };
 
+  useEffect(() => {
+    dispatch(obtenerProductoIdApi(productoId));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (producto && producto.images && producto.images.length > 0) {
+      const ogImage = document.querySelector('meta[property="og:image"]');
+      if (ogImage) {
+        ogImage.setAttribute('content', producto.images[0].url || ''); // Actualizar la URL de la imagen en las etiquetas OG
+      }
+    }
+  }, [producto]);
+
   const isLogged = sessionStorage.getItem('userId') !== null;
-  const existe = (productoFavoritos, producto) => {
-    return _.includes(productoFavoritos, producto);
-  };
+
   let productoFavoritos = [];
-  const [favorite, setFavorite] = useState(
-    producto ? existe(productoFavoritos, producto._id) : false
-  );
   if (isLogged && useSelector((state) => state.users.user) !== undefined) {
     productoFavoritos = useSelector((state) => state.users.user.favoritos);
   } else if (isLogged && useSelector((state) => state.users.user) === undefined) {
     dispatch(obtenerDatosUsuario(userId));
   }
+
+  const existe = (productoFavoritos, producto) => {
+    return _.includes(productoFavoritos, producto);
+  };
+
+  // CREAR FORMULARIO PARA GESTION DE DATOS DE ENVIO
+  const [showForm, setShowForm] = useState(false);
+
+  const [favorite, setFavorite] = useState(
+    producto ? existe(productoFavoritos, producto._id) : false
+  );
 
   const handleFavorite = () => {
     setFavorite(!favorite);
@@ -188,6 +175,15 @@ const VerProducto = () => {
   };
 
   if (producto === null || producto === undefined) return null;
+
+  /* useEffect(() => {
+    // Asegúrate de que ReactGA haya sido inicializado en alguna parte de tu aplicación
+    ReactGA.event({
+      category: 'Producto',
+      action: 'Ver_Producto',
+      label: 'Visita_Producto',
+    });
+  }, [producto]); */
 
   return (
     <Fragment>
@@ -320,12 +316,7 @@ const VerProducto = () => {
             </div>
           </div>
           <div className='mt-3 me-2 d-flex justify-content-end'>
-            <WhatsappShareButton
-              ref={shareButton}
-              openShareDialogOnClick={urlShare !== 'none'}
-              url={url}
-              onClick={onClick}
-            >
+            <WhatsappShareButton url={url} image={producto.images[0].url}>
               <WhatsappIconShare size={25} />
             </WhatsappShareButton>
             <FacebookShareButton url={url} className='ms-3'>
@@ -342,6 +333,7 @@ const VerProducto = () => {
                     <BotonGestionEnvio setShowForm={setShowForm} />
                   </div>
                 )}
+
                 <div className='col d-flex justify-content-end'>
                   <div className='col-3 pproductoTitleFecha '>{clonedDateFormat}</div>
                   {sessionStorage.getItem('userId') !== null &&
@@ -384,9 +376,11 @@ const VerProducto = () => {
                     />
                   </>
                 )}
+                {/* <SendMessage phoneNumber={producto.author.telefono} /> */}
                 <Footer />
               </div>
             </div>
+
             <div className='text-center my-4'>
               <Link
                 to={`/productos?busqueda=${producto.categoria}&page=${paginaActual}`}
