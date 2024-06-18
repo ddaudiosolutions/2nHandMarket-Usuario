@@ -30,9 +30,9 @@ import BotonEditarProducto from './botonesProducto/BotonEditarProducto';
 /* import GoogleAds from '../adsense/GoogleAds'; */
 /* import ReactGA from 'react-ga4'; */
 
-import { FacebookIcon, FacebookShareButton, WhatsappShareButton } from 'react-share';
+import { /* FacebookIcon, FacebookShareButton, */ WhatsappShareButton } from 'react-share';
 import WhatsappIconShare from './iconos/WhatsappIconShare';
-import MetaTagsDinamicas from '../gestionOpenGraph/MetaTagsDinamicas';
+/* import MetaTagsDinamicas from '../gestionOpenGraph/MetaTagsDinamicas'; */
 
 const VerProducto = () => {
   const producto = useSelector((state) => state.products.productoId);
@@ -121,14 +121,14 @@ const VerProducto = () => {
     dispatch(obtenerProductoIdApi(productoId));
   }, [dispatch]);
 
-  useEffect(() => {
+  /*  useEffect(() => {
     if (producto && producto.images && producto.images.length > 0) {
       const ogImage = document.querySelector('meta[property="og:image"]');
       if (ogImage) {
         ogImage.setAttribute('content', producto.images[0].url || ''); // Actualizar la URL de la imagen en las etiquetas OG
       }
     }
-  }, [producto]);
+  }, [producto]); */
 
   const isLogged = sessionStorage.getItem('userId') !== null;
 
@@ -187,7 +187,12 @@ const VerProducto = () => {
 
   return (
     <Fragment>
-      <MetaTagsDinamicas title={producto.title} image={producto.images[0].url} url={url} />
+      {/*  <MetaTagsDinamicas
+        title={producto.title}
+        image={producto.images[0].url}
+        url={url}
+        description={producto.description}
+      /> */}
       <GestionEnvioModal
         show={showForm}
         handleClose={() => setShowForm(false)}
@@ -316,12 +321,13 @@ const VerProducto = () => {
             </div>
           </div>
           <div className='mt-3 me-2 d-flex justify-content-end'>
-            <WhatsappShareButton url={url} image={producto.images[0].url}>
+            <WhatsappShareButton url={url}>
               <WhatsappIconShare size={25} />
             </WhatsappShareButton>
-            <FacebookShareButton url={url} className='ms-3'>
+
+            {/* <FacebookShareButton url={url} className='ms-3'>
               <FacebookIcon size={30} round={true} />
-            </FacebookShareButton>
+            </FacebookShareButton> */}
           </div>
           <div className='card-body'>
             <h4 className=' price-hp1'>Precio: {producto.price} €</h4>

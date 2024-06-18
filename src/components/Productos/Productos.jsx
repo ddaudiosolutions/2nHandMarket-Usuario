@@ -17,7 +17,7 @@ import SearchByWords from './busquedaPorTexto/SearchByWords';
 import Navbar from '../Navbar';
 import HappyBanner from '../banners/HappyBanner';
 import { ProductoMasVistos } from '../googleAnalytics/ProductoMasVistos';
-import { Helmet } from 'react-helmet';
+/* import { Helmet } from 'react-helmet'; */
 
 import WebCamsContainer from '../webCams/WebCamsContainer';
 /* 
@@ -25,9 +25,11 @@ import GoogleAds from '../adsense/GoogleAds'; */
 
 const Productos = () => {
   // const history = useHistory();
+  const location = useLocation();
+
   const productos = useSelector((state) => state.products.productos.prodAll);
   const productosPorPalabras = useSelector((state) => state.products.productsByWords);
-  const paginasTotales = useSelector((state) => state.products.totalPages);
+  const paginasTotales = useSelector((state) => state.products.productos.totalPages);
   const productosMasVistos = useSelector(
     (state) => state.products.productosMasVistos.productosVistas
   );
@@ -36,13 +38,14 @@ const Productos = () => {
   const paginas = new Array(paginasTotales).fill(null).map((v, i) => i);
 
   // TRAEMOS LAS SOLICITUDES DE BUSQUEDA
-  const params = new URL(document.location).searchParams;
+
+  const params = new URLSearchParams(location.search);
   const busquedaquery = params.get('busqueda');
   const pagequery = params.get('page');
+
   const [searchWords, setSearchWords] = useState([]);
 
   const dispatch = useDispatch();
-  const location = useLocation();
   const mostrarProductoMasVistos =
     location.pathname === '/productos' && location.search === '?busqueda=ultimos_productos&page=0';
 
@@ -73,22 +76,6 @@ const Productos = () => {
 
   return (
     <Fragment>
-      <Helmet>
-        <title>WindyMarket</title>
-        <meta name='description' content='Material windsurf segunda mano' />
-        <meta
-          name='keywords'
-          content='windsurf, botavara, arnés, vela, aleta, wingfoil, foil, freride, slalom'
-        />
-        <meta name='author' content='Windymarket' />
-        <meta property='og:title' content='Material windsurf segunda mano' />
-        <meta
-          property='og:description'
-          content='Material de windsurf, wingfoil, foil, de segunda mano'
-        />
-        {/*   <meta property='og:image' content='https://example.com/image.jpg' />
-        <meta property='og:url' content='https://example.com/my-page' /> */}
-      </Helmet>
       <div className='container '>
         <div className='row'>
           <div className='bg-form col-12 justify-content-center mx-auto rounded mb-3 mt-2'>
@@ -111,7 +98,12 @@ const Productos = () => {
           <div className='col mx-auto mt-3'>
             {productosPorPalabras !== undefined && productosPorPalabras.length === 0 ? (
               <>
-                <h2 className='text-center'> Últimas novedades </h2>
+                <h2 className='text-center'>
+                  {' '}
+                  {busquedaquery !== 'ultimos_productos'
+                    ? busquedaquery.toUpperCase()
+                    : 'Últimas novedades'}
+                </h2>
                 <ListaProductos productos={productos} />
               </>
             ) : (
@@ -121,16 +113,27 @@ const Productos = () => {
 
           <div className='d-flex justify-content-center mt-4 '>
             {busquedaquery !== 'ultimos_productos'
-              ? paginas.map((pagina) => (
-                  <Link
-                    type='submit'
-                    key={pagina}
-                    to={`/productos?busqueda=${busquedaquery}&page=${pagina}`}
-                    className='rounded btn btn-select page-link'
-                  >
-                    {pagina + 1}
-                  </Link>
-                ))
+              ? paginas.map((pagina) => {
+                  console.log('pagequery', pagina + 1, pagequery);
+                  return (
+                    <Link
+                      type='submit'
+                      key={pagina}
+                      to={`/productos?busqueda=${busquedaquery}&page=${pagina}`}
+                      className='rounded btn page-link'
+                    >
+                      <h2
+                        className='me-4 '
+                        style={{
+                          color:
+                            Number(pagequery) === Number(pagina) ? '#201e2f' : 'rgb(56, 217, 223)',
+                        }}
+                      >
+                        {pagina + 1}
+                      </h2>
+                    </Link>
+                  );
+                })
               : null}
           </div>
 
