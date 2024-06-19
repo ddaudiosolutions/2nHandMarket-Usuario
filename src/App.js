@@ -1,6 +1,5 @@
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import Header from './components/Header';
-// import Bienvenida from "./components/Bienvenida";
 import Productos from './components/Productos/Productos';
 import ProductosUser from './components/Productos/ProductosUser';
 import NuevoProducto from './components/Productos/NuevoProducto';
